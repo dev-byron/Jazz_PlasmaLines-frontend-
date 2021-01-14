@@ -1,5 +1,3 @@
-// --- example-route.js ---
-// • This is an example on how a simple route should be created
 // • Routes are imported on index.js file and are used to declare our simple
 // API endpoints.
 // • Remember, this is a simple template and I will not complicate things but
@@ -8,7 +6,7 @@
 // more clean and simple to read.
 // -----------------------------------------------------------------------------
 
-const Example = require('./../../repo/example-repo')
+const PlasmaLinesSchema = require('../../repo/repository')
 const express = require('express')
 const router = express.Router()
 
@@ -17,7 +15,7 @@ router.get('/', function (req, res) {
   // • Use mongoose to get all `examples` in our database
   // • How we got this find() method you'll ask? Well, that comes from our
   // declared mongoose model.
-  Example.find(function (err, examples) {
+  PlasmaLinesSchema.find(function (err, examples) {
     // • If there is an error, send the error. nothing after res.send(err)
     // will execute
     if (err) { res.send(err) }
@@ -31,14 +29,14 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
   // • Create and save `example` on MongoDB.
   // • We get information form request body
-  Example.create({
+  PlasmaLinesSchema.create({
     title: req.body.title,
     content: req.body.content
   }, function (err, examples) {
     if (err) { res.send(err) }
 
     // • Get and return all the `examples` after you create another
-    Example.find(function (err, examples) {
+    PlasmaLinesSchema.find(function (err, examples) {
       if (err) { res.send(err) }
       res.json(examples)
     })

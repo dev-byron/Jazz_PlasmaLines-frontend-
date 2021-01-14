@@ -35,7 +35,7 @@ mongoose.connect('mongodb://localhost/example-app', (err) => {
 
     // • We call use() on the Express application to add the Router to handle path,
     // specifying an URL path on first parameter '/api/example'.
-    app.use('/api/example', require('./server/routes/example-route'))
+    app.use('/api/example', require('./server/routes/route'))
 
     // • Every other route that starts with `api/` but not declared above will
     // return `not-found` status. Apply your `not-found` format here.
