@@ -9,6 +9,8 @@
 const PlasmaLinesSchema = require('../../repo/repository')
 const express = require('express')
 const router = express.Router()
+const controller = require('../controllers/test');
+
 
 // • Declaring GET method
 router.get('/', function (req, res) {
@@ -42,6 +44,10 @@ router.post('/', function (req, res) {
     })
   })
 })
+
+
+// • declaring routes
+router.get('/test', controller.get)
 
 // • Export router to use it on other modules
 module.exports = router
