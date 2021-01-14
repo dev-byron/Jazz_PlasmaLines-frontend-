@@ -1,0 +1,74 @@
+SOCCER, RUGBY, HANDBALL
+
+COLUMNS: TIME, TEAM, MLINE, SPREAD, TOTAL GOALS
+
+every schedule.game
+  participant over
+    game.time
+    participant.id + participant.name
+    participant.line.money_line
+    (upArrow or downArrow) participant.line.spread + participant.line.spread_odds
+    upArrow + game.total.value + game.total.over_odds
+
+  participant under
+    game.time
+    participant.id + participant.name
+    participant.line.money_line
+    (upArrow or downArrow) participant.line.spread + participant.line.spread_odds
+    downArrow + game.total.value + game.total.under_odds
+
+  draw
+    -
+    participant.id + participant.name
+    participant.line.money_line
+
+<schedule id="5018763" date="2021-02-23" sport="SOC" division="SOC" title="UEFA - CHAMPIONS LEAGUE">
+<game id="5018763" time="12:00 PM">
+<participant rotation_number="224217" name="BAYERN MUNICH">
+<line publisher="Publisher 1" money_line="-185" spread="-1" spread_odds="-121"/>
+</participant>
+<participant rotation_number="224218" name="LAZIO">
+<line publisher="Publisher 1" money_line="403" spread="1" spread_odds="-105"/>
+</participant>
+<total publisher="Publisher 1" over_odds="-151" under_odds="119" value="3"/>
+<participant rotation_number="224219" name="DRAW">
+<line publisher="Publisher 1" money_line="340" spread="" spread_odds=""/>
+</participant>
+</game>
+<game id="5018764" time="12:00 PM">
+<participant rotation_number="224221" name="CHELSEA">
+<line publisher="Publisher 1" money_line="221" spread="0" spread_odds="121"/>
+</participant>
+<participant rotation_number="224222" name="ATLETICO MADRID">
+<line publisher="Publisher 1" money_line="126" spread="0" spread_odds="-153"/>
+</participant>
+<total publisher="Publisher 1" over_odds="-154" under_odds="122" value="2"/>
+<participant rotation_number="224223" name="DRAW">
+<line publisher="Publisher 1" money_line="212" spread="" spread_odds=""/>
+</participant>
+</game>
+<game id="5018770" time="12:00 PM">
+<participant rotation_number="1224217" name="1H BAYERN MUNICH">
+<line publisher="Publisher 1" money_line="-101" spread="-0.5" spread_odds="100"/>
+</participant>
+<participant rotation_number="1224218" name="1H LAZIO">
+<line publisher="Publisher 1" money_line="390" spread="0.5" spread_odds="-134"/>
+</participant>
+<total publisher="Publisher 1" over_odds="115" under_odds="-153" value="1.5"/>
+<participant rotation_number="1224219" name="DRAW">
+<line publisher="Publisher 1" money_line="147" spread="" spread_odds=""/>
+</participant>
+</game>
+<game id="5018769" time="12:00 PM">
+<participant rotation_number="1224221" name="1H CHELSEA">
+<line publisher="Publisher 1" money_line="273" spread="0" spread_odds="109"/>
+</participant>
+<participant rotation_number="1224222" name="1H ATLETICO MADRID">
+<line publisher="Publisher 1" money_line="205" spread="0" spread_odds="-145"/>
+</participant>
+<total publisher="Publisher 1" over_odds="116" under_odds="-156" value="1"/>
+<participant rotation_number="1224223" name="DRAW">
+<line publisher="Publisher 1" money_line="-106" spread="" spread_odds=""/>
+</participant>
+</game>
+</schedule>

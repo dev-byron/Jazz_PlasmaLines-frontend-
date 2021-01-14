@@ -1,0 +1,37 @@
+LOOF FUTURES OR ODDS TO WIN
+
+COLUMNS: CUT OFF, DESCRIPTION, ODDS
+
+every schedule.game.participant
+    schedule.date
+    participant.number + participant.name
+    "+" + participant.line.money_line
+
+<schedule id="4456681" date="2021-01-16" sport="TNT" division="TNT" title="ODDS TO WIN SUPER BOWL LV - TO WIN SUPER BOWL LV">
+<game id="4456681" time="01:35 PM">
+<participant rotation_number="10001" name="KANSAS CITY CHIEFS">
+<line publisher="Publisher 1" money_line="200" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="10003" name="BALTIMORE RAVENS">
+<line publisher="Publisher 1" money_line="700" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="10004" name="NEW ORLEANS SAINTS">
+<line publisher="Publisher 1" money_line="500" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="10006" name="GREEN BAY PACKERS">
+<line publisher="Publisher 1" money_line="350" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="10011" name="LOS ANGELES RAMS">
+<line publisher="Publisher 1" money_line="2000" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="10016" name="BUFFALO BILLS">
+<line publisher="Publisher 1" money_line="450" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="10020" name="CLEVELAND BROWNS">
+<line publisher="Publisher 1" money_line="2500" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="10023" name="TAMPA BAY BUCCANEERS">
+<line publisher="Publisher 1" money_line="650" spread="" spread_odds=""/>
+</participant>
+</game>
+</schedule>

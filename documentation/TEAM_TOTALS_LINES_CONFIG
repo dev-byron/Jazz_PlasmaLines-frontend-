@@ -1,0 +1,111 @@
+LOOK FOR TEAM TOTALS IN TITLE
+
+COLUMNS: TIME, TEAM, SPREAD, TOTAL, MLINE
+
+every schedule.game
+  participant over
+    game.time
+    participant.id + participant.name
+    -
+    upArrow + game.total.value + game.total.over_odds
+    -
+
+  participant under
+    game.time
+    participant.id + participant.name
+    -
+    downArrow + game.total.value + game.total.under_odds
+    -
+
+<schedule id="5081894" date="2021-01-14" sport="NBA" division="NBA" title="TEAM TOTALS - NBA">
+<game id="5081894" time="04:05 PM">
+<participant rotation_number="29001" name="TOTAL POINTS BY HEAT (MIA)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29002" name="TOTAL POINTS BY HEAT (MIA)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-120" under_odds="-110" value="105.5"/>
+</game>
+<game id="5081895" time="04:05 PM">
+<participant rotation_number="29003" name="TOTAL POINTS BY 76ERS (PHA)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29004" name="TOTAL POINTS BY 76ERS (PHA)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-115" under_odds="-115" value="116.5"/>
+</game>
+<game id="5081896" time="04:35 PM">
+<participant rotation_number="29005" name="TOTAL POINTS BY HORNETS (CHA)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29006" name="TOTAL POINTS BY HORNETS (CHA)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-110" under_odds="-120" value="106.5"/>
+</game>
+<game id="5081897" time="04:35 PM">
+<participant rotation_number="29007" name="TOTAL POINTS BY RAPTORS (TOR)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29008" name="TOTAL POINTS BY RAPTORS (TOR)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-115" under_odds="-115" value="114.5"/>
+</game>
+<game id="5081898" time="04:35 PM">
+<participant rotation_number="29009" name="TOTAL POINTS BY ROCKETS (HOU)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29010" name="TOTAL POINTS BY ROCKETS (HOU)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-120" under_odds="-110" value="106"/>
+</game>
+<game id="5081899" time="04:35 PM">
+<participant rotation_number="29011" name="TOTAL POINTS BY SPURS (SA)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29012" name="TOTAL POINTS BY SPURS (SA)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-115" under_odds="-115" value="114"/>
+</game>
+<game id="5081900" time="07:05 PM">
+<participant rotation_number="29013" name="TOTAL POINTS BY WARRIORS (GST)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29014" name="TOTAL POINTS BY WARRIORS (GST)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-105" under_odds="-125" value="111.5"/>
+</game>
+<game id="5081901" time="07:05 PM">
+<participant rotation_number="29015" name="TOTAL POINTS BY NUGGETS (DEN)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29016" name="TOTAL POINTS BY NUGGETS (DEN)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-110" under_odds="-120" value="115.5"/>
+</game>
+<game id="5081902" time="07:05 PM">
+<participant rotation_number="29017" name="TOTAL POINTS BY PACERS (IND)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29018" name="TOTAL POINTS BY PACERS (IND)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-115" under_odds="-115" value="113.5"/>
+</game>
+<game id="5081903" time="07:05 PM">
+<participant rotation_number="29019" name="TOTAL POINTS BY TRAILBLAZERS (POR)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<participant rotation_number="29020" name="TOTAL POINTS BY TRAILBLAZERS (POR)">
+<line publisher="Publisher 1" money_line="" spread="" spread_odds=""/>
+</participant>
+<total publisher="Publisher 1" over_odds="-115" under_odds="-115" value="116"/>
+</game>
+</schedule>

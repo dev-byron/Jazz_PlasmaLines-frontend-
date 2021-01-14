@@ -1,0 +1,45 @@
+PRO FOOTBALL, PRO BASKETBALL, HOCKEY, GOLF, MATCHUPS IN TITLE, CRICKET, BOXING
+
+LINE CONFIGURATION
+COLUMNS: TIME, TEAM, SPREAD, TOTAL, MLINE
+
+MLB LINE CONFIGURATION
+COLUMNS: TIME, TEAM, RUN LINE, TOTAL, MLINE
+
+isPositive: returns + or -
+
+every schedule.game
+  participant over
+    game.time
+    participant.id + participant.name
+    (upArrow or downArrow) participant.line.spread + participant.line.spread_odds
+    upArrow + game.total.value + game.total.over_odds
+    participant.line.money_line
+
+  participant under
+    game.time
+    participant.id + participant.name
+    (upArrow or downArrow) participant.line.spread + participant.line.spread_odds
+    downArrow + game.total.value + game.total.under_odds
+    participant.line.money_line
+
+<schedule id="5078201" date="2021-01-16" sport="NFL" division="NFL" title="NFL PLAYOFFS">
+<game id="5078201" time="01:35 PM">
+<participant rotation_number="301" name="RAMS (LA)">
+<line publisher="Publisher 1" money_line="250" spread="6.5" spread_odds="-110"/>
+</participant>
+<participant rotation_number="302" name="PACKERS (GB)">
+<line publisher="Publisher 1" money_line="-310" spread="-6.5" spread_odds="-110"/>
+</participant>
+<total publisher="Publisher 1" over_odds="-110" under_odds="-110" value="45.5"/>
+</game>
+<game id="5078230" time="05:15 PM">
+<participant rotation_number="303" name="RAVENS (BAL)">
+<line publisher="Publisher 1" money_line="125" spread="2.5" spread_odds="-105"/>
+</participant>
+<participant rotation_number="304" name="BILLS (BUF)">
+<line publisher="Publisher 1" money_line="-145" spread="-2.5" spread_odds="-115"/>
+</participant>
+<total publisher="Publisher 1" over_odds="-110" under_odds="-110" value="50"/>
+</game>
+</schedule>
