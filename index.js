@@ -35,16 +35,16 @@ mongoose.connect('mongodb://localhost/example-app', (err) => {
 
     // • We call use() on the Express application to add the Router to handle path,
     // specifying an URL path on first parameter '/api/example'.
-    app.use('/api/example', require('./server/routes/index'))
+    app.use('/api', require('./server/routes/index'))
 
-    // • Every other route that starts with `api/` but not declared above will
-    // return `not-found` status. Apply your `not-found` format here.
-    app.get('/api/*', (req, res) => {
-      res.send({
-        message: 'Endpoint not found',
-        type: 'error'
-      })
-    })
+    // // • Every other route that starts with `api/` but not declared above will
+    // // return `not-found` status. Apply your `not-found` format here.
+    // app.get('/api/*', (req, res) => {
+    //   res.send({
+    //     message: 'Endpoint not found',
+    //     type: 'error'
+    //   })
+    // })
 
     // • Every other route not declared above will redirect us to Angular view
     // called `index.html`. Be sure you have builded and created output files from
