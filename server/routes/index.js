@@ -39,9 +39,7 @@ router.post('/', function (req, res) {
 
 
 // • declaring routes
-router.get('/collector', function(req, res){
-  res.send(controller.get(req, res));
-})
+router.get('/collector', controller.get);
 
 // • Export router to use it on other modules
 module.exports = router
