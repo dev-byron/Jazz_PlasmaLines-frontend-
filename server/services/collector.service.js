@@ -1,5 +1,3 @@
-// import { Sport } from '../models/sport';
-
 var _ = require('lodash');
 const https = require('https');
 const parseStringPromise = require('xml2js').parseStringPromise;
@@ -17,41 +15,63 @@ module.exports = {
 };
 
 function formatData(xmlAsJson) {
-   var list = [];
-   if (xmlAsJson && xmlAsJson.odds[0].schedule) {
-        xmlAsJson.odds[0].schedule.forEach(function (schedule){
-        list.push({
-          sport: schedule.$.sport,
-          division: schedule.$.division,
-          title: schedule.$.title
-        });
-      });
-   }
-
-  var sports = _.uniqBy(list, 'sport').map(function(obj) { return obj.sport});
-  var formattedData = [];
-   sports.forEach(function(sportName) {
-      var sportModel = {
-        sport: sportName,
-        divisions: []
-      }
-      var divisionsBySport = _.uniqBy(_.filter(list, function(schedule) {return schedule.sport == sportName }), 'division').map(function(obj) { return obj.division});
-      divisionsBySport.forEach(function(divisionName){
-        var divisionModel = {
-          name: divisionName,
-          titles: []
-        };
-        var titles = _.filter(list, function(titlesByDivision) { return titlesByDivision.sport == sportName && titlesByDivision.division == divisionName}).map(function(obj) { return obj.title})
-        titles.forEach(function(titleName){
-          divisionModel.titles.push({
-            name: titleName
-          });
-        });
-        sportModel.divisions.push(divisionModel);
-      });
-      formattedData.push(sportModel);
-   });
+   var list = getCleanList(xmlAsJson);
+  var formattedData = getSports(list);
    return formattedData;
+}
+
+function getCleanList(xmlAsJson){
+  var cleanList = [];
+  if (xmlAsJson && xmlAsJson.odds[0].schedule) {
+      xmlAsJson.odds[0].schedule.forEach(function (schedule){
+        cleanList.push({
+        sport: schedule.$.sport,
+        division: schedule.$.division,
+        title: schedule.$.title
+      });
+    });
+  }
+  return cleanList;
+}
+
+function getSports(list){
+  var sports = [];
+  var sportsList = _.uniqBy(list, 'sport').map(function(obj) { return obj.sport});
+  sportsList.forEach(function(sportName) {
+    var sportModel = {
+      sport: sportName,
+      divisions: []
+    }
+    sportModel.divisions = getDivisionsBySport(list, sportName);
+    sports.push(sportModel);
+ });
+ return sports;
+}
+
+function getDivisionsBySport(list, sportName) {
+  var divisions = [];
+  var divisionsBySport = _.uniqBy(_.filter(list, function(schedule) {return schedule.sport == sportName }), 'division').map(function(obj) { return obj.division});
+  divisionsBySport.forEach(function(divisionName){
+    var divisionModel = {
+      name: divisionName,
+      titles: []
+    };
+    divisionModel.titles = getTitlesByDivision(list, sportName, divisionName);
+    divisions.push(divisionModel);
+  });
+  return divisions;
+}
+
+function getTitlesByDivision(list, sportName, divisionName) {
+  var titles = [];
+  var titlesByDivision = _.filter(list, function(schedule) { return schedule.sport == sportName && schedule.division == divisionName})
+                          .map(function(obj) { return obj.title});
+  titlesByDivision.forEach(function(titleName){
+    titles.push({
+      name: titleName
+    });
+  });
+  return titles;
 }
 
 function xmlToJson (url) {
