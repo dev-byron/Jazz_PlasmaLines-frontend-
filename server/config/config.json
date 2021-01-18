@@ -1,0 +1,4 @@
+{
+    "jazzsportsFeedUrl": "https://affiliates.jazzsports.com/xmlfeed/oanFeed?id_book=15&id_profile=4002&id_line_type=21",
+    "mongoConnectionString": "mongodb://localhost/jazz-lines"
+}

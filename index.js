@@ -2,10 +2,12 @@
 // • This is the start (entry-point) of our application.
 // • Mongoose is used to make communication with MongoDB easy and simple
 // -----------------------------------------------------------------------------
-
+const ws = require('ws');
+const config = require('../Jazz/server/config/config.json');
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
+
 
 // • Creating Express instance. Later we will use this to declare routes
 const app = express()
@@ -13,7 +15,7 @@ const app = express()
 // • Connect to MongoDB database. Please be sure you have started MongoDB
 // services before running application and replace `example-app` with your
 // database's name.
-mongoose.connect('mongodb://localhost/example-app', (err) => {
+mongoose.connect(config.mongoConnectionString, (err) => {
   if (err) {
     // We want to log if app can not connect to database
     console.log(err)
@@ -35,16 +37,7 @@ mongoose.connect('mongodb://localhost/example-app', (err) => {
 
     // • We call use() on the Express application to add the Router to handle path,
     // specifying an URL path on first parameter '/api/example'.
-    app.use('/api', require('./server/routes/index'))
-
-    // // • Every other route that starts with `api/` but not declared above will
-    // // return `not-found` status. Apply your `not-found` format here.
-    // app.get('/api/*', (req, res) => {
-    //   res.send({
-    //     message: 'Endpoint not found',
-    //     type: 'error'
-    //   })
-    // })
+    app.use('/api', require('./server/routes/routes'))
 
     // • Every other route not declared above will redirect us to Angular view
     // called `index.html`. Be sure you have builded and created output files from
@@ -56,7 +49,18 @@ mongoose.connect('mongodb://localhost/example-app', (err) => {
 
     // • Start listening on port 3000 for requests.
     const PORT = 3000
-    app.listen(PORT, () => console.log(`Application started successfully on port: ${PORT}!`))
+    var server = app.listen(PORT, () => console.log(`Application started successfully on port: ${PORT}!`))
+
+    // • Creating and opening web socket
+    const wsServer = new ws.Server({ server });
+    wsServer.on('connection', socket => {
+      socket.on('message', message => {
+        console.log('received: %s', message);
+        socket.send(JSON.stringify({
+          content: 'test' + message.clientMessage
+        }));
+      });
+    });
 
   }
 })

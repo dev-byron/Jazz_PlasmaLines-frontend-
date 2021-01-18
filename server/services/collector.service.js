@@ -1,11 +1,12 @@
-var _ = require('lodash');
+const _ = require('lodash');
 const https = require('https');
 const parseStringPromise = require('xml2js').parseStringPromise;
-const url = "https://affiliates.jazzsports.com/xmlfeed/oanFeed?id_book=15&id_profile=4002&id_line_type=21";
+const config = require('../config/config.json');
+const LineModel = require('../models/line.model'); 
 
 module.exports = {
     get () {
-      return xmlToJson(url).then(response => {
+      return xmlToJson(config.jazzsportsFeedUrl).then(response => {
         return formatData(response);
       })
       .catch(error => {
@@ -23,12 +24,20 @@ function formatData(xmlAsJson) {
 function getCleanList(xmlAsJson){
   var cleanList = [];
   if (xmlAsJson && xmlAsJson.odds[0].schedule) {
-      xmlAsJson.odds[0].schedule.forEach(function (schedule){
-        cleanList.push({
-        sport: schedule.$.sport,
-        division: schedule.$.division,
-        title: schedule.$.title
-      });
+      xmlAsJson.odds[0].schedule.forEach(function (schedule) {
+        var model = new LineModel(
+          {
+            sport: schedule.$.sport,
+            division: schedule.$.division,
+            title: schedule.$.title
+          }
+        );
+        model.save(function(err){
+          if (err) {
+            throw error;
+        }
+        });
+        cleanList.push(model);
     });
   }
   return cleanList;
@@ -36,7 +45,7 @@ function getCleanList(xmlAsJson){
 
 function getSports(list){
   var sports = [];
-  var sportsList = _.uniqBy(list, 'sport').map(function(obj) { return obj.sport});
+  var sportsList = _.uniqBy(list, 'sport').map(function(obj) { return obj.sport });
   sportsList.forEach(function(sportName) {
     var sportModel = {
       sport: sportName,
