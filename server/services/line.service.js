@@ -1,17 +1,20 @@
 const LineModel = require('../models/line.model');
 const XmlClient = require('../client/xmlClient');
 const config = require('../config/config.json');
+const _ = require('lodash');
+const Room = require('../cache/data/room.model');
+const cacheManager = require('../cache/manager.service');
 
 module.exports = {
-    refreshLines() {
+    async loadLines() {
         return XmlClient.get(config.jazzsportsFeedUrl).then(response => {
-            var linesFormatted = formatXmlLines(response);
-            saveLines(linesFormatted);
-            return linesFormatted;
+            var result = formatXmlLines(response);
+            setRooms(response);
+            return result;
         })
-            .catch(error => {
-                throw error;
-            });
+        .catch(error => {
+            throw error;
+        });
     },
     get(lineId) {
 
@@ -21,27 +24,41 @@ module.exports = {
     }
 };
 
-function saveLines(linesList) {
-    linesList.forEach(function (line) {
-        var model = new LineModel(
-            {
-                sport: line.sport,
-                division: line.division,
-                description: line.description,
-            }
-        );
-        model.save(function (err) {
-            if (err) {
-                throw err;
-            }
-        })
-    });
-}
+// function saveLines(linesList) {
+//     linesList.forEach(function (line) {
+//         var model = new LineModel(
+//             {
+//                 sport: line.sport,
+//                 division: line.division,
+//                 description: line.description,
+//             }
+//         );
+//         model.save(function (err) {
+//             if (err) {
+//                 throw err;
+//             }
+//         })
+//     });
+// }
 
 function formatXmlLines(xmlAsJson) {
     var list = getSchedulesList(xmlAsJson);
     //var formattedData = getSports(list);
     return list;
+}
+
+function setRooms(xmlAsJson) {
+    var rooms = [];
+    if (xmlAsJson && xmlAsJson.odds[0].schedule) {
+        xmlAsJson.odds[0].schedule.forEach(function (schedule) {
+            var room = new Room(schedule.$.sport, schedule.$.division, true, false);
+            rooms.push(room);
+        });
+    }
+    if (rooms.length > 0) {
+        rooms = _.uniqWith(rooms, _.isEqual);
+        cacheManager.set('rooms', JSON.stringify(rooms));
+    }
 }
 
 function getSchedulesList(xmlAsJson) {

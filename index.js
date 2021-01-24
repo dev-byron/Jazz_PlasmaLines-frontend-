@@ -2,15 +2,17 @@
 // • This is the start (entry-point) of our application.
 // • Mongoose is used to make communication with MongoDB easy and simple
 // -----------------------------------------------------------------------------
-const ws = require('ws');
 const config = require('../Jazz/server/config/config.json');
 const express = require('express')
 const path = require('path')
-const mongoose = require('mongoose')
-
+const configController = require('../Jazz/server/controllers/config.controller');
 
 // • Creating Express instance. Later we will use this to declare routes
 const app = express()
+
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+const mongoose = require('mongoose')
 
 // • Connect to MongoDB database. Please be sure you have started MongoDB
 // services before running application and replace `example-app` with your
@@ -47,19 +49,45 @@ mongoose.connect(config.mongoConnectionString, (err) => {
       res.sendFile(path.join(__dirname, 'dist/index.html'))
     })
 
+    setInterval(function() {
+      const rooms =  configController.getRooms().then(result => {
+        console.log(result);
+      });
+      console.log('call');
+    }, 20000);
+
+    io.on('connection', async (socket) => {
+
+      // const rooms = await configController.getRooms().then(room => {
+      //   socket.join(room);
+      // });
+
+      socket.on('subscribe', function(room) { 
+        console.log('joining room', room);
+        socket.join(room); 
+        io.to(room).emit('onListen', 'test ' + room);
+      });
+
+      // setTimeout(function() {
+      //   io.to('test2').emit('onListen', 'prueba interval test2');
+      //  }, 2000);
+
+      //  setTimeout(function() {
+      //   io.to('test').emit('onListen', 'prueba interval test1');
+      //  }, 4000);
+      
+      socket.on('unsubscribe', function(room) {  
+          console.log('leaving room', room);
+          socket.leave(room); 
+      });
+      
+    })
+
     // • Start listening on port 3000 for requests.
     const PORT = 3000
-    var server = app.listen(PORT, () => console.log(`Application started successfully on port: ${PORT}!`))
-
-    // • Creating and opening web socket
-    const wsServer = new ws.Server({ server });
-    wsServer.on('connection', socket => {
-      socket.on('message', message => {
-        console.log('received: %s', message);
-        socket.send(JSON.stringify({
-          content: 'test' + message.clientMessage
-        }));
-      });
+    // var server = app.listen(PORT, () => console.log(`Application started successfully on port: ${PORT}!`))
+    var server = http.listen(3000, () => {
+      console.log('server is running on port', server.address().port);
     });
 
   }

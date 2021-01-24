@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SocketComponent } from './components/sockets/socket.component';
 import { FormsModule } from '@angular/forms';
+import { SocketioService } from './services/websocket/socket.service';
 
 @NgModule({
   declarations: [
@@ -14,9 +15,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [],
+  providers: [SocketioService],
   bootstrap: [
     AppComponent,
     SocketComponent

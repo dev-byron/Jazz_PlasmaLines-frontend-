@@ -1,6 +1,7 @@
 
-import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
-import { WebSocketSubject } from 'rxjs/webSocket';
+import { Component, ViewChild, ElementRef} from '@angular/core';
+import { Observable } from 'rxjs';
+import { SocketioService } from 'src/app/services/websocket/socket.service';
 
 export class Message {
     constructor(
@@ -24,25 +25,22 @@ export class SocketComponent {
     public isBroadcast = false;
     public sender = '';
 
-    private socket$: WebSocketSubject<Message>;
 
-    constructor() {
-        this.socket$ = new WebSocketSubject('ws://localhost:3000');
-
-        this.socket$
-            .subscribe(
-                (message) => this.serverMessages.push(message),
-                (err) => console.error(err),
-                () => console.warn('Completed!')
-            );
-    }
+    constructor(private socketService: SocketioService) {}
 
 
     public send(): void {
-        const message = new Message('byron', this.clientMessage, this.isBroadcast);
-        this.serverMessages.push(message);
-        this.socket$.next(message);
+        // this.socket.emit('new-message', this.clientMessage);
+        this.socketService.sendMessage(this.clientMessage)
         this.clientMessage = '';
+    }
+
+    public getMessages = () => {
+        // return Observable.create((observer) => {
+        //         this.socket.on('new-message', (message) => {
+        //             observer.next(message);
+        //         });
+        // });
     }
 
 }

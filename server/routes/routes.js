@@ -1,7 +1,7 @@
 const PlasmaLinesSchema = require('../../repo/repository')
 const express = require('express')
 const router = express.Router()
-const controller = require('../controllers/collector.controller');
+const controller = require('../controllers/config.controller');
 const lineContronller = require('../controllers/line.controller');
 
 // • Declaring GET method
@@ -37,11 +37,11 @@ router.post('/', function (req, res) {
   })
 })
 
-// • declaring routes
-router.get('/collector', controller.get);
+// // • declaring routes
+// router.get('/collector', controller.get);
 
 // • declaring routes
-router.get('/reloadLines', lineContronller.reloadLines);
+router.get('/loadLines', lineContronller.loadLines);
 
 // • Export router to use it on other modules
 module.exports = router
