@@ -6,6 +6,8 @@ const config = require('../Jazz/server/config/config.json');
 const express = require('express')
 const path = require('path')
 const configController = require('../Jazz/server/controllers/config.controller');
+const scheduleController = require('../Jazz/server/controllers/schedule.controller');
+const lineController = require('../Jazz/server/controllers/line.controller');
 
 // • Creating Express instance. Later we will use this to declare routes
 const app = express()
@@ -23,58 +25,50 @@ mongoose.connect(config.mongoConnectionString, (err) => {
     console.log(err)
   } else { // If there is no error during db connection, continue proccess 
 
-    // • `/dist` is default file output of ng build command. You can change
-    // that on `angular-cli.json` config file but don't forget to change below line
-    // too or server will not be able to locate our front-end part of application.
     app.use(express.static(path.join(__dirname, 'dist')))
-
-    // • This is a special method called `middleware`. Every request will be
-    // executed on each request. If you want to exclude a specific route to make it
-    // not enter on this middleware, simply declare that route before this function
+ 
     app.use('/', function (req, res, next) {
-      // • Implement your logic here.
       console.log('Time:', Date.now())
-      next()
-    })
+      next();
+    });
 
-    // • We call use() on the Express application to add the Router to handle path,
-    // specifying an URL path on first parameter '/api/example'.
-    app.use('/api', require('./server/routes/routes'))
+    app.use('/api', require('./server/routes/routes'));
 
-    // • Every other route not declared above will redirect us to Angular view
-    // called `index.html`. Be sure you have builded and created output files from
-    // angular app.
     app.get('*', (req, res) => {
       console.log(req.url)
-      res.sendFile(path.join(__dirname, 'dist/index.html'))
-    })
+      res.sendFile(path.join(__dirname, 'dist/index.html'));
+    });
 
-    setInterval(function() {
-      const rooms =  configController.getRooms().then(result => {
-        console.log(result);
-      });
-      console.log('call');
-    }, 20000);
 
+    //TEMPORAL
+    lineController.load();
     io.on('connection', async (socket) => {
 
-      // const rooms = await configController.getRooms().then(room => {
-      //   socket.join(room);
-      // });
+
+
+      //notas
+      //TEMPORAL, verificar si hay alguien escuchando por room para enviar mensaje
+      setInterval(function() {
+        configController.getRooms().then(function (rooms) {
+          if (rooms.length > 0) {
+              rooms.forEach(function (room) {
+                var roomName = room.sport + ':' + room.division;
+                console.log('room', roomName);
+                // socket.join(roomName);
+                scheduleController.getSchedulesByRoomName(roomName).then(function (result) {
+                  io.to(roomName).emit('onListen', JSON.stringify(result));
+                });
+              });
+          }
+        });
+      }, 30000);
+      //TEMPORAL
+
 
       socket.on('subscribe', function(room) { 
         console.log('joining room', room);
         socket.join(room); 
-        io.to(room).emit('onListen', 'test ' + room);
       });
-
-      // setTimeout(function() {
-      //   io.to('test2').emit('onListen', 'prueba interval test2');
-      //  }, 2000);
-
-      //  setTimeout(function() {
-      //   io.to('test').emit('onListen', 'prueba interval test1');
-      //  }, 4000);
       
       socket.on('unsubscribe', function(room) {  
           console.log('leaving room', room);

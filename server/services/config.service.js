@@ -5,13 +5,16 @@ module.exports = {
       setInitialCache();
     },
     async getRooms () {
-      return getCacheObject('rooms');
+      return JSON.parse(getCacheObject('rooms'));
     },
 };
 
 function setInitialCache() {
   var rooms = [];
   cacheManager.set('rooms', rooms);
+
+  var schedules = [];
+  cacheManager.set('schedules', schedules);
 }
 
 function getCacheObject(key) {

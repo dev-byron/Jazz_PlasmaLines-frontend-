@@ -18,11 +18,10 @@ export class SocketioService {
 
   setupSocketConnection() {
     this.socket = io(environment.SOCKET_ENDPOINT);
-    this. socket.emit('subscribe', 'test');
-    this.socket.emit('subscribe', 'test2');
+    this. socket.emit('subscribe', 'MU:MU');
 
     this.socket.on('onListen', (data: string) => {
-      console.log(data + 'picha');
+      console.log(data);
     });
     
   }

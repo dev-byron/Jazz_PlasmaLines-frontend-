@@ -9,4 +9,8 @@ module.exports = {
             res.status(500).send({ msg: 'Internal Server Error: ' + e.message })
         }
     },
+    //temporal
+    async load() {
+        return await service.loadLines();
+    },
 };

@@ -1,11 +1,13 @@
 const service = require('../services/config.service');
 
 module.exports = {
-    setInitialConfig() {
+    async setInitialConfig() {
 
     },
+    async loadInitialData() {
+
+    },   
     async getRooms() {
       return await service.getRooms();
     },
-
 };
