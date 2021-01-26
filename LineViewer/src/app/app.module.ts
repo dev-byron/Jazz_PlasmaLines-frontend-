@@ -20,9 +20,11 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { AppStartComponent } from './components/app-start/app-start.component';
+import { AppViewerComponent } from './components/app-viewer/app-viewer.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AppStartComponent, AppViewerComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
