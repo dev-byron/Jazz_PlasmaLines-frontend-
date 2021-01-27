@@ -6,11 +6,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 export const routes: Routes = [
   {
     path: 'verify',
-    component: VerifierComponent
+    component: VerifierComponent,
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
   },
   { path: '', redirectTo: 'verify', pathMatch: 'full' },
   { path: '**', redirectTo: 'verify' },
