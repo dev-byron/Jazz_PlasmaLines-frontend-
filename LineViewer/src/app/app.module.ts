@@ -20,16 +20,20 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import { AppStartComponent } from './components/app-start/app-start.component';
-import { AppViewerComponent } from './components/app-viewer/app-viewer.component';
+import { VerifierComponent } from './components/verifier/verifier.component';
+import { FormsModule } from '@angular/forms';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SocketioService } from './services/sockets/socket.service';
+import { NavbarComponent } from './components/dashboard/navbar/navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, AppStartComponent, AppViewerComponent],
+  declarations: [AppComponent, VerifierComponent, DashboardComponent, NavbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -42,6 +46,7 @@ import { AppViewerComponent } from './components/app-viewer/app-viewer.component
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
   ],
+  providers: [SocketioService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

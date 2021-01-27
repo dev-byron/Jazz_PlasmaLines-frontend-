@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 mx-auto">
+            <div class="card card-signin my-8">
+                <div class="card-header">
+                    <div class="card-header-img">
+                        <img src="https://jazzsports.ag/assets/images/jazzsports/jazz-logo.png" class="img-responsive">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form class="form-signin">
+                        <div class="form-label-group">
+                            <h5 class="input-code-header">Inserte el código de verificación:</h5>
+                            <input type="text" name="verificationCode" id="inputCode" class="form-control input-code"
+                                placeholder="Código" required 
+                                [(ngModel)]="verificationCode" 
+                                autofocus>
+                            <label for="inputCode"></label>
+                        </div>
+                        <button (click)="verifyCode()" class="btn btn-lg btn-primary btn-block text-uppercase"
+                            type="submit">
+                            Verificar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
