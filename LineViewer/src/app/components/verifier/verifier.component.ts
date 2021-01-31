@@ -18,7 +18,7 @@ export class VerifierComponent implements OnInit {
   }
 
   verifyCode() {
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('/live');
   }
 
 }

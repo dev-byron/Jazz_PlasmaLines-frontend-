@@ -2,18 +2,24 @@
 // • This is the start (entry-point) of our application.
 // • Mongoose is used to make communication with MongoDB easy and simple
 // -----------------------------------------------------------------------------
-const config = require('../Jazz/server/config/config.json');
+const config = require('./server/config/config.json');
 const express = require('express')
 const path = require('path')
-const configController = require('../Jazz/server/controllers/config.controller');
-const scheduleController = require('../Jazz/server/controllers/schedule.controller');
-const lineController = require('../Jazz/server/controllers/line.controller');
+const configController = require('./server/controllers/config.controller');
+const scheduleController = require('./server/controllers/schedule.controller');
+const lineController = require('./server/controllers/line.controller');
 
 // • Creating Express instance. Later we will use this to declare routes
 const app = express()
 
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http,  {
+  cors: {
+    origin: "http://localhost:4200",
+    credentials: true
+  }
+});
+
 const mongoose = require('mongoose')
 
 // • Connect to MongoDB database. Please be sure you have started MongoDB
@@ -70,7 +76,6 @@ mongoose.connect(config.mongoConnectionString, (err) => {
           console.log('leaving room', room);
           socket.leave(room); 
       });
-      
     })
 
     // • Start listening on port 3000 for requests.

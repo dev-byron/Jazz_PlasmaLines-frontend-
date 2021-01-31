@@ -3,6 +3,7 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
+import { CommonModule } from "@angular/common";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -23,12 +24,18 @@ import {
 import { VerifierComponent } from './components/verifier/verifier.component';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { SocketioService } from './services/sockets/socket.service';
+import { SocketService } from './services/sockets/socket.service';
 import { NavbarComponent } from './components/dashboard/navbar/navbar.component';
+import { EventAggregator } from './services/utils/event-aggregator';
+import { SportBookComponent } from './components/dashboard/sportbook/sportbook.component';
+import { SectionComponent } from './components/dashboard/sportbook/section/section.component';
+import { LineComponent } from './components/dashboard/sportbook/section/line/line.component';
+
 
 @NgModule({
-  declarations: [AppComponent, VerifierComponent, DashboardComponent, NavbarComponent],
+  declarations: [AppComponent, VerifierComponent, DashboardComponent, NavbarComponent,  SportBookComponent, SectionComponent, LineComponent],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -46,7 +53,10 @@ import { NavbarComponent } from './components/dashboard/navbar/navbar.component'
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
   ],
-  providers: [SocketioService],
+  providers: [
+      SocketService, 
+      EventAggregator
+    ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

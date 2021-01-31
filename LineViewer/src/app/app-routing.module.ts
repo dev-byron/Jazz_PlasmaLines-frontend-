@@ -9,7 +9,7 @@ export const routes: Routes = [
     component: VerifierComponent,
   },
   {
-    path: 'dashboard',
+    path: 'live',
     component: DashboardComponent,
   },
   { path: '', redirectTo: 'verify', pathMatch: 'full' },

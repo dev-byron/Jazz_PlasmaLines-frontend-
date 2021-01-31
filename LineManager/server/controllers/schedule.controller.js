@@ -1,4 +1,4 @@
-const { throws } = require('assert');
+
 const service = require('../services/schedule.service');
 
 module.exports = {
