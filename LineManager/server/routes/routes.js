@@ -1,16 +1,20 @@
-const PlasmaLinesSchema = require('../../repo/repository')
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/config.controller');
 const lineContronller = require('../controllers/line.controller');
-
+const plasmaConfigController = require('../controllers/plasma-configuration.controller');
 
 // • declaring routes
 router.get('/loadLines', lineContronller.loadLines);
 
 
+//plasmaconfiguration
+router.post('/plasmaconfiguration', plasmaConfigController.save);
+router.get('/plasmaconfiguration/:code', (req, res) => {
+  return plasmaConfigController.get(req, res);
+});
 
-// • Export router to use it on other modules
+
 module.exports = router
 
 // // • Declaring POST method

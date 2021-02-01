@@ -1,6 +1,33 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+let EventSchema = new Schema({
+    sport: {
+        type: String,
+        required: true,
+    },
+    division: {
+        type: String,
+        required: false
+    },
+    titles: [{
+        type: String
+    }]
+});
+
+let SectionSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    imageUrl: {
+        type: String,
+        required: false
+    },
+    events: [EventSchema]
+});
+
+
 let PlasmaConfigurationSchema = new Schema({
     code: {
         type: String,
@@ -26,7 +53,11 @@ let PlasmaConfigurationSchema = new Schema({
         type: String,
         required: false
     },
-    sections: [{type: Schema.Types.ObjectId, ref: 'Section'}]
+    createdDate: {
+        type: Date, 
+        default: Date.now
+    },
+    sections: [SectionSchema]
 });
 
 // Export the model

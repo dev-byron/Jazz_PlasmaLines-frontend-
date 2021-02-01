@@ -17,7 +17,4 @@ export class SportBookComponent implements OnInit {
 
   }
 
-
-  
-
 }

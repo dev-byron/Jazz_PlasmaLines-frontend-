@@ -5,16 +5,44 @@ module.exports = {
         saveNewModel();
       return true;
     },
+    async get(configurationCode) {
+        return await PlasmaConfigurationModel.findOne({code: configurationCode}, function(err, result){
+            if (err) throw err;
+            return result;
+        });
+    }
 };
 
+//just for testing 
 function saveNewModel() {
-  var model = new PlasmaConfigurationModel({
-      
-  });
-  model.save(function(err, doc) {
-    if (err) return console.error(err);
-    console.log("Configuration inserted successfully");
-  });
+//   var model = new PlasmaConfigurationModel({
+//     code: "AH65RS",
+//     viewType: "v",
+//     lineType: "a",
+//     time: "12:01 PM",
+//     createdDate: new Date().toISOString(),
+//     sections: [
+//         {
+//             name: "BOXING",
+//             events: [
+//                 {
+//                     sport: "MU",
+//                     division: "MU",
+//                     titles: [
+//                             "BOXING",
+//                             "WTA TENNIS - SPREAD IS FOR SETS",
+//                             "ATP TENNIS - GAMES AND TOTAL LINES",
+//                             "UFC / MMA"
+//                     ]
+//                 }
+//             ]
+//         }
+//     ]
+//   });
+
+//   model.save(function(err, doc) {
+//     if (err) return console.error(err);
+//     console.log("Configuration inserted successfully");
+//   });
+
 }
-
-

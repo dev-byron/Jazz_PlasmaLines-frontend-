@@ -1,4 +1,4 @@
-const service = require('../services/line.service');
+const service = require('../services/plasma-configuration.service');
 
 module.exports = {
     async verifyIfExist(code) {
@@ -9,12 +9,12 @@ module.exports = {
             // res.status(500).send({ msg: 'Internal Server Error: ' + e.message })
         }
     },
-    async getPlasmaConfigurationByCode(code) {
+    async get(req, res) {
         try {
-            // var response = await service.loadLines();
-            // return res.status(200).json({ status: 200, data: response, message: "data" });
+            var response = await service.get(req.params.code);
+            return res.status(200).json({ status: 200, data: response });
         } catch (e) {
-            // res.status(500).send({ msg: 'Internal Server Error: ' + e.message })
+            res.status(500).send({ msg: 'Internal Server Error: ' + e.message })
         }
     },
     async save(req, res) {
