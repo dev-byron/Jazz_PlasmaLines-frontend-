@@ -12,7 +12,7 @@ module.exports = {
     async get(req, res) {
         try {
             var response = await service.get(req.params.code);
-            return res.status(200).json({ status: 200, data: response });
+            return res.status(200).json(response);
         } catch (e) {
             res.status(500).send({ msg: 'Internal Server Error: ' + e.message })
         }

@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { PlasmaLine } from '../../models/plasma-line.model';
 import { Room } from '../../models/rooms.model';
+import { PlasmaLineConfigurationService } from '../../services/component/plasma-line-configuration.service';
 import { SocketService } from '../../services/sockets/socket.service';
 
 @Component({
@@ -7,21 +9,14 @@ import { SocketService } from '../../services/sockets/socket.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-  private rooms = [
-    {
-      name: 'MU:MU'
-    }
-  ] as Room[];
-
-  constructor(private socketService: SocketService) { }
+export class DashboardComponent implements OnInit {
+ 
+  constructor() { }
 
   ngOnInit(): void {
-    this.socketService.setupSocketRooms(this.rooms);
+   
   }
 
-  ngOnDestroy(): void {
-    this.socketService.closeSocketConnection(this.rooms);
-  }
+ 
 
 }

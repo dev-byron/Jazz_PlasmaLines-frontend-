@@ -4,6 +4,7 @@
 // -----------------------------------------------------------------------------
 const config = require('./server/config/config.json');
 const express = require('express')
+const cors = require('cors');
 const path = require('path')
 const configController = require('./server/controllers/config.controller');
 const scheduleController = require('./server/controllers/schedule.controller');
@@ -20,6 +21,11 @@ var io = require('socket.io')(http,  {
   }
 });
 
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200 // For legacy browser support
+}
+
 const mongoose = require('mongoose')
 
 // • Connect to MongoDB database. Please be sure you have started MongoDB
@@ -33,6 +39,8 @@ mongoose.connect(config.mongoConnectionString, (err) => {
 
     app.use(express.static(path.join(__dirname, 'dist')))
  
+    app.use(cors(corsOptions));
+
     app.use('/', function (req, res, next) {
       console.log('Time:', Date.now())
       next();

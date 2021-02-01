@@ -30,6 +30,8 @@ import { EventAggregator } from './services/utils/event-aggregator';
 import { SportBookComponent } from './components/dashboard/sportbook/sportbook.component';
 import { SectionComponent } from './components/dashboard/sportbook/section/section.component';
 import { LineComponent } from './components/dashboard/sportbook/section/line/line.component';
+import { PlasmaLineConfigurationService } from "./services/component/plasma-line-configuration.service";
+import { PlasmaLineConfigurationRestService } from "./services/rest/plasma-line-configuration.rest.service";
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import { LineComponent } from './components/dashboard/sportbook/section/line/lin
   ],
   providers: [
       SocketService, 
-      EventAggregator
+      EventAggregator,
+      PlasmaLineConfigurationService,
+      PlasmaLineConfigurationRestService
     ],
   bootstrap: [AppComponent],
 })

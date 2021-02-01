@@ -3,6 +3,7 @@ import { io, Socket } from 'socket.io-client';
 import { Room } from '../../models/rooms.model';
 import { FeaturedSchedules } from '../../models/featured-schedules.model';
 import { EventAggregator } from '../utils/event-aggregator';
+import { PlasmaSection } from '../../models/plasma-section.model';
 
 
 export const environment = {
@@ -37,8 +38,9 @@ export class SocketService {
     try {
       this.socket.on('onListen', (data: string) => {
         if (data) {
-           const featuredSchedules: FeaturedSchedules = JSON.parse(data);
-           console.log(featuredSchedules)
+           const featuredSchedules = {
+            schedules: JSON.parse(data)
+           } as FeaturedSchedules; 
            this.eventAggregator.featuredSchedules.next(featuredSchedules);
         }
       });
