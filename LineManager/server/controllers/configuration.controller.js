@@ -17,6 +17,14 @@ module.exports = {
             res.status(500).send({ msg: 'Internal Server Error: ' + e.message })
         }
     },
+    async validConfigurationCode(req, res) {
+        try {
+            var response = await service.validConfigurationCode(req.params.code);
+            return res.status(200).json(response);
+        } catch (e) {
+            res.status(500).send({ msg: 'Internal Server Error: ' + e.message })
+        }
+    },
     async save(req, res) {
         try {
             await service.save();

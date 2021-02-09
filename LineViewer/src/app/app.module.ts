@@ -16,8 +16,12 @@ import {
   NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
+  NbDialogService,
+  NbLayoutModule,
   NbMenuModule,
+  NbSelectModule,
   NbSidebarModule,
+  NbThemeModule,
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
@@ -30,19 +34,33 @@ import { EventAggregator } from './services/utils/event-aggregator';
 import { SportBookComponent } from './components/dashboard/sportbook/sportbook.component';
 import { SectionComponent } from './components/dashboard/sportbook/section/section.component';
 import { LineComponent } from './components/dashboard/sportbook/section/line/line.component';
-import { PlasmaLineConfigurationService } from "./services/component/plasma-line-configuration.service";
-import { PlasmaLineConfigurationRestService } from "./services/rest/plasma-line-configuration.rest.service";
+import {ConfigurationService } from "./services/component/configuration.service";
+import { ConfigurationRestService } from "./services/rest/configuration.rest.service";
+import { ContainerWrapperDirective } from './directives/container-wrapper.directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
-  declarations: [AppComponent, VerifierComponent, DashboardComponent, NavbarComponent,  SportBookComponent, SectionComponent, LineComponent],
+  declarations: [
+    AppComponent, 
+    VerifierComponent, 
+    DashboardComponent, 
+    NavbarComponent,  
+    SportBookComponent, 
+    SectionComponent, 
+    LineComponent, 
+    ContainerWrapperDirective, 
+  ],
   imports: [
+    NbSelectModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    NbLayoutModule,
+    NbThemeModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -54,12 +72,14 @@ import { PlasmaLineConfigurationRestService } from "./services/rest/plasma-line-
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    NgbModule,
   ],
   providers: [
       SocketService, 
       EventAggregator,
-      PlasmaLineConfigurationService,
-      PlasmaLineConfigurationRestService
+      ConfigurationService,
+      ConfigurationRestService,
+      NbDialogService
     ],
   bootstrap: [AppComponent],
 })

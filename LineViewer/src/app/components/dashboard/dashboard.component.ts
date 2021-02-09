@@ -1,20 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PlasmaLine } from '../../models/plasma-line.model';
-import { Room } from '../../models/rooms.model';
-import { PlasmaLineConfigurationService } from '../../services/component/plasma-line-configuration.service';
-import { SocketService } from '../../services/sockets/socket.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { _ } from 'lodash';
 
 @Component({
   selector: 'ngx-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
- 
-  constructor() { }
+  
+  code: string;
+  constructor(private router: Router, 
+              private activateRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-   
+    this.activateRoute.paramMap.subscribe(params => { 
+       this.code = params.get('code'); 
+      //  if (this.code !== null) {
+      //   this.router.navigateByUrl('/verifier');
+      //  }
+   });
   }
 
  

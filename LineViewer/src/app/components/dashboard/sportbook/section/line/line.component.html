@@ -1,1 +1,17 @@
-<p>line works!</p>
+<td>
+    {{game.time}}
+</td>
+<td>
+  <div *ngFor="let participant of game.participants" >
+    {{participant.rotationNumber + ' ' + participant.name}}
+  </div>
+</td>
+<td>
+    N/A
+</td>
+<td>
+    N/A
+</td>
+<td>
+    N/A
+</td>

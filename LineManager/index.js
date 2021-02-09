@@ -71,7 +71,7 @@ mongoose.connect(config.mongoConnectionString, (err) => {
               });
           }
         });
-      }, 30000);
+      }, 10000);
       //TEMPORAL
 
 

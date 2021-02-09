@@ -1,0 +1,30 @@
+.test {
+    border: 1px solid black;
+    display: inline-block;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.table {
+    color: #3EB0DA;
+}
+
+.card {
+    background-color: transparent;
+}
+
+.img-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100px;
+    
+}
+.img-section img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}

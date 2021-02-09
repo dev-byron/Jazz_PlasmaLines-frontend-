@@ -10,6 +10,9 @@ module.exports = {
             if (err) throw err;
             return result;
         });
+    },
+    async validConfigurationCode(configurationCode) {
+        return await this.get(configurationCode) !== null;
     }
 };
 

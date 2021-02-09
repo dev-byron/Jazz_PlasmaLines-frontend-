@@ -2,18 +2,20 @@ const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/config.controller');
 const lineContronller = require('../controllers/line.controller');
-const plasmaConfigController = require('../controllers/plasma-configuration.controller');
+const configController = require('../controllers/configuration.controller');
 
 // • declaring routes
 router.get('/loadLines', lineContronller.loadLines);
 
 
-//plasmaconfiguration
-router.post('/plasmaconfiguration', plasmaConfigController.save);
-router.get('/plasmaconfiguration/:code', (req, res) => {
-  return plasmaConfigController.get(req, res);
+//configuration
+router.post('/configuration', configController.save);
+router.get('/configuration/:code', (req, res) => {
+  return configController.get(req, res);
 });
-
+router.get('/configuration/:code/isValid', (req, res) => {
+  return configController.validConfigurationCode(req, res);
+});
 
 module.exports = router
 

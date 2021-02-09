@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Game } from '../../../../models/game.model';
+import { Schedule } from '../../../../models/schedule.model';
 
 @Component({
   selector: 'ngx-section',
@@ -7,19 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SectionComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  schedules: Schedule[];
+  games: Game[] = [];
 
   ngOnInit(): void {
-    this.getRandomColor();
-  }
-
-
-  letters = '0123456789ABCDEF';
-  color = '#';
-  getRandomColor() {
-    this.color = "#";
-    for (var i = 0; i < 6; i++) {
-      this.color += this.letters[Math.floor(Math.random() * 16)];
+    if (this.schedules && this.schedules.length > 0) {
+      this.schedules.forEach(schedule =>  {
+        if (schedule) {
+          this.games = this.games.concat(schedule.games);
+        }
+      });
     }
   }
 

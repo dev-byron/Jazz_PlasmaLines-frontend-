@@ -1,4 +1,24 @@
-<div class="w-100 ">
-    received from the server
+<div class="card">
+    <div class="img-section">
+    <img src="https://t3.ftcdn.net/jpg/01/75/91/84/360_F_175918488_wkuz1qNqDlsWYhfsHdQAmV23SNmkj3vV.jpg" class="card-img-top">
+    </div>
+    <div class="card-body no-padding">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">HORA</th>
+                    <th scope="col">EQUIPOS</th>
+                    <th scope="col">HANDICAP</th>
+                    <th scope="col">TOTAL</th>
+                    <th scope="col">GANADOR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let game of games" 
+                    ngx-line
+                    [game]="game">
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<br>

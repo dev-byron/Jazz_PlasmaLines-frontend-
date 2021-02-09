@@ -1,0 +1,22 @@
+.main-wrapper {
+    max-height: 850px; 
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    position: relative;
+}
+
+.main-wrapper::-webkit-scrollbar { 
+    width: 0;
+    height: 0;  /* Safari and Chrome */
+}
+
+.main-wrapper-section {
+    position: relative;
+}
+
+.no-padding {
+    padding: 0;
+}

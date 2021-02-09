@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfigurationService } from '../../services/component/configuration.service';
 
 @Component({
   selector: 'ngx-verifier',
@@ -8,17 +9,29 @@ import { Router } from '@angular/router';
 })
 export class VerifierComponent implements OnInit {
 
-  constructor(private router: Router) {
-
-  }
-
+  validVerificationCode: boolean;
   verificationCode: string;
+  isLoading: boolean;
+
+  constructor(private router: Router,  
+              private configurationService: ConfigurationService) {}
 
   ngOnInit() {
+    this.validVerificationCode = true;
+    this.isLoading = false;
   }
 
   verifyCode() {
-    this.router.navigateByUrl('/live');
+    this.isLoading = true;
+    this.configurationService.validConfigurationCode(this.verificationCode)
+    .subscribe(isValid => {
+      this.isLoading = false;
+      this.validVerificationCode = isValid;
+      if (isValid) {
+        this.router.navigateByUrl('/live/'+this.verificationCode);
+      } 
+    })
+    
   }
 
 }

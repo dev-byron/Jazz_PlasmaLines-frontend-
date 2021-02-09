@@ -1,7 +1,19 @@
-<div class="container p-0 mt-4"  style="background-color: white; min-height: 800px;">
-    <div class="w-100">
-        <div *ngFor="let section of sections">
-            <ngx-section></ngx-section>
-          </div>
+<div class="container p-0 mt-3">
+  <div class="w-100" class="main-wrapper" ngxContainerWrapper (push)="push($event)" (pop)="pop($event)">
+    <div *ngFor="let section of sportbookSections" class="main-wrapper-section">
+      <ngx-section [schedules]="section.schedules">
+      </ngx-section>
     </div>
+  </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Title</h4>
+  </div>
+  <div class="modal-body">
+    <div class="modal-body">
+      <h4>estamos trayendo data tenga paciencia</h4>
+    </div>
+  </div>
+</ng-template>
