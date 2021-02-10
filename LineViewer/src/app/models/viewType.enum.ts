@@ -1,0 +1,4 @@
+enum ViewTypeEnum {
+    Vertical,
+    Horizontal
+  }

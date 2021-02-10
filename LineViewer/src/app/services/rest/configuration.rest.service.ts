@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PlasmaLine } from '../../models/plasma-line.model';
+import { PlasmaLineConfig } from '../../models/plasma-line.model';
 
 @Injectable()
 export class ConfigurationRestService {
@@ -10,8 +10,8 @@ export class ConfigurationRestService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getByCode(code: string): Observable<HttpResponse<PlasmaLine>> { 
-    return this.httpClient.get<PlasmaLine>(`${this.api}/api/configuration/${code}`, { observe: 'response' });
+  getByCode(code: string): Observable<HttpResponse<PlasmaLineConfig>> { 
+    return this.httpClient.get<PlasmaLineConfig>(`${this.api}/api/configuration/${code}`, { observe: 'response' });
   }
 
   validConfigurationCode(code: string): Observable<HttpResponse<boolean>> { 

@@ -1,0 +1,4 @@
+enum LineTypeEnum {
+    Decimal,
+    American
+  }

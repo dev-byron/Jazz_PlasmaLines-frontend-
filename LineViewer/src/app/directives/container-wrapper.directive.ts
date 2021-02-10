@@ -1,7 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, OnDestroy, OnInit, Output } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 
-
 @Directive({
   selector: '[ngxContainerWrapper]'
 })
@@ -15,48 +14,36 @@ export class ContainerWrapperDirective implements AfterViewInit {
   constructor(private ref: ElementRef) { }
 
   ngAfterViewInit() {
-    let size = 50;
-    var pop = true;
-    var saved = 0;
-    var value = 0;
-    //time is configurable
-
-    interval(1000).subscribe(() => {
+    //time must be configurable
+    interval(2000).subscribe(() => {
       var childHeightTotal = 0;
-      var scrollHeight = this.ref.nativeElement.scrollHeight;
-      var height = this.ref.nativeElement.offsetHeight;
-      if (scrollHeight > height) {
+      var firstChildHeight = 0
+      var scrollPosition = 0;
+      if (this.ref.nativeElement.scrollHeight > this.ref.nativeElement.offsetHeight) {
         if (this.ref && this.ref.nativeElement && this.ref.nativeElement.children.length > 0) {
           for (var i = 0; i < this.ref.nativeElement.children.length; i++) {
             childHeightTotal += this.ref.nativeElement.children[i].offsetHeight;
           }
+          firstChildHeight = this.ref.nativeElement.children[0].offsetHeight;
 
-          value = this.ref.nativeElement.scrollTop + 75;
-
-          this.ref.nativeElement.scroll({
-            top: value,
-            left: 0,
-            behavior: 'smooth'
-          });
+          if (firstChildHeight < this.ref.nativeElement.scrollTop) {
+            this.pop.emit(true);
+            this.ref.nativeElement.removeChild(this.ref.nativeElement.children[0]);
+          } 
+          else {
+            scrollPosition = this.ref.nativeElement.scrollTop + 75;
+            this.ref.nativeElement.scroll({
+              top: scrollPosition,
+              left: 0,
+              behavior: 'smooth'
+            });
+          }
           
-          if (value + height + 100 > childHeightTotal) {
+          if (scrollPosition + this.ref.nativeElement.offsetHeight + 100 > childHeightTotal) {
             this.push.emit(true);
           }
-          // if (saved > childHeightTotal){
-          //   console.log('1')
-          //   this.ref.nativeElement.scrollTop = this.ref.nativeElement.offsetTop - this.ref.nativeElement.scrollTop;
-          // } else if (saved < childHeightTotal) {
-          //   console.log('2')
-          //   saved = childHeightTotal;
-          // }
-         
         }
-
       }
-
     });
-
-
   }
-
 }

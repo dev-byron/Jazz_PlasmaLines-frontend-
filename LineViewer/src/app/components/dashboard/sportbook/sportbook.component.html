@@ -1,4 +1,4 @@
-<div class="container p-0 mt-3">
+<div class="container p-0">
   <div class="w-100" class="main-wrapper" ngxContainerWrapper (push)="push($event)" (pop)="pop($event)">
     <div *ngFor="let section of sportbookSections" class="main-wrapper-section">
       <ngx-section [schedules]="section.schedules">
@@ -8,8 +8,7 @@
 </div>
 
 <ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Title</h4>
+  <div class="modal-header" style="background-color: brown;">
   </div>
   <div class="modal-body">
     <div class="modal-body">

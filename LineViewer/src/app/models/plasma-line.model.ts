@@ -1,9 +1,9 @@
 import { PlasmaSection } from "./plasma-section.model";
 
-export interface PlasmaLine {
+export interface PlasmaLineConfig {
     code: string;
-    viewType: string, //change to enum
-    lineType: string, //change to enum
+    viewType: string,
+    lineType: string,
     time: string,
     imageUrl: string,
     createdDate: string,

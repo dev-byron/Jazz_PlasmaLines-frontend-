@@ -7,5 +7,6 @@ export interface Schedule {
     division: string;
     title: string;
     games: Game[];
+    imageUrl: string; 
     touched: boolean;
 }

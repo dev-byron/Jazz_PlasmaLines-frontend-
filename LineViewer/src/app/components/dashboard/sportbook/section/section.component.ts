@@ -12,16 +12,12 @@ export class SectionComponent implements OnInit {
 
   @Input()
   schedules: Schedule[];
-  games: Game[] = [];
+
+
 
   ngOnInit(): void {
-    if (this.schedules && this.schedules.length > 0) {
-      this.schedules.forEach(schedule =>  {
-        if (schedule) {
-          this.games = this.games.concat(schedule.games);
-        }
-      });
-    }
+    
   }
+  
 
 }
