@@ -1,14 +1,18 @@
-<div class="container p-0">
-  <div class="w-100" class="main-wrapper" ngxContainerWrapper (push)="push($event)" (pop)="pop($event)">
-    <div *ngFor="let section of sportbookSections" class="main-wrapper-section">
-      <ngx-section [schedules]="section.schedules">
-      </ngx-section>
+<div>
+  <div class="p-0" [ngClass]="{'container-fluid': viewConfig.viewType === viewTypeEnum.Vertical, 'container': viewConfig.viewType === viewTypeEnum.Horizontal }"   >
+    <div class="w-100" class="main-wrapper" 
+    [ngClass]="{'main-wrapper-v': viewConfig.viewType === viewTypeEnum.Vertical, 'main-wrapper-h': viewConfig.viewType === viewTypeEnum.Horizontal }"  
+      ngxContainerWrapper (push)="push($event)" (pop)="pop($event)">
+      <div *ngFor="let section of sportbookSections" class="main-wrapper-section">
+        <ngx-section [schedules]="section.schedules">
+        </ngx-section>
+      </div>
     </div>
   </div>
 </div>
 
 <ng-template #content let-modal>
-  <div class="modal-header" style="background-color: brown;">
+  <div class="modal-header">
   </div>
   <div class="modal-body">
     <div class="modal-body">

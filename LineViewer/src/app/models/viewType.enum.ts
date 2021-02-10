@@ -1,4 +1,4 @@
-enum ViewTypeEnum {
+export enum ViewTypeEnum {
     Vertical,
     Horizontal
   }

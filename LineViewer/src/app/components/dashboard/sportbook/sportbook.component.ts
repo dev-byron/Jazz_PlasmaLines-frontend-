@@ -8,6 +8,9 @@ import { ConfigurationService } from '../../../services/component/configuration.
 import { SocketService } from '../../../services/sockets/socket.service';
 import { EventAggregator } from '../../../services/utils/event-aggregator';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ViewConfig } from '../../../models/view-config.model';
+import { ViewTypeEnum } from '../../../models/viewType.enum';
+import { LineTypeEnum } from '../../../models/lineType.enum';
 
 @Component({
   selector: 'ngx-sportbook',
@@ -19,10 +22,17 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   code: string;
 
   @ViewChild('content') loadingInfoModal: NgbModalRef;
-  modalReference = null;    
+  modalReference = null;
 
   sections = [];
   plasmaLineConfig: PlasmaLineConfig;
+  viewConfig: ViewConfig = {
+    viewType: ViewTypeEnum.Horizontal,
+    lineType: LineTypeEnum.Decimal
+  } as ViewConfig;
+
+  viewTypeEnum = ViewTypeEnum;
+
   rooms: Room[];
   sportbookSections: SportbookSection[];
   loadingData: boolean;
@@ -32,11 +42,12 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private eventAggregator: EventAggregator,
     private socketService: SocketService,
     private configurationService: ConfigurationService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.loadingData = true;
     this.sportbookSections = [];
+    
   }
 
   ngAfterViewInit() {
@@ -54,7 +65,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sportbookSections.push(sportbookSection);
     }
   }
-  
+
   pop($event) {
     //this.sportbookSections.shift();
   }
@@ -68,12 +79,13 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   private setSubscribers() {
     if (this.code) {
       this.configurationService.getByCode(this.code).subscribe(plasmaLineConfig => {
-        if (plasmaLineConfig) { 
+        if (plasmaLineConfig) {
           this.plasmaLineConfig = plasmaLineConfig;
           this.configureSocketRooms(this.plasmaLineConfig);
+          this.configureView(this.plasmaLineConfig);
         }
       });
-  
+
       this.eventAggregator.featuredSchedules.subscribe(featuredSchedule => {
         if (featuredSchedule != null && this.plasmaLineConfig) {
           this.filterSportbookSections(featuredSchedule.schedules, this.plasmaLineConfig.sections);
@@ -92,6 +104,14 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  private configureView(plasmaLineConfig: PlasmaLineConfig) {
+    this.viewConfig = {
+      viewType: (plasmaLineConfig.viewType == 'v' ? ViewTypeEnum.Vertical : ViewTypeEnum.Horizontal),
+      lineType: (plasmaLineConfig.lineType == 'a' ? LineTypeEnum.American : LineTypeEnum.Decimal),
+      time: plasmaLineConfig.time
+    } as ViewConfig;
+  }
+
   private filterSportbookSections(allSchedules: Schedule[], subscribedSections: PlasmaSection[]) {
     if (allSchedules && subscribedSections && this.sportbookSections.length == 0) {
       this.sportbookSections = [];
@@ -104,7 +124,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           } as SportbookSection;
           subscribedEvent.titles.forEach(subscribedTitle => {
             var schedules = allSchedules.find(x => x.sport == section.sport && x.division == section.division && x.title == subscribedTitle);
-            if(schedules) {
+            if (schedules) {
               section.schedules.push(schedules);
             }
           });
@@ -114,6 +134,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.closeLoadingModal();
   }
+
 
   private getRoomsFromLineConfig(plasmaLineConfig: PlasmaLineConfig) {
     const newRooms: Room[] = [];
@@ -138,7 +159,6 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.modalReference) {
       this.modalReference.close();
     }
-   }
-
+  }
 
 }

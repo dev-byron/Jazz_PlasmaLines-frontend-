@@ -1,4 +1,4 @@
-enum LineTypeEnum {
+export enum LineTypeEnum {
     Decimal,
     American
   }
