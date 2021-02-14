@@ -1,14 +1,14 @@
-// --- index.js ---
+// --- server.js ---
 // • This is the start (entry-point) of our application.
 // • Mongoose is used to make communication with MongoDB easy and simple
 // -----------------------------------------------------------------------------
-const config = require('./server/config/config.json');
+const config = require('./src/config/config.json');
 const express = require('express')
 const cors = require('cors');
 const path = require('path')
-const configController = require('./server/controllers/config.controller');
-const scheduleController = require('./server/controllers/schedule.controller');
-const lineController = require('./server/controllers/line.controller');
+const configController = require('./src/controllers/config.controller');
+const scheduleController = require('./src/controllers/schedule.controller');
+const lineController = require('./src/controllers/line.controller');
 
 // • Creating Express instance. Later we will use this to declare routes
 const app = express()
@@ -46,7 +46,7 @@ mongoose.connect(config.mongoConnectionString, (err) => {
       next();
     });
 
-    app.use('/api', require('./server/routes/routes'));
+    app.use('/api', require('./src/routes/routes'));
 
     app.get('*', (req, res) => {
       console.log(req.url)
