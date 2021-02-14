@@ -5,7 +5,6 @@ import { interval, Subscription } from 'rxjs';
   selector: '[ngxContainerWrapper]'
 })
 export class ContainerWrapperDirective implements AfterViewInit {
-
   @Output()
   pop: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
@@ -15,7 +14,7 @@ export class ContainerWrapperDirective implements AfterViewInit {
 
   ngAfterViewInit() {
     //time must be configurable
-    interval(2000).subscribe(() => {
+    interval(3000).subscribe(() => {
       var childHeightTotal = 0;
       var firstChildHeight = 0
       var scrollPosition = 0;

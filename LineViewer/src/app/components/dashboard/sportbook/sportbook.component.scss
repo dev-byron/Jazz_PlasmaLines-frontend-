@@ -28,11 +28,28 @@
     height: 0;  /* Safari and Chrome */
 }
 
-
 .main-wrapper-section {
     position: relative;
 }
 
 .no-padding {
     padding: 0;
+}
+
+.modal-header {
+    background-color: #138bb0 !important;
+    padding: 10px 10px;
+    color: white;
+}
+
+.loading-icon {
+    text-align: center;
+    font-size: 40px;
+    display: block;
+}
+
+.loading-text {
+    font-size: 20px;
+    text-align: center;
+    display: block;
 }

@@ -8,34 +8,35 @@
 }
 
 .table {
-    color: #15708C;
+    color: #138bb0;
 }
 
 .table-title {
-    background-color: #15708C;
+    background-color: #138bb0;
     color: white;
-    padding: 10px 12px;
-    font-size: 22px;
+    padding: 7px 10px;
+    font-size: 20px;
     margin: 0;
     border: 0;
-   
+    font-weight: 700;
 }
 
 .table-subtitle > th {
-    background-color: #158C31;
+    background-color: #4C4C4C;
     color: white;
-    font-size: 18px;
-    padding: 8px 12px;
+    padding: 6px 10px;
+    font-size: 16px;
     margin: 0;
     border: 0;
+    font-weight: 700;
 }
 
 .col-th-1 {
-    width: 10%;
+    width: 8%;
 }
 
 .col-th-2 {
-    width: 38%;
+    width: 40%;
 }
 
 .col-th-3 {
@@ -51,9 +52,9 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    height: 130px;
-    
+    max-height: 150px;
 }
+
 .img-section img {
     flex-shrink: 0;
     min-width: 100%;

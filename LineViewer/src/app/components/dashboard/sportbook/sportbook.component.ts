@@ -7,7 +7,7 @@ import { SportbookSection } from '../../../models/sportbook-section.model';
 import { ConfigurationService } from '../../../services/component/configuration.service';
 import { SocketService } from '../../../services/sockets/socket.service';
 import { EventAggregator } from '../../../services/utils/event-aggregator';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ViewConfig } from '../../../models/view-config.model';
 import { ViewTypeEnum } from '../../../models/viewType.enum';
 import { LineTypeEnum } from '../../../models/lineType.enum';
@@ -152,7 +152,11 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openLoadingModal() {
-    this.modalReference = this.modalService.open(this.loadingInfoModal);
+    let ngbModalOptions: NgbModalOptions = {
+      backdrop : 'static',
+      keyboard : false
+};
+    this.modalReference = this.modalService.open(this.loadingInfoModal, ngbModalOptions);
   }
 
   closeLoadingModal() {

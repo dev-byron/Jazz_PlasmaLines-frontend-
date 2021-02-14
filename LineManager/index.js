@@ -53,11 +53,9 @@ mongoose.connect(config.mongoConnectionString, (err) => {
       res.sendFile(path.join(__dirname, 'dist/index.html'));
     });
 
-
-    //TEMPORAL
+  
     lineController.load();
     io.on('connection', async (socket) => {
-
       //notas
       //TEMPORAL, verificar si hay alguien escuchando por room para enviar mensaje
       setInterval(function() {
@@ -73,7 +71,6 @@ mongoose.connect(config.mongoConnectionString, (err) => {
         });
       }, 10000);
       //TEMPORAL
-
 
       socket.on('subscribe', function(room) { 
         console.log('joining room', room);

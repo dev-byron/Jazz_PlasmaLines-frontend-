@@ -1,11 +1,10 @@
 <div class="card" *ngIf="schedules">
     <div class="img-section">
-        <img src="https://t3.ftcdn.net/jpg/01/75/91/84/360_F_175918488_wkuz1qNqDlsWYhfsHdQAmV23SNmkj3vV.jpg"
-            class="card-img-top">
+        <img src="https://via.placeholder.com/1500x140" class="card-img-top">
     </div>
     <div class="card-body no-padding">
         <div *ngFor="let schedule of schedules">
-            <table class="table table-striped table-dark no-margin table-bordered">
+            <table class="table table-striped no-margin">
                 <thead>
                     <tr>
                         <th colspan="5" class="table-title">{{schedule.title}}</th>

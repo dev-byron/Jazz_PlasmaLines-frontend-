@@ -5,15 +5,15 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
-    path: 'verify',
+    path: '',
     component: VerifierComponent,
   },
   {
     path: 'live/:code',
     component: DashboardComponent,
   },
-  { path: '', redirectTo: 'verify', pathMatch: 'full' },
-  { path: '**', redirectTo: 'verify' },
+  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: '' },
 ];
 
 const config: ExtraOptions = {
