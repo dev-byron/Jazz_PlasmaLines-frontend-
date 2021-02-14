@@ -11,12 +11,17 @@ import {
 
 export const routes: Routes = [
   {
-    path: 'pages',
+    path: 'manager',
     loadChildren: () => import('./components/manager.module')
       .then(m => m.ManagerModule),
   },
   {
     path: 'auth',
+    loadChildren: () => import('./auth/auth.module')
+    .then(m => m.AuthModule),
+  },
+  {
+    path: 'authtest',
     component: NbAuthComponent,
     children: [
       {
@@ -45,8 +50,8 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '', redirectTo: 'manager', pathMatch: 'full' },
+  { path: '**', redirectTo: 'manager' },
 ];
 
 const config: ExtraOptions = {

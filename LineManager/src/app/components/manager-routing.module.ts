@@ -5,25 +5,28 @@ import { ManagerComponent } from './manager.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 
-const routes: Routes = [{
-  path: '',
-  component: ManagerComponent,
-  children: [
-    {
-      path: 'dashboard',
-      component: DashboardComponent,
-    },
-    {
-      path: '',
-      redirectTo: 'dashboard',
-      pathMatch: 'full',
-    },
-    {
-      path: '**',
-      component: NotFoundComponent,
-    },
-  ],
-}];
+
+const routes: Routes = [
+  {
+    path: '',
+    component: ManagerComponent,
+    children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: '**',
+        component: NotFoundComponent,
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -4,17 +4,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Administrador de líneas',
     icon: 'home-outline',
-    link: '/components/dashboard',
+    link: '/dashboard',
     home: true,
   },
   {
     title: 'Usuarios',
     icon: 'people-outline',
-    link: '/components/dashboard'
+    link: '/users'
   },
   {
     title: 'Salir',
     icon: 'corner-down-left-outline',
-    link: '/auth/login'
+    link: '../auth'
   },
 ];

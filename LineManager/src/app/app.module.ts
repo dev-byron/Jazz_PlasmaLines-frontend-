@@ -19,6 +19,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { NbSecurityModule } from '@nebular/security';
 
 @NgModule({
   declarations: [AppComponent],
