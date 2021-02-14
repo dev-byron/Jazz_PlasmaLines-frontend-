@@ -6,15 +6,14 @@ const config = require('./src/config.json');
 const express = require('express')
 const cors = require('cors');
 const path = require('path')
+const bodyParser = require("body-parser");
+
 const configController = require('./src/controllers/config.controller');
 const scheduleController = require('./src/controllers/schedule.controller');
 const lineController = require('./src/controllers/line.controller');
 
 // • Creating Express instance. Later we will use this to declare routes
 const app = express()
-
-require('./src/routes/auth.routes')(app);
-require('./src/routes/user.routes')(app);
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http,  {
@@ -30,9 +29,13 @@ var corsOptions = {
 }
 
 
-const Role = require('./src/models/role.model')
+// const Role = require('./src/models/role.model')
 const mongoose = require('mongoose')
 
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // • Connect to MongoDB database. Please be sure you have started MongoDB
@@ -54,6 +57,9 @@ mongoose.connect(config.mongoConnectionString, (err) => {
     });
 
     app.use('/api', require('./src/routes/routes'));
+    // routes
+    require('./src/routes/auth.routes')(app);
+    require('./src/routes/user.routes')(app);
 
     app.get('*', (req, res) => {
       console.log(req.url)
