@@ -1,3 +1,21 @@
 ::ng-deep .nb-theme-default  nb-card-header {
     display: none !important;
     }
+
+.header-img {
+    height: 70px; 
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.header-img > img{
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 200px;
+}

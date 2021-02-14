@@ -19,7 +19,7 @@ var io = require('socket.io')(http,  {
     origin: "http://localhost:4200",
     credentials: true
   }
-});
+}); 
 
 var corsOptions = {
   origin: 'http://localhost:4200',
