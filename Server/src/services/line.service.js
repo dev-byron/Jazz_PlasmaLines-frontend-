@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const XmlClient = require('../client/xmlClient');
-const config = require('../config/config.json');
+const config = require('../config.json');
 const cacheManager = require('../cache/manager.service');
 const Game = require('../cache/data/game.model');
 const Room = require('../cache/data/room.model');

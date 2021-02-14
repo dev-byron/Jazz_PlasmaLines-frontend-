@@ -2,7 +2,7 @@
 // • This is the start (entry-point) of our application.
 // • Mongoose is used to make communication with MongoDB easy and simple
 // -----------------------------------------------------------------------------
-const config = require('./src/config/config.json');
+const config = require('./src/config.json');
 const express = require('express')
 const cors = require('cors');
 const path = require('path')
@@ -12,6 +12,9 @@ const lineController = require('./src/controllers/line.controller');
 
 // • Creating Express instance. Later we will use this to declare routes
 const app = express()
+
+require('./src/routes/auth.routes')(app);
+require('./src/routes/user.routes')(app);
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http,  {
@@ -26,7 +29,11 @@ var corsOptions = {
   optionsSuccessStatus: 200 // For legacy browser support
 }
 
+
+const Role = require('./src/models/role.model')
 const mongoose = require('mongoose')
+
+
 
 // • Connect to MongoDB database. Please be sure you have started MongoDB
 // services before running application and replace `example-app` with your
@@ -90,5 +97,22 @@ mongoose.connect(config.mongoConnectionString, (err) => {
       console.log('server is running on port', server.address().port);
     });
 
+    initial();
   }
 })
+
+function initial() {
+  // Role.count((err, count) => {
+  //   if (!err && count === 0) {
+  //     new Role({
+  //       name: "admin"
+  //     }).save(err => {
+  //       if (err) {
+  //         console.log("error", err);
+  //       }
+
+  //       console.log("added 'admin' to roles collection");
+  //     });
+  //   }
+  // });
+}
