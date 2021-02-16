@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 
 const configController = require('./src/controllers/config.controller');
 const scheduleController = require('./src/controllers/schedule.controller');
-const lineController = require('./src/controllers/line.controller');
+const lineController = require('./src/controllers/lines.controller');
 
 // • Creating Express instance. Later we will use this to declare routes
 const app = express()

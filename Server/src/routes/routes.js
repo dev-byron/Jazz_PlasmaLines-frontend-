@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/config.controller');
-const lineContronller = require('../controllers/line.controller');
+const lineContronller = require('../controllers/lines.controller');
 const configController = require('../controllers/configuration.controller');
 
 // • declaring routes
@@ -12,6 +12,9 @@ router.get('/loadLines', lineContronller.loadLines);
 router.post('/configuration', configController.save);
 router.get('/configuration/:code', (req, res) => {
   return configController.get(req, res);
+});
+router.get('/configuration/', (req, res) => {
+  return configController.getAll(req, res);
 });
 router.get('/configuration/:code/isValid', (req, res) => {
   return configController.validConfigurationCode(req, res);

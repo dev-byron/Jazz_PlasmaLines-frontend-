@@ -5,6 +5,12 @@ module.exports = {
         saveNewModel();
       return true;
     },
+    async getAll() {
+        return await PlasmaConfigurationModel.find({}, function(err, result){
+            if (err) throw err;
+            return result;
+        });
+    },
     async get(configurationCode) {
         return await PlasmaConfigurationModel.findOne({code: configurationCode}, function(err, result){
             if (err) throw err;
