@@ -1,10 +1,10 @@
 const config = require("../config/auth.config");
 const db = require("../models");
-const User = db.user;
-const Role = db.role;
-
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+
+const User = db.user;
+const Role = db.role;
 
 exports.signup = (req, res) => {
   const user = new User({
@@ -64,7 +64,7 @@ exports.signup = (req, res) => {
 
 exports.signin = (req, res) => {
   User.findOne({
-    username: req.body.username
+    email: req.body.email
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
@@ -74,7 +74,7 @@ exports.signin = (req, res) => {
       }
 
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({ message: "The email or password is incorrect" });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -85,7 +85,7 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password!"
+          message: "The email or password is incorrect"
         });
       }
 

@@ -20,6 +20,12 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 
+import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { AuthService } from './services/auth.service';
+import { TokenStorageService } from './services/token-storage.service';
+import { UserService } from './services/user.service';
+
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -33,10 +39,13 @@ import {
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
-    NbChatModule.forRoot({
-      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-    }),
     ThemeModule.forRoot(),
+  ],
+  providers: [
+    authInterceptorProviders, 
+    AuthService, 
+    TokenStorageService, 
+    UserService
   ],
   bootstrap: [AppComponent],
 })

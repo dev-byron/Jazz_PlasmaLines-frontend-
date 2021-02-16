@@ -18,16 +18,15 @@ const app = express()
 var http = require('http').Server(app);
 var io = require('socket.io')(http,  {
   cors: {
-    origin: "http://localhost:4200",
+    origin: config.cors.origins,
     credentials: true
   }
 }); 
 
 var corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: config.cors.origins,
   optionsSuccessStatus: 200 // For legacy browser support
 }
-
 
 // const Role = require('./src/models/role.model')
 const mongoose = require('mongoose')
