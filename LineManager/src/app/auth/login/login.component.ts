@@ -50,7 +50,7 @@ export class LoginComponent extends NbLoginComponent implements OnInit {
   }
 
   private redirectoToDashboard(): void {
-    this.router.navigate(['./manager/dashboard']);
+    this.router.navigate(['./manager']);
   }
 
 }

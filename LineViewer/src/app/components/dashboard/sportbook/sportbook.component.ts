@@ -47,7 +47,6 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.loadingData = true;
     this.sportbookSections = [];
-    
   }
 
   ngAfterViewInit() {

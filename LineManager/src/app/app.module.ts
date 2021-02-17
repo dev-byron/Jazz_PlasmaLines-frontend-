@@ -24,7 +24,7 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { AuthService } from './services/auth.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { UserService } from './services/user.service';
-
+import { ConfigurationLinesService } from './services/configuration-lines.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,7 +45,8 @@ import { UserService } from './services/user.service';
     authInterceptorProviders, 
     AuthService, 
     TokenStorageService, 
-    UserService
+    UserService,
+    ConfigurationLinesService
   ],
   bootstrap: [AppComponent],
 })

@@ -4,13 +4,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Lines Manager',
     icon: 'home-outline',
-    link: '/dashboard',
+    link: '/manager/dashboard',
     home: true,
   },
   {
     title: 'Users',
     icon: 'people-outline',
-    link: '/users'
+    link: '/manager/users'
   },
   {
     title: 'Exit',

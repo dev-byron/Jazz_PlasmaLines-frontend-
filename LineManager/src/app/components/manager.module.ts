@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbMenuModule } from '@nebular/theme';
 import { ThemeModule } from '../shared/theme.module';
 import { ManagerComponent } from './manager.component';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -13,7 +13,10 @@ import { UsersComponent } from './users/users.component';
     ThemeModule,
     NbMenuModule,
     DashboardModule,
-    MiscellaneousModule
+    MiscellaneousModule,
+    NbCardModule,
+    NbButtonModule,
+    ThemeModule,
   ],
   declarations: [
     ManagerComponent,

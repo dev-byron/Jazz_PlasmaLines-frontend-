@@ -2,8 +2,7 @@
     <img src="https://jazzsports.ag/assets/images/jazzsports/jazz-logo.png" class="img-responsive">
 </div>
 
-<h2 id="title" class="title">Sign In</h2>
-
+<h2 id="title" class="title">LOGIN</h2>
 <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
     <p class="alert-title"><b>Oh snap!</b></p>
     <ul class="alert-message-list">
@@ -19,8 +18,17 @@
 </nb-alert>
 
 <form (ngSubmit)="login()" #form="ngForm" aria-labelledby="title">
+    <div class="form-control-group" >
+        <ng-container *ngIf="isLoginFailed">
+            <div class="error-login">
+                <ul class="caption status-danger">
+                    <li>{{errorMessage}}</li>
+                </ul>
+            </div>
+        </ng-container>
+    </div>
     <div class="form-control-group">
-        <label class="label" for="input-email">Email address:</label>
+        <label class="label" for="input-email">Email:</label>
         <input nbInput fullWidth [(ngModel)]="user.email" #email="ngModel" name="email" id="input-email"
             pattern=".+@.+\..+" placeholder="Email address" autofocus
             [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : 'basic'"
@@ -57,15 +65,8 @@
             </p>
         </ng-container>
     </div>
-    <div class="form-control-group">
-        <ng-container *ngIf="isLoginFailed">
-            <p class="caption status-danger">
-                {{errorMessage}}
-            </p>
-        </ng-container>
-    </div>
 
-    <button nbButton fullWidth (click)="login()" status="success" [disabled]="submitted || !form.valid"
+    <button nbButton fullWidth (click)="login()" class="btn-login" status="success" [disabled]="submitted || !form.valid"
         [class.btn-pulse]="submitted">
         Sign In
     </button>

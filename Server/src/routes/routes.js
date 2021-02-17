@@ -7,7 +7,6 @@ const configController = require('../controllers/configuration.controller');
 // • declaring routes
 router.get('/loadLines', lineContronller.loadLines);
 
-
 //configuration
 router.post('/configuration', configController.save);
 router.get('/configuration/:code', (req, res) => {

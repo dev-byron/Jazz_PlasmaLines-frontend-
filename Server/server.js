@@ -28,8 +28,10 @@ var corsOptions = {
   optionsSuccessStatus: 200 // For legacy browser support
 }
 
-// const Role = require('./src/models/role.model')
-const mongoose = require('mongoose')
+
+
+const mongoose = require('mongoose');
+const { count } = require('./src/models/user.model');
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -102,10 +104,13 @@ mongoose.connect(config.mongoConnectionString, (err) => {
       console.log('server is running on port', server.address().port);
     });
 
+    //testing
     initial();
   }
 })
 
+const Role = require('./src/models/role.model')
+const demoConfig = require('./src/services/plasma-configuration.service')
 function initial() {
   // Role.count((err, count) => {
   //   if (!err && count === 0) {
@@ -115,9 +120,9 @@ function initial() {
   //       if (err) {
   //         console.log("error", err);
   //       }
-
   //       console.log("added 'admin' to roles collection");
   //     });
   //   }
   // });
+  // demoConfig.saveTestModel();
 }

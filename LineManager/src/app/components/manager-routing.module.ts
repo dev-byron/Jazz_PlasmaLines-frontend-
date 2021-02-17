@@ -1,9 +1,9 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { ManagerComponent } from './manager.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { UsersComponent } from './users/users.component';
 
 
 const routes: Routes = [
@@ -14,6 +14,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+      },
+      {
+        path: 'users',
+        component: UsersComponent
       },
       {
         path: '',

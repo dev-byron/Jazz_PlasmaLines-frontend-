@@ -12,6 +12,7 @@ module.exports = {
     return {};
   },
 };
+
 function setInitialCache() {
   var rooms = [];
   cacheManager.set('rooms', rooms);

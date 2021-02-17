@@ -1,27 +1,41 @@
 <nb-card>
   <nb-card-header>
-    <i class="fas fa-bars"></i> Lines manager 
+    <i class="fas fa-bars"></i> 
+    Lines manager 
   </nb-card-header>
   <nb-card-body>
     <div class="row my-4">
       <div class="col-sm-12">
-          <button class="float-right" nbButton status="info">Add</button>
+          <button class="float-right btn-add" nbButton status="info"><i class="fas fa-plus"></i> Add new</button>
       </div>
     </div>
     <div class="row my-4">
       <div class="col-sm-12">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered ">
           <thead>
             <tr>
               <th scope="col">Code</th>
               <th scope="col">Time</th>
-              <th scope="col">View type</th>
-              <th scope="col">Line type</th>
-              <th scope="col">Created by</th>
-              <th scope="col">Date</th>
+              <th scope="col">View Type</th>
+              <th scope="col">Line Type</th>
+              <th scope="col">Created By</th>
+              <th scope="col">Created Date</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
+            <tr *ngFor="let config of models">
+              <td>{{config.code}}</td>
+              <td>{{config.time}}</td>
+              <td>{{getViewType(config.viewType)}}</td>
+              <td>{{getLineType(config.lineType)}}</td>
+              <td>bserrano</td>
+              <td>{{config.createdDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+              <td>
+                <button type="button" class="btn btn-success btn-table"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-table"><i class="far fa-trash-alt"></i></button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
