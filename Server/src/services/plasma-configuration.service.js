@@ -24,34 +24,34 @@ module.exports = {
 
 //just for testing 
 function saveNewModel() {
-  var model = new PlasmaConfigurationModel({
-    code: "AH65RS",
-    viewType: "v",
-    lineType: "a",
-    time: "12:01 PM",
-    createdDate: new Date().toISOString(),
-    sections: [
-        {
-            name: "BOXING",
-            events: [
-                {
-                    sport: "MU",
-                    division: "MU",
-                    titles: [
-                            "BOXING",
-                            "WTA TENNIS - SPREAD IS FOR SETS",
-                            "ATP TENNIS - GAMES AND TOTAL LINES",
-                            "UFC / MMA"
-                    ]
-                }
-            ]
-        }
-    ]
-  });
+//   var model = new PlasmaConfigurationModel({
+//     code: "AH65RS",
+//     viewType: "v",
+//     lineType: "a",
+//     time: "12:01 PM",
+//     createdDate: new Date().toISOString(),
+//     sections: [
+//         {
+//             name: "BOXING",
+//             events: [
+//                 {
+//                     sport: "MU",
+//                     division: "MU",
+//                     titles: [
+//                             "BOXING",
+//                             "WTA TENNIS - SPREAD IS FOR SETS",
+//                             "ATP TENNIS - GAMES AND TOTAL LINES",
+//                             "UFC / MMA"
+//                     ]
+//                 }
+//             ]
+//         }
+//     ]
+//   });
 
-  model.save(function(err, doc) {
-    if (err) return console.error(err);
-    console.log("Configuration inserted successfully");
-  });
+//   model.save(function(err, doc) {
+//     if (err) return console.error(err);
+//     console.log("Configuration inserted successfully");
+//   });
 
 }
