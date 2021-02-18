@@ -3,6 +3,7 @@ const router = express.Router()
 const controller = require('../controllers/config.controller');
 const lineContronller = require('../controllers/lines.controller');
 const configController = require('../controllers/configuration.controller');
+const sportController = require('../controllers/sport.controller');
 
 // • declaring routes
 router.get('/loadLines', lineContronller.loadLines);
@@ -19,8 +20,8 @@ router.get('/configuration/:code/isValid', (req, res) => {
   return configController.validConfigurationCode(req, res);
 });
 
-router.get('/configuration/tree', (req, res) => {
-  return configController.validConfigurationCode(req, res);
+router.get('/sports/tree', (req, res) => {
+  return sportController.getSportsAsTree(req, res);
 });
 
 module.exports = router

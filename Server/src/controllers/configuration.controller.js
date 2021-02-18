@@ -16,7 +16,7 @@ module.exports = {
             res.status(500).send({ message: 'Internal Server Error: ' + e.message })
         }
     },
-    async getTree(req, res) {
+    async getAsTree(req, res) {
         try {
             var response = await service.get(req.params.code);
             return res.status(200).json(response);
