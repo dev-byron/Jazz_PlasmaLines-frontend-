@@ -33,7 +33,6 @@ export class CreateComponent implements OnInit {
   }
 
   onSelectedChange(selectedTitles: string[]): void {
-    console.log(this.items);
     this.updateSelectedItems(selectedTitles);
   }
 
@@ -41,14 +40,14 @@ export class CreateComponent implements OnInit {
   }
 
   getSelectedItems(): TreeviewItem[]  {
-    return this.items.filter(x => x.checked);
+    return this.items.filter(x => x.checked || x.checked === undefined);
+  }
+  
+  getSelectedChild(treeviewItem: TreeviewItem): TreeviewItem[]  {
+    return treeviewItem.children.filter(x => x.checked || x.checked === undefined);
   }
 
   
-  getSelectedChild(treeviewItem: TreeviewItem): TreeviewItem[]  {
-    return treeviewItem.children.filter(x => x.checked);
-  }
-
 
 
   formatSportsIntoTree(sports: Sport[]) {
