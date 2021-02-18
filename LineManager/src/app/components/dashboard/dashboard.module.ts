@@ -5,9 +5,11 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { DashboardComponent } from './dashboard.component';
 import { CreateComponent } from './configuration/create/create.component';
 import { FormsModule } from '@angular/forms';
+import { TreeviewModule } from 'ngx-treeview';
 
 @NgModule({
   imports: [
+    TreeviewModule.forRoot(),
     FormsModule,
     NbSelectModule,
     NbInputModule,
