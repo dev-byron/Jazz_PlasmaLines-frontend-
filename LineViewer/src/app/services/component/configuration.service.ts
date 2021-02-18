@@ -19,7 +19,7 @@ export class ConfigurationService {
             return throwError(error);
         })
     );
-  }
+  } 
 
   validConfigurationCode(code: string): Observable<boolean> { 
     return this.plasmaLineConfigurationRestService.validConfigurationCode(code).pipe(

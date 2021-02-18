@@ -1,0 +1,77 @@
+<div class="row ">
+    <div class="col-sm-12">
+        <nb-card accent="info">
+            <nb-card-header>
+                Configuration
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="row form-group">
+                            <label class="label col-sm-4">View Type:</label>
+                            <nb-radio-group class="col-sm-8" [(ngModel)]="selectedOption">
+                                <nb-radio value="h">Horizontal</nb-radio>
+                                <nb-radio value="v">Vertical</nb-radio>
+                            </nb-radio-group>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="row form-group">
+                            <label class="label col-sm-4">Line Type:</label>
+                            <nb-radio-group class="col-sm-8" [(ngModel)]="selectedOP">
+                                <nb-radio value="a">American</nb-radio>
+                                <nb-radio value="d">Decimal</nb-radio>
+                            </nb-radio-group>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="row form-group">
+                            <label class="label col-sm-4">Origin Time Zone:</label>
+                            <label type="text" class="col-sm-8" status="info">GMT/UTC - 8</label>
+                        </div>
+                        <div class="row form-group">
+                            <label class="label col-sm-4">Time Zone:</label>
+                            <nb-select class="col-sm-7" placeholder="Select the time zone">
+                                <nb-option value="1">Option 1</nb-option>
+                                <nb-option value="2">Option 2</nb-option>
+                                <nb-option value="3">Option 3</nb-option>
+                                <nb-option value="4">Option 4</nb-option>
+                              </nb-select>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+            <nb-card-header>
+                Events
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row ">
+                    <div class="col-sm-12">
+
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+            <nb-card-header>
+                Image Headers & Adds
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row ">
+                    <div class="col-sm-12">
+                    </div>
+                </div>
+            </nb-card-body>
+            <nb-card-footer>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="float-right btn-success mr-3" nbButton status="success">Save</button>
+                        <button class="float-right mr-2" nbButton>Cancel</button>
+                    </div>
+                </div>
+            </nb-card-footer>
+        </nb-card>
+    </div>
+</div>

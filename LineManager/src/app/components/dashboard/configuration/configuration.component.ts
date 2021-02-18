@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationLine } from '../../../models/configuration-line.model';
 import { ConfigurationLinesService } from '../../../services/configuration-lines.service';
 
@@ -11,7 +12,9 @@ import { ConfigurationLinesService } from '../../../services/configuration-lines
 export class ConfigurationComponent implements OnInit {
   models: ConfigurationLine[];
 
-  constructor(private service: ConfigurationLinesService) {}
+  constructor(private service: ConfigurationLinesService,  
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {}
   
   ngOnInit(): void {
     this.service.getAll().subscribe(res => {
@@ -25,6 +28,10 @@ export class ConfigurationComponent implements OnInit {
 
   getLineType(type): string {
     return type === 'a' ? 'American' : 'Decimal';
+  }
+
+  goToManager() {
+    this.router.navigate(['../create'], {relativeTo: this.activatedRoute});
   }
 
 }

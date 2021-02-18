@@ -1,15 +1,14 @@
-<nb-card>
+<nb-card accent="info">
   <nb-card-header>
-    <i class="fas fa-bars"></i> 
-    Lines manager 
+    Lines Manager 
   </nb-card-header>
   <nb-card-body>
-    <div class="row my-4">
+    <div class="row">
       <div class="col-sm-12">
-          <button class="float-right btn-add" nbButton status="info"><i class="fas fa-plus"></i> Add new</button>
+          <button class="float-right btn-add" (click)="goToManager()" routerLinkActive="active" nbButton status="info"><i class="fas fa-plus"></i> Add new</button>
       </div>
     </div>
-    <div class="row my-4">
+    <div class="row my-3">
       <div class="col-sm-12">
         <table class="table table-striped table-bordered ">
           <thead>

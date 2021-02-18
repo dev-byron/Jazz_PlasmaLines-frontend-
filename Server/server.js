@@ -29,7 +29,6 @@ var corsOptions = {
 }
 
 
-
 const mongoose = require('mongoose');
 const { count } = require('./src/models/user.model');
 

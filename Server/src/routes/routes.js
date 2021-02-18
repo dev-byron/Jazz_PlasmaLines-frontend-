@@ -19,6 +19,10 @@ router.get('/configuration/:code/isValid', (req, res) => {
   return configController.validConfigurationCode(req, res);
 });
 
+router.get('/configuration/tree', (req, res) => {
+  return configController.validConfigurationCode(req, res);
+});
+
 module.exports = router
 
 // // • Declaring POST method
