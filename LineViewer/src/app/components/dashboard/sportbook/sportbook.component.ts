@@ -37,6 +37,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   sportbookSections: SportbookSection[];
   loadingData: boolean;
   deletedFirst = false;
+  counter = 0;
 
   // necesito dos arreglos diferentes, uno para vizualizar la vara y otro que es es socket que va a actualizar lo que esta en pantalla si es necesario
   constructor(private eventAggregator: EventAggregator,
@@ -60,8 +61,9 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
 
   push($event) {
     if (this.sportbookSections.length > 0) {
-      const sportbookSection: SportbookSection = this.sportbookSections[0];
+      const sportbookSection: SportbookSection = this.sportbookSections[this.counter];
       this.sportbookSections.push(sportbookSection);
+      this.counter++;
     }
   }
 
@@ -112,8 +114,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private filterSportbookSections(allSchedules: Schedule[], subscribedSections: PlasmaSection[]) {
-    if (allSchedules && subscribedSections && this.sportbookSections.length == 0) {
-      this.sportbookSections = [];
+    if (allSchedules && subscribedSections) {
       subscribedSections.forEach(subscribedSection => {
         subscribedSection.events.forEach(subscribedEvent => {
           const section = {
@@ -127,7 +128,15 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
               section.schedules.push(schedules);
             }
           });
-          this.sportbookSections.push(section);
+          if (!this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division)) {
+             this.sportbookSections.push(section);
+          }
+           else {
+              const sportbookSection = this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division);
+              if(sportbookSection.schedules.length == 0) {
+                sportbookSection.schedules = section.schedules;
+              }
+           }
         });
       });
     }

@@ -14,7 +14,7 @@
           <thead>
             <tr>
               <th scope="col">Code</th>
-              <th scope="col">Time</th>
+              <th scope="col">Time Zone</th>
               <th scope="col">View Type</th>
               <th scope="col">Line Type</th>
               <th scope="col">Created By</th>
@@ -25,14 +25,14 @@
           <tbody>
             <tr *ngFor="let config of models">
               <td>{{config.code}}</td>
-              <td>{{config.time}}</td>
+              <td>{{getTimeZone(config.time)}}</td>
               <td>{{getViewType(config.viewType)}}</td>
               <td>{{getLineType(config.lineType)}}</td>
               <td>bserrano</td>
               <td>{{config.createdDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
               <td>
-                <button type="button" class="btn btn-success btn-table"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-table"><i class="far fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-success btn-table" disabled><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-table" disabled><i class="far fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>

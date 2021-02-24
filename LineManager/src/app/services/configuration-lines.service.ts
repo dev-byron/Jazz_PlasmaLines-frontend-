@@ -12,7 +12,7 @@ export class ConfigurationLinesService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<ConfigurationLine[]> {
-    return this.http.get<ConfigurationLine[]>(API_URL +'configuration', { responseType: 'json' });
+    return this.http.get<ConfigurationLine[]>(API_URL +'configuration/', { responseType: 'json' });
   }
 
   getByCode(configurationCode: string):  Observable<ConfigurationLine> {
@@ -22,5 +22,10 @@ export class ConfigurationLinesService {
   getSportsAsTree(): Observable<Sport[]> {
     return this.http.get<Sport[]>(API_URL + 'sports/tree', { responseType: 'json' });
   }
+
+  save(configuration: any):  Observable<ConfigurationLine> {
+    return this.http.post<ConfigurationLine>(API_URL + 'configuration/', configuration, { responseType: 'json' });
+  }
+
 
 }

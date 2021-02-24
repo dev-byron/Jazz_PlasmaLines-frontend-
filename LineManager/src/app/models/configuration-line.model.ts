@@ -3,6 +3,5 @@ export interface ConfigurationLine {
     viewType: string,
     lineType: string,
     time: string,
-    imageUrl: string,
     createdDate: string,
 }

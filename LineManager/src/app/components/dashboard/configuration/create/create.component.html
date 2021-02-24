@@ -9,111 +9,31 @@
                     <div class="col-sm-3">
                         <div class="row form-group">
                             <label class="label col-sm-4">View Type:</label>
-                            <nb-radio-group class="col-sm-8" [(ngModel)]="selected-option">
-                                <nb-radio value="h">Horizontal</nb-radio>
-                                <nb-radio value="v">Vertical</nb-radio>
+                            <nb-radio-group class="col-sm-8" name="viewType" [(ngModel)]="selectedViewType">
+                                <nb-radio [value]="1">Horizontal</nb-radio>
+                                <nb-radio [value]="2">Vertical</nb-radio>
                             </nb-radio-group>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="row form-group">
                             <label class="label col-sm-4">Line Type:</label>
-                            <nb-radio-group class="col-sm-8" [(ngModel)]="selectedOP">
-                                <nb-radio value="a">American</nb-radio>
-                                <nb-radio value="d">Decimal</nb-radio>
+                            <nb-radio-group class="col-sm-8" name="lineType" [(ngModel)]="selectedLineType">
+                                <nb-radio [value]="1">Decimal</nb-radio>
+                                <nb-radio [value]="2">American</nb-radio>
                             </nb-radio-group>
                         </div>
                     </div>
                     <div class="col-sm-5">
                         <div class="row form-group">
-                            <label class="label col-sm-4">Origin Time Zone:</label>
-                            <label type="text" class="col-sm-8" status="info">(GMT-08:00) Pacific Time (US & Canada)</label>
+                            <label class="label col-sm-3">Origin Time Zone:</label>
+                            <label type="text" class="col-sm-9" status="info">(GMT-08:00) Pacific Time (US & Canada)</label>
                         </div>
                         <div class="row form-group">
-                            <label class="label col-sm-4">Time Zone:</label>
-                            <nb-select class="col-sm-8" placeholder="Select the time zone">
-                                <nb-option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="-12">(GMT-12:00) International Date Line West</nb-option>
-                                <nb-option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="-11">(GMT-11:00) Midway Island, Samoa</nb-option>
-                                <nb-option timeZoneId="3" gmtAdjustment="GMT-10:00" useDaylightTime="0" value="-10">(GMT-10:00) Hawaii</nb-option>
-                                <nb-option timeZoneId="4" gmtAdjustment="GMT-09:00" useDaylightTime="1" value="-9">(GMT-09:00) Alaska</nb-option>
-                                <nb-option timeZoneId="5" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Pacific Time (US & Canada)</nb-option>
-                                <nb-option timeZoneId="6" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Tijuana, Baja California</nb-option>
-                                <nb-option timeZoneId="7" gmtAdjustment="GMT-07:00" useDaylightTime="0" value="-7">(GMT-07:00) Arizona</nb-option>
-                                <nb-option timeZoneId="8" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Chihuahua, La Paz, Mazatlan</nb-option>
-                                <nb-option timeZoneId="9" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Mountain Time (US & Canada)</nb-option>
-                                <nb-option timeZoneId="10" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Central America</nb-option>
-                                <nb-option timeZoneId="11" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Central Time (US & Canada)</nb-option>
-                                <nb-option timeZoneId="12" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Guadalajara, Mexico City, Monterrey</nb-option>
-                                <nb-option timeZoneId="13" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Saskatchewan</nb-option>
-                                <nb-option timeZoneId="14" gmtAdjustment="GMT-05:00" useDaylightTime="0" value="-5">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</nb-option>
-                                <nb-option timeZoneId="15" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Eastern Time (US & Canada)</nb-option>
-                                <nb-option timeZoneId="16" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Indiana (East)</nb-option>
-                                <nb-option timeZoneId="17" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Atlantic Time (Canada)</nb-option>
-                                <nb-option timeZoneId="18" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Caracas, La Paz</nb-option>
-                                <nb-option timeZoneId="19" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Manaus</nb-option>
-                                <nb-option timeZoneId="20" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Santiago</nb-option>
-                                <nb-option timeZoneId="21" gmtAdjustment="GMT-03:30" useDaylightTime="1" value="-3.5">(GMT-03:30) Newfoundland</nb-option>
-                                <nb-option timeZoneId="22" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Brasilia</nb-option>
-                                <nb-option timeZoneId="23" gmtAdjustment="GMT-03:00" useDaylightTime="0" value="-3">(GMT-03:00) Buenos Aires, Georgetown</nb-option>
-                                <nb-option timeZoneId="24" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Greenland</nb-option>
-                                <nb-option timeZoneId="25" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Montevideo</nb-option>
-                                <nb-option timeZoneId="26" gmtAdjustment="GMT-02:00" useDaylightTime="1" value="-2">(GMT-02:00) Mid-Atlantic</nb-option>
-                                <nb-option timeZoneId="27" gmtAdjustment="GMT-01:00" useDaylightTime="0" value="-1">(GMT-01:00) Cape Verde Is.</nb-option>
-                                <nb-option timeZoneId="28" gmtAdjustment="GMT-01:00" useDaylightTime="1" value="-1">(GMT-01:00) Azores</nb-option>
-                                <nb-option timeZoneId="29" gmtAdjustment="GMT+00:00" useDaylightTime="0" value="0">(GMT+00:00) Casablanca, Monrovia, Reykjavik</nb-option>
-                                <nb-option timeZoneId="30" gmtAdjustment="GMT+00:00" useDaylightTime="1" value="0">(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London</nb-option>
-                                <nb-option timeZoneId="31" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</nb-option>
-                                <nb-option timeZoneId="32" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</nb-option>
-                                <nb-option timeZoneId="33" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</nb-option>
-                                <nb-option timeZoneId="34" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb</nb-option>
-                                <nb-option timeZoneId="35" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) West Central Africa</nb-option>
-                                <nb-option timeZoneId="36" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Amman</nb-option>
-                                <nb-option timeZoneId="37" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Athens, Bucharest, Istanbul</nb-option>
-                                <nb-option timeZoneId="38" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Beirut</nb-option>
-                                <nb-option timeZoneId="39" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Cairo</nb-option>
-                                <nb-option timeZoneId="40" gmtAdjustment="GMT+02:00" useDaylightTime="0" value="2">(GMT+02:00) Harare, Pretoria</nb-option>
-                                <nb-option timeZoneId="41" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</nb-option>
-                                <nb-option timeZoneId="42" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Jerusalem</nb-option>
-                                <nb-option timeZoneId="43" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Minsk</nb-option>
-                                <nb-option timeZoneId="44" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Windhoek</nb-option>
-                                <nb-option timeZoneId="45" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Kuwait, Riyadh, Baghdad</nb-option>
-                                <nb-option timeZoneId="46" gmtAdjustment="GMT+03:00" useDaylightTime="1" value="3">(GMT+03:00) Moscow, St. Petersburg, Volgograd</nb-option>
-                                <nb-option timeZoneId="47" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Nairobi</nb-option>
-                                <nb-option timeZoneId="48" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Tbilisi</nb-option>
-                                <nb-option timeZoneId="49" gmtAdjustment="GMT+03:30" useDaylightTime="1" value="3.5">(GMT+03:30) Tehran</nb-option>
-                                <nb-option timeZoneId="50" gmtAdjustment="GMT+04:00" useDaylightTime="0" value="4">(GMT+04:00) Abu Dhabi, Muscat</nb-option>
-                                <nb-option timeZoneId="51" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Baku</nb-option>
-                                <nb-option timeZoneId="52" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Yerevan</nb-option>
-                                <nb-option timeZoneId="53" gmtAdjustment="GMT+04:30" useDaylightTime="0" value="4.5">(GMT+04:30) Kabul</nb-option>
-                                <nb-option timeZoneId="54" gmtAdjustment="GMT+05:00" useDaylightTime="1" value="5">(GMT+05:00) Yekaterinburg</nb-option>
-                                <nb-option timeZoneId="55" gmtAdjustment="GMT+05:00" useDaylightTime="0" value="5">(GMT+05:00) Islamabad, Karachi, Tashkent</nb-option>
-                                <nb-option timeZoneId="56" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Sri Jayawardenapura</nb-option>
-                                <nb-option timeZoneId="57" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</nb-option>
-                                <nb-option timeZoneId="58" gmtAdjustment="GMT+05:45" useDaylightTime="0" value="5.75">(GMT+05:45) Kathmandu</nb-option>
-                                <nb-option timeZoneId="59" gmtAdjustment="GMT+06:00" useDaylightTime="1" value="6">(GMT+06:00) Almaty, Novosibirsk</nb-option>
-                                <nb-option timeZoneId="60" gmtAdjustment="GMT+06:00" useDaylightTime="0" value="6">(GMT+06:00) Astana, Dhaka</nb-option>
-                                <nb-option timeZoneId="61" gmtAdjustment="GMT+06:30" useDaylightTime="0" value="6.5">(GMT+06:30) Yangon (Rangoon)</nb-option>
-                                <nb-option timeZoneId="62" gmtAdjustment="GMT+07:00" useDaylightTime="0" value="7">(GMT+07:00) Bangkok, Hanoi, Jakarta</nb-option>
-                                <nb-option timeZoneId="63" gmtAdjustment="GMT+07:00" useDaylightTime="1" value="7">(GMT+07:00) Krasnoyarsk</nb-option>
-                                <nb-option timeZoneId="64" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi</nb-option>
-                                <nb-option timeZoneId="65" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Kuala Lumpur, Singapore</nb-option>
-                                <nb-option timeZoneId="66" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Irkutsk, Ulaan Bataar</nb-option>
-                                <nb-option timeZoneId="67" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Perth</nb-option>
-                                <nb-option timeZoneId="68" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Taipei</nb-option>
-                                <nb-option timeZoneId="69" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Osaka, Sapporo, Tokyo</nb-option>
-                                <nb-option timeZoneId="70" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Seoul</nb-option>
-                                <nb-option timeZoneId="71" gmtAdjustment="GMT+09:00" useDaylightTime="1" value="9">(GMT+09:00) Yakutsk</nb-option>
-                                <nb-option timeZoneId="72" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Adelaide</nb-option>
-                                <nb-option timeZoneId="73" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Darwin</nb-option>
-                                <nb-option timeZoneId="74" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Brisbane</nb-option>
-                                <nb-option timeZoneId="75" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Canberra, Melbourne, Sydney</nb-option>
-                                <nb-option timeZoneId="76" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Hobart</nb-option>
-                                <nb-option timeZoneId="77" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Guam, Port Moresby</nb-option>
-                                <nb-option timeZoneId="78" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Vladivostok</nb-option>
-                                <nb-option timeZoneId="79" gmtAdjustment="GMT+11:00" useDaylightTime="1" value="11">(GMT+11:00) Magadan, Solomon Is., New Caledonia</nb-option>
-                                <nb-option timeZoneId="80" gmtAdjustment="GMT+12:00" useDaylightTime="1" value="12">(GMT+12:00) Auckland, Wellington</nb-option>
-                                <nb-option timeZoneId="81" gmtAdjustment="GMT+12:00" useDaylightTime="0" value="12">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</nb-option>
-                                <nb-option timeZoneId="82" gmtAdjustment="GMT+13:00" useDaylightTime="0" value="13">(GMT+13:00) Nuku'alofa</nb-option>
+                            <label class="label col-sm-3">Time Zone:</label>
+                            <nb-select class="col-sm-9" placeholder="Select the time zone" [(ngModel)]="timeZoneId" [selected]="timeZoneId">
+                                <nb-option *ngFor="let zone of timeZones.getTimeZoneList()" 
+                                    [value]="zone.id">{{zone.text}}</nb-option>
                             </nb-select>
                         </div>
                     </div>
@@ -208,7 +128,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <button class="float-right btn-success mr-3" nbButton status="success">Save</button>
-        <button class="float-right mr-2" nbButton status="danger">Cancel</button>
+        <button class="float-right btn-success mr-3" nbButton (click)="submit()" status="success">Save</button>
+        <button class="float-right mr-2" nbButton (click)="cancel()" status="danger">Cancel</button>
     </div>
 </div>

@@ -34,8 +34,8 @@ module.exports = {
     },
     async save(req, res) {
         try {
-            await service.save();
-            return res.status(200).json({ status: 200, data: [] });
+            var response = await service.saveConfiguration(req.body);
+            return res.status(200).json(response);
         } catch (e) {
             return res.status(500).send({ message: 'Internal Server Error: ' + e.message })
         }

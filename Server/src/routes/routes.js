@@ -9,7 +9,7 @@ const sportController = require('../controllers/sport.controller');
 router.get('/loadLines', lineContronller.loadLines);
 
 //configuration
-router.post('/configuration', configController.save);
+router.post('/configuration/', configController.save);
 router.get('/configuration/:code', (req, res) => {
   return configController.get(req, res);
 });
@@ -19,6 +19,7 @@ router.get('/configuration/', (req, res) => {
 router.get('/configuration/:code/isValid', (req, res) => {
   return configController.validConfigurationCode(req, res);
 });
+
 
 router.get('/sports/tree', (req, res) => {
   return sportController.getSportsAsTree(req, res);

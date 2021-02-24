@@ -14,7 +14,7 @@ module.exports = {
 
 function getChachedData(key) {
     return cacheManager.get(key);
-}
+}   
 
 function getSports(list) {
     var sports = [];

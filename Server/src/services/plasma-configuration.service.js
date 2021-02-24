@@ -1,3 +1,4 @@
+const { config } = require('rxjs');
 var PlasmaConfigurationModel = require('../models/plasma-configuration.model');
 
 module.exports = {
@@ -19,8 +20,35 @@ module.exports = {
     },
     async validConfigurationCode(configurationCode) {
         return await this.get(configurationCode) !== null;
-    }
+    },
+    async saveConfiguration(configuration) {
+        if (configuration.code == "") {
+            configuration.code = generateCode(6);
+            var model = new PlasmaConfigurationModel({
+                code: configuration.code,
+                viewType: configuration.viewType,
+                lineType: configuration.lineType,
+                time: configuration.time,
+                createdDate: new Date().toISOString(),  
+                createdBy: 'bserrano',
+                sections: configuration.sections
+            });
+            model.save(function (err, obj) {
+                if (err) throw err;
+                return obj;
+            });
+        }
+    },
 };
+
+function generateCode(keyLength) {
+    var i, key = "", characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var charactersLength = characters.length;
+    for (i = 0; i < keyLength; i++) {
+        key += characters.substr(Math.floor((Math.random() * charactersLength) + 1), 1);
+    }
+    return key.toUpperCase();
+}
 
 //just for testing 
 function saveNewModel() {
