@@ -13,10 +13,11 @@ export class SectionComponent implements OnInit {
   @Input()
   schedules: Schedule[];
 
-
+  @Input()
+  imageUrl: string;
 
   ngOnInit(): void {
-    
+    console.log(this.imageUrl);
   }
   
 

@@ -1,0 +1,25 @@
+<nb-card class="modal-card">
+    <nb-card-header>
+        <span>Upload your image</span>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="span-resolution-container">
+            <span status="danger" class="span-resolution"><i class="fas fa-exclamation"></i> Recommended resolution: {{resolutionMessage}} </span>
+        </div>
+        <div class="img-container">
+            <div [ngClass]="{'container-responsive-banner': isBanner, 'container-responsive-adv': isAdvertising }">
+                <img src="{{imageUrl}}">
+            </div>
+        </div>
+        <div>
+            <label class="btn btn-default">
+                <input accept="image/*" type="file" (change)="selectFile($event)">
+            </label>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="float-right mr-2" nbButton status="success" [disabled]="!selectedFiles || isSubmitting"
+            (click)="upload()">Upload <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i></button>
+        <button class="float-right btn-success mr-3" nbButton status="danger" [disabled]="isSubmitting" (click)="cancel()">Cancel</button>
+    </nb-card-footer>
+</nb-card>

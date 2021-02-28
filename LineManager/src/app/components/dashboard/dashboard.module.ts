@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbTreeGridModule, NbIconModule, NbInputModule, NbButtonModule, NbRadioModule, NbSelectModule } from '@nebular/theme';
+import { NbCardModule, NbTreeGridModule, NbIconModule, NbInputModule, NbButtonModule, NbRadioModule, NbSelectModule, NbDialogModule } from '@nebular/theme';
 import { ThemeModule } from '../../shared/theme.module';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { DashboardComponent } from './dashboard.component';
 import { CreateComponent } from './configuration/create/create.component';
 import { FormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';
+import { ImageManageModalComponent } from './utils/modals/image-manager/image-manager-modal.component';
 
 @NgModule({
   imports: [
@@ -17,11 +18,13 @@ import { TreeviewModule } from 'ngx-treeview';
     NbCardModule,
     NbButtonModule,
     ThemeModule,
+    NbDialogModule.forChild(),
   ],
   declarations: [
     DashboardComponent,
     ConfigurationComponent,
-    CreateComponent
+    CreateComponent,
+    ImageManageModalComponent
   ],
 })
 export class DashboardModule { }

@@ -4,6 +4,10 @@ import { ConfigurationLinesService } from '../../../../services/configuration-li
 import { TreeviewItem } from 'ngx-treeview';
 import { TimeZones } from '../../../../data/time-zones';
 import { Router } from '@angular/router';
+import { Section } from '../../../../models/section.model';
+import { Event } from '../../../../models/event.model';
+import { NbDialogService } from '@nebular/theme';
+import { ImageManageModalComponent } from '../../utils/modals/image-manager/image-manager-modal.component';
 
 @Component({
   selector: 'ngx-create',
@@ -11,6 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
+  
   selectedViewType: number;
   selectedLineType: number;
   timeZoneId: number;
@@ -27,13 +32,16 @@ export class CreateComponent implements OnInit {
 
   sportsAsTree: Sport[];
   items: TreeviewItem[] = [];
+  selectedSections: Section[];
 
-  constructor(private configService: ConfigurationLinesService, private router: Router) { }
+  constructor(private configService: ConfigurationLinesService, private router: Router, 
+             private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     this.selectedViewType = 1;
     this.selectedLineType = 1;
     this.timeZoneId = 5;
+    this.selectedSections = [];
 
     this.configService.getSportsAsTree().subscribe(res => {
       this.sportsAsTree = res;
@@ -46,6 +54,7 @@ export class CreateComponent implements OnInit {
   }
 
   updateSelectedItems($event) {
+    this.updatetSelectedSections();;    
   }
 
   getSelectedItems(): TreeviewItem[] {
@@ -64,19 +73,18 @@ export class CreateComponent implements OnInit {
     var model = {};
     const timeZone = this.getSelectedTimeZone();
     if (this.modelIsValid) {
-      const selectedSections = this.getSelectedSections();
       model = {
         code: "",
         viewType: this.selectedViewType == 1 ? 'h': 'v',
         lineType: this.selectedLineType == 1 ? 'd': 'a' ,
         time: timeZone.id,
         createdDate: "",
-        sections: selectedSections
+        sections: this.selectedSections
       }
+      console.log(this.selectedSections);
       this.configService.save(model).subscribe(res => {
         this.redirectoToDashboard();
       });
-      
     }
   }
 
@@ -88,15 +96,15 @@ export class CreateComponent implements OnInit {
     this.router.navigate(['./manager']);
   }
 
-  getSelectedSections() {
-    var sections = [];
+  updatetSelectedSections() {
+    this.selectedSections = [];
     this.getSelectedItems().forEach(item => {
       const section = {
         name: item.value,
-        bannerUrl: 'https://via.placeholder.com/1500x140',
-        advertisingUrl: 'https://via.placeholder.com/800x600',
+        bannerUrl: '',
+        advertisingUrl: '',
         events: []
-      };
+      } as Section;
       const children = item.children.filter(x => x.checked || x.checked === undefined);
       children.forEach(child => {
         const titles = child.children.filter(x => x.checked).map(x => x.value);
@@ -104,14 +112,12 @@ export class CreateComponent implements OnInit {
           sport: item.value,
           division: child.value,
           titles: titles
-        };
+        } as Event;
         section.events.push(event);
       });
-      sections.push(section);
+      this.selectedSections.push(section);
     });
-    return sections;
   }
-
 
   formatSportsIntoTree(sports: Sport[]) {
     if (sports) {
@@ -149,6 +155,53 @@ export class CreateComponent implements OnInit {
         this.items.push(sportTree);
       });
     }
+  }
+
+  addAdvertisingForAll() {
+    const imageManager = this.dialogService.open(ImageManageModalComponent, {
+      context: {
+        type: 'advertising',
+        sectionName: '',
+        imageUrl: ''
+      } 
+    });
+    imageManager.onClose.subscribe(res => {
+      if (res) {
+        this.selectedSections.forEach(section => {
+          section.advertisingUrl = res;
+        });
+      }
+    });
+  }
+
+  manageBanner(section: Section) {
+    const imageManager = this.dialogService.open(ImageManageModalComponent, {
+      context: {
+        type: 'banner',
+        sectionName: section.name,
+        imageUrl: section.bannerUrl
+      } 
+    });
+    imageManager.onClose.subscribe(res => {
+      if (res) {
+        section.bannerUrl = res;
+      }
+    });
+  }
+
+  manageAdvertising(section: Section) {
+    const imageManager =  this.dialogService.open(ImageManageModalComponent, {
+      context: {
+        type: 'advertising',
+        sectionName: section.name,
+        imageUrl: section.advertisingUrl
+      } 
+    })
+    imageManager.onClose.subscribe(res => {
+      if (res) {
+        section.advertisingUrl = res;
+      }
+    });
   }
 
 }

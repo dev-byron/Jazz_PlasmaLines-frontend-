@@ -120,6 +120,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           const section = {
             sport: subscribedEvent.sport,
             division: subscribedEvent.division,
+            bannerUrl: subscribedSection.bannerUrl,
             schedules: []
           } as SportbookSection;
           subscribedEvent.titles.forEach(subscribedTitle => {

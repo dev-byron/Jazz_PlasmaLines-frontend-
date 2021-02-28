@@ -20,7 +20,11 @@ let SectionSchema = new Schema({
         type: String,
         required: true,
     },
-    imageUrl: {
+    bannerUrl: {
+        type: String,
+        required: false
+    },
+    advertisingUrl: {
         type: String,
         required: false
     },

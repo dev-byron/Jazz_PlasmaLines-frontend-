@@ -27,13 +27,15 @@
                     <div class="col-sm-5">
                         <div class="row form-group">
                             <label class="label col-sm-3">Origin Time Zone:</label>
-                            <label type="text" class="col-sm-9" status="info">(GMT-08:00) Pacific Time (US & Canada)</label>
+                            <label type="text" class="col-sm-9" status="info">(GMT-08:00) Pacific Time (US &
+                                Canada)</label>
                         </div>
                         <div class="row form-group">
                             <label class="label col-sm-3">Time Zone:</label>
-                            <nb-select class="col-sm-9" placeholder="Select the time zone" [(ngModel)]="timeZoneId" [selected]="timeZoneId">
-                                <nb-option *ngFor="let zone of timeZones.getTimeZoneList()" 
-                                    [value]="zone.id">{{zone.text}}</nb-option>
+                            <nb-select class="col-sm-9" placeholder="Select the time zone" [(ngModel)]="timeZoneId"
+                                [selected]="timeZoneId">
+                                <nb-option *ngFor="let zone of timeZones.getTimeZoneList()" [value]="zone.id">
+                                    {{zone.text}}</nb-option>
                             </nb-select>
                         </div>
                     </div>
@@ -65,7 +67,7 @@
                     <nb-card-body>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <button class="float-right btn-add" nbButton status="info"><i class="fas fa-plus"></i>
+                                <button class="float-right btn-add" nbButton status="info" (click)="addAdvertisingForAll()">
                                     Advertising for all
                                 </button>
                             </div>
@@ -76,19 +78,19 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" class="col-name">Section / Sport Name</th>
-                                            <th scope="col" class="col-btn">Check Banner</th>
-                                            <th scope="col" class="col-btn">Add Advertising</th>
+                                            <th scope="col" class="col-btn">Banner</th>
+                                            <th scope="col" class="col-btn">Advertising</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let item of getSelectedItems()">
-                                            <td>{{item.value}}</td>
+                                        <tr *ngFor="let section of selectedSections">
+                                            <td>{{section.name}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-info btn-table btn-action"><i
+                                                <button type="button" (click)="manageBanner(section)" class="btn btn-info btn-table btn-action"><i
                                                         class="fas fa-eye"></i></button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-warning btn-table btn-action"><i
+                                                <button type="button" (click)="manageAdvertising(section)" class="btn btn-warning btn-table btn-action"><i
                                                         class="fas fa-plus"></i></button>
                                             </td>
                                         </tr>

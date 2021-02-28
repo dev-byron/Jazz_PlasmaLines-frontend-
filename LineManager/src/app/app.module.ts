@@ -25,6 +25,7 @@ import { AuthService } from './services/auth.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { UserService } from './services/user.service';
 import { ConfigurationLinesService } from './services/configuration-lines.service';
+import { ImageManagerService } from './services/images-manager.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +47,8 @@ import { ConfigurationLinesService } from './services/configuration-lines.servic
     AuthService, 
     TokenStorageService, 
     UserService,
-    ConfigurationLinesService
+    ConfigurationLinesService,
+    ImageManagerService
   ],
   bootstrap: [AppComponent],
 })
