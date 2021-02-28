@@ -61,6 +61,10 @@ let PlasmaConfigurationSchema = new Schema({
         type: Date, 
         default: Date.now
     },
+    active: {
+        type: Boolean,
+        required: true
+    },
     sections: [SectionSchema]
 });
 

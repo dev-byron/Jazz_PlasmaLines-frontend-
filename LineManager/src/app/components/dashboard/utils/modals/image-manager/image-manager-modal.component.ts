@@ -47,7 +47,8 @@ export class ImageManageModalComponent implements OnInit {
   async upload() {
       this.isSubmitting = true;
       const file = this.selectedFiles.item(0);
-      const data = await this.imagesService.uploadFile(file, this.folderName, file.name);
+      const fileName = this.generateGuid() + '.' + this.getFileExtension(file.name);
+      const data = await this.imagesService.uploadFile(file, this.folderName, fileName);
       if(data) {
         this.isSubmitting = false;
         this.dialogRef.close(data.Location);
@@ -63,5 +64,16 @@ export class ImageManageModalComponent implements OnInit {
         }
         reader.readAsDataURL(event.target.files[0]);
       }
+    }
+
+    generateGuid(): string {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    getFileExtension(fileName) {
+      return fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2);
     }
 }

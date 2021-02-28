@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +11,9 @@ import { User } from '../../models/user.model';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(private service: UserService) { }
+  constructor(private service: UserService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) { }
   models: User[];
   
   ngOnInit(): void {
@@ -18,6 +21,10 @@ export class UsersComponent implements OnInit {
       console.log(res);
       this.models = res;
     });
+  }
+
+  add() {
+    this.router.navigate(['./create'], {relativeTo: this.activatedRoute});
   }
 
 

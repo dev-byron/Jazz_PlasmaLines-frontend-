@@ -19,7 +19,8 @@ export class CreateComponent implements OnInit {
   selectedViewType: number;
   selectedLineType: number;
   timeZoneId: number;
-  modelIsValid: boolean = true;
+  modelIsValid: boolean;
+  isSubmitting: boolean;
 
   timeZones: TimeZones = new TimeZones();
   config = {
@@ -42,6 +43,7 @@ export class CreateComponent implements OnInit {
     this.selectedLineType = 1;
     this.timeZoneId = 5;
     this.selectedSections = [];
+    this.modelIsValid = false;
 
     this.configService.getSportsAsTree().subscribe(res => {
       this.sportsAsTree = res;
@@ -54,7 +56,8 @@ export class CreateComponent implements OnInit {
   }
 
   updateSelectedItems($event) {
-    this.updatetSelectedSections();;    
+    this.updatetSelectedSections();
+    this.modelIsValid = this.selectedSections.length > 0;
   }
 
   getSelectedItems(): TreeviewItem[] {
@@ -70,6 +73,7 @@ export class CreateComponent implements OnInit {
   }
 
   submit() {
+    this.isSubmitting = true;
     var model = {};
     const timeZone = this.getSelectedTimeZone();
     if (this.modelIsValid) {
@@ -81,8 +85,8 @@ export class CreateComponent implements OnInit {
         createdDate: "",
         sections: this.selectedSections
       }
-      console.log(this.selectedSections);
       this.configService.save(model).subscribe(res => {
+        this.isSubmitting = false;
         this.redirectoToDashboard();
       });
     }

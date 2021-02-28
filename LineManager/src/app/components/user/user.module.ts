@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { NbCardModule,  NbButtonModule } from '@nebular/theme';
 import { ThemeModule } from '../../shared/theme.module';
 import { UsersComponent } from './users.component';
+import { UserCreateComponent } from './user-create/user-create.component';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { UsersComponent } from './users.component';
     ThemeModule,
   ],
   declarations: [
-    UsersComponent
+    UsersComponent,
+    UserCreateComponent
   ],
 })
 export class UserModule { }

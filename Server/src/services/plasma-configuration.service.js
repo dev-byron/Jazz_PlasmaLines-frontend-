@@ -31,6 +31,7 @@ module.exports = {
                 time: configuration.time,
                 createdDate: new Date().toISOString(),  
                 createdBy: 'bserrano',
+                active: true,
                 sections: configuration.sections
             });
             model.save(function (err, obj) {

@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { ManagerComponent } from './manager.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
-import { UsersComponent } from './users/users.component';
+import { UsersComponent } from './user/users.component';
 import { CreateComponent } from './dashboard/configuration/create/create.component';
+import { UserCreateComponent } from './user/user-create/user-create.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,13 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        component: UsersComponent
+        component: UsersComponent,
+        children: [
+          {
+            path: 'create',
+            component: UserCreateComponent,
+          }
+        ]
       },
       {
         path: '',
