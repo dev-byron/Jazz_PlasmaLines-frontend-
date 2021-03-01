@@ -97,7 +97,7 @@ export class CreateComponent implements OnInit {
   }
   
   private redirectoToDashboard(): void {
-    this.router.navigate(['./manager']);
+    this.router.navigate(['manager']);
   }
 
   updatetSelectedSections() {

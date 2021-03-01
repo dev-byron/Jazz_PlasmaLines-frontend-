@@ -15,16 +15,24 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent
-      },
-      {
-        path: 'create',
-        component: CreateComponent
+        children: [
+          {
+            path: '',
+            component: DashboardComponent
+          },
+          {
+            path: 'create',
+            component: CreateComponent
+          },
+        ]
       },
       {
         path: 'users',
-        component: UsersComponent,
         children: [
+          {
+            path: '',
+            component: UsersComponent,
+          },
           {
             path: 'create',
             component: UserCreateComponent,

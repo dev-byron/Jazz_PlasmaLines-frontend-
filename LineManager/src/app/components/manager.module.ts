@@ -5,7 +5,7 @@ import { ManagerComponent } from './manager.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ManagerRoutingModule } from './manager-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
-import { UsersComponent } from './user/users.component';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   imports: [
@@ -13,14 +13,14 @@ import { UsersComponent } from './user/users.component';
     ThemeModule,
     NbMenuModule,
     DashboardModule,
+    UserModule,
     MiscellaneousModule,
     NbCardModule,
     NbButtonModule,
     ThemeModule,
   ],
   declarations: [
-    ManagerComponent,
-    UsersComponent
+    ManagerComponent
   ],
 })
 export class ManagerModule {

@@ -12,6 +12,10 @@ module.exports = function(app) {
 
   app.get("/api/users", controller.getAll);
 
+  app.post("/api/users", controller.save);
+
+  app.get("/api/users/byEmail/:email", controller.getByEmail); 
+
   app.get("/api/users/id", [authJwt.verifyToken], controller.userBoard);
 
   app.get(

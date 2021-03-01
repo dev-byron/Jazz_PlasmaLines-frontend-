@@ -6,6 +6,11 @@
             "http://localhost:4200",
             "http://localhost:4201"
         ]
+    },
+    "notifications": {
+        "email": "zyo1994@gmail.com",
+        "pwd": "7654321byron",
+        "service": "gmail"
     }
 
 }

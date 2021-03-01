@@ -18,13 +18,12 @@ export class UsersComponent implements OnInit {
   
   ngOnInit(): void {
     this.service.getAll().subscribe(res => {
-      console.log(res);
       this.models = res;
     });
   }
 
   add() {
-    this.router.navigate(['./create'], {relativeTo: this.activatedRoute});
+    this.router.navigate(['create'], {relativeTo: this.activatedRoute});
   }
 
 

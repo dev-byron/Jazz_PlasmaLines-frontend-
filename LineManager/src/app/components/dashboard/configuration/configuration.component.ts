@@ -38,7 +38,7 @@ export class ConfigurationComponent implements OnInit {
   }
  
   goToManager() {
-    this.router.navigate(['../create'], {relativeTo: this.activatedRoute});
+    this.router.navigate(['create'], {relativeTo: this.activatedRoute});
   }
 
 

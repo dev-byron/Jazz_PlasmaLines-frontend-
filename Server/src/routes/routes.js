@@ -13,13 +13,14 @@ router.post('/configuration/', configController.save);
 router.get('/configuration/:code', (req, res) => {
   return configController.get(req, res);
 });
+
 router.get('/configuration/', (req, res) => {
   return configController.getAll(req, res);
 });
+
 router.get('/configuration/:code/isValid', (req, res) => {
   return configController.validConfigurationCode(req, res);
 });
-
 
 router.get('/sports/tree', (req, res) => {
   return sportController.getSportsAsTree(req, res);
