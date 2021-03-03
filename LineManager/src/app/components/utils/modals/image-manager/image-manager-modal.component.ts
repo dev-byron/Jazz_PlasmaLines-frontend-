@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { ImageManagerService } from '../../../../../services/images-manager.service';
+import { ImageManagerService } from '../../../../services/images-manager.service';
 
 @Component({
   selector: 'nb-name-prompt',

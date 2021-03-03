@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Section } from '../../../../models/section.model';
 import { Event } from '../../../../models/event.model';
 import { NbDialogService } from '@nebular/theme';
-import { ImageManageModalComponent } from '../../utils/modals/image-manager/image-manager-modal.component';
+import { ImageManageModalComponent } from '../../../utils/modals/image-manager/image-manager-modal.component';
 
 @Component({
   selector: 'ngx-create',

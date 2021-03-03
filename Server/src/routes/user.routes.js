@@ -11,22 +11,9 @@ module.exports = function(app) {
   });
 
   app.get("/api/users", controller.getAll);
-
   app.post("/api/users", controller.save);
-
+  app.delete("/api/users/:id", controller.delete);
   app.get("/api/users/byEmail/:email", controller.getByEmail); 
-
   app.get("/api/users/id", [authJwt.verifyToken], controller.userBoard);
 
-  app.get(
-    "api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    controller.moderatorBoard
-  );
-
-  app.get(
-    "api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
 };

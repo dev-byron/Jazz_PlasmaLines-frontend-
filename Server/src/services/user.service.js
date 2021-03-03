@@ -2,13 +2,14 @@ var UserModel = require('../models/user.model');
 const db = require("../models");
 var bcrypt = require("bcryptjs");
 const mailService = require('./mail.service');
+var ObjectID = require('mongodb').ObjectID;
 
 const User = db.user;
 const Role = db.role;
 
 exports.getAll = async () => {
   var result = [];
-  var users = await UserModel.find({}, function (err, users) {
+  var users = await UserModel.find({active: true}, function (err, users) {
     if (err) throw err;
     return users;
   });
@@ -25,7 +26,8 @@ exports.getAll = async () => {
 exports.getByEmail = async (email) => {
    return await UserModel.findOne(
     {
-      email: email
+      email: email,
+      active: true
     }, function (err, user) {
       if (err) throw err;
       if (user) {
@@ -39,13 +41,22 @@ exports.getByEmail = async (email) => {
     });
 };
 
+exports.delete = async (id) => {
+  return await UserModel.updateOne(
+   { _id: ObjectID(id) }, 
+   { active: false }, 
+   function (err, user) {
+     if (err) throw err;
+     return true;
+   });
+};
 
 exports.save = async (req, res) => {
-  const tmpPwd = generateRandomString();
-  console.log(tmpPwd);
+  const tmpPwd = "123456"; //generateRandomString();
   const user = new User({
     username: req.body.username,
     email: req.body.email,
+    active: true,
     password: bcrypt.hashSync(tmpPwd, 6)
   });
 
@@ -66,7 +77,7 @@ exports.save = async (req, res) => {
           res.status(500).send({ message: err });
           return;
         }
-        //mailService.sendMail(req.body.email, tmpPwd);
+        //mailService.sendEmail(req.body.email);
         return user;
       });
     });

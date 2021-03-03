@@ -44,7 +44,7 @@
 
     <div class="row">
         <div class="col-sm-5">
-            <button class="float-right btn-success mr-3" nbButton (click)="submit()" [disabled]="!form.valid"
+            <button class="float-right btn-success mr-3" nbButton (click)="submit()" [disabled]="!form.valid || isSubmitting"
                 status="success">Save
                 <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i></button>
             <button class="float-right mr-2" nbButton (click)="cancel()" status="danger">Cancel</button>

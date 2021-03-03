@@ -23,14 +23,17 @@ export class UserCreateComponent implements OnInit {
 
   submit() {
    this.emailTaken = false;
+   this.isSubmitting = true;
    this.service.getByEmail(this.emailModel).subscribe(res => {
     if (res) {
       this.emailTaken = true;
+      this.isSubmitting = false;
     } else {
       const user = {
         username: this.userNameModel,
         email: this.emailModel
       } as User;
+      this.isSubmitting = false;
       this.service.save(user).subscribe(data => {
         this.back();
       });

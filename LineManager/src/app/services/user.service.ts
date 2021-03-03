@@ -25,4 +25,8 @@ export class UserService {
   save(user: User): Observable<User> {
     return this.http.post<User>(API_URL, user, { responseType: 'json' });
   }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete<any>(API_URL + '/' + id, { responseType: 'json' });
+  }
 }
