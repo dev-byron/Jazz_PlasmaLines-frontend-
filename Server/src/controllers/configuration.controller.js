@@ -40,4 +40,12 @@ module.exports = {
             return res.status(500).send({ message: 'Internal Server Error: ' + e.message })
         }
     },
+    async delete(req, res) {
+        try {
+            var response = await service.delete(req.params.id);
+            return res.status(200).json(response);
+        } catch (e) {
+            return res.status(500).send({ message: 'Internal Server Error: ' + e.message })
+        }
+    },
 };

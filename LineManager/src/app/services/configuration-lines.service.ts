@@ -27,5 +27,8 @@ export class ConfigurationLinesService {
     return this.http.post<ConfigurationLine>(API_URL + 'configuration/', configuration, { responseType: 'json' });
   }
 
+  delete(id: string): Observable<any> {
+    return this.http.delete<any>(API_URL + 'configuration/' + id, { responseType: 'json' });
+  }
 
 }

@@ -26,4 +26,6 @@ router.get('/sports/tree', (req, res) => {
   return sportController.getSportsAsTree(req, res);
 });
 
+router.delete('/configuration/:id', configController.delete);
+
 module.exports = router;

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationLine } from '../../../models/configuration-line.model';
 import { ConfigurationLinesService } from '../../../services/configuration-lines.service';
 import { TimeZones } from '../../../data/time-zones';
+import { NbDialogService } from '@nebular/theme';
+import { DeleteConfirmationModalComponent } from '../../utils/modals/delete-confirmation/delete-confirmation-modal.component';
 
 @Component({
   selector: 'ngx-configuration',
@@ -16,9 +18,14 @@ export class ConfigurationComponent implements OnInit {
   
   constructor(private service: ConfigurationLinesService,  
               private router: Router,
-              private activatedRoute: ActivatedRoute) {}
+              private activatedRoute: ActivatedRoute,
+              private dialogService: NbDialogService) {}
   
   ngOnInit(): void {
+    this.loadAll();
+  }
+
+  loadAll() {
     this.service.getAll().subscribe(res => {
       this.models = res.sort((val1, val2)=> {return new Date(val2.createdDate).getTime() - new 
         Date(val1.createdDate).getTime()})
@@ -39,6 +46,21 @@ export class ConfigurationComponent implements OnInit {
  
   goToManager() {
     this.router.navigate(['create'], {relativeTo: this.activatedRoute});
+  }
+
+  edit(id) {
+
+  }
+
+  delete(id) {
+    const deleteModal = this.dialogService.open(DeleteConfirmationModalComponent);
+    deleteModal.onClose.subscribe(res => {
+      if (res) {
+        this.service.delete(id).subscribe(() => {
+          this.loadAll();
+        })
+      }
+    });
   }
 
 

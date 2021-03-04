@@ -18,7 +18,7 @@ module.exports = {
         .catch(error => {
             throw error;
         });
-    }
+    },
 };
 
 function setDataInCache(xmlAsJson) {
@@ -101,3 +101,4 @@ function getTotal(game) {
     }
     return totalModel;
 }
+
