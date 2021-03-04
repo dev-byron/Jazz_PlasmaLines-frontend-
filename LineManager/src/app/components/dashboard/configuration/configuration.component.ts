@@ -44,12 +44,12 @@ export class ConfigurationComponent implements OnInit {
     return this.timeZones.getTimeZoneList().find(x => x.id == timeZoneId).text;
   }
  
-  goToManager() {
+  addNew() {
     this.router.navigate(['create'], {relativeTo: this.activatedRoute});
   }
 
-  edit(id) {
-
+  edit(code) {
+    this.router.navigate(['edit', code ], {relativeTo: this.activatedRoute});
   }
 
   delete(id) {

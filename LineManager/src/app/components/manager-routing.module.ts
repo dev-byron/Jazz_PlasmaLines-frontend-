@@ -24,6 +24,10 @@ const routes: Routes = [
             path: 'create',
             component: CreateComponent
           },
+          {
+            path: 'edit/:code',
+            component: CreateComponent,
+          }
         ]
       },
       {
@@ -36,7 +40,7 @@ const routes: Routes = [
           {
             path: 'create',
             component: UserCreateComponent,
-          }
+          },
         ]
       },
       {

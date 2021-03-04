@@ -5,7 +5,7 @@
   <nb-card-body>
     <div class="row">
       <div class="col-sm-12">
-          <button class="float-right btn-add" (click)="goToManager()" routerLinkActive="active" nbButton status="info"><i class="fas fa-plus"></i> Add new</button>
+          <button class="float-right btn-add" (click)="addNew()" routerLinkActive="active" nbButton status="info"><i class="fas fa-plus"></i> Add new</button>
       </div>
     </div>
     <div class="row my-3">
@@ -31,7 +31,7 @@
               <td>bserrano</td>
               <td>{{config.createdDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
               <td>
-                <button type="button" class="btn btn-success btn-table" (click)="edit(config.id)"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-success btn-table" (click)="edit(config.code)"><i class="fas fa-edit"></i></button>
                 <button type="button" class="btn btn-danger btn-table" (click)="delete(config.id)"><i class="far fa-trash-alt"></i></button>
               </td>
             </tr>
