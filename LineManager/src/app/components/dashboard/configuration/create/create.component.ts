@@ -3,11 +3,12 @@ import { Sport } from '../../../../models/sport.model';
 import { ConfigurationLinesService } from '../../../../services/configuration-lines.service';
 import { TreeviewItem } from 'ngx-treeview';
 import { TimeZones } from '../../../../data/time-zones';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Section } from '../../../../models/section.model';
 import { Event } from '../../../../models/event.model';
 import { NbDialogService } from '@nebular/theme';
 import { ImageManageModalComponent } from '../../../utils/modals/image-manager/image-manager-modal.component';
+import { ConfigurationLine } from '../../../../models/configuration-line.model';
 
 @Component({
   selector: 'ngx-create',
@@ -15,12 +16,12 @@ import { ImageManageModalComponent } from '../../../utils/modals/image-manager/i
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  
   selectedViewType: number;
   selectedLineType: number;
   timeZoneId: number;
   modelIsValid: boolean;
   isSubmitting: boolean;
+  editCode: string;
 
   timeZones: TimeZones = new TimeZones();
   config = {
@@ -35,7 +36,9 @@ export class CreateComponent implements OnInit {
   items: TreeviewItem[] = [];
   selectedSections: Section[];
 
-  constructor(private configService: ConfigurationLinesService, private router: Router, 
+  constructor(private configService: ConfigurationLinesService, 
+             private router: Router, 
+             private route: ActivatedRoute,
              private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
@@ -48,6 +51,16 @@ export class CreateComponent implements OnInit {
     this.configService.getSportsAsTree().subscribe(res => {
       this.sportsAsTree = res;
       this.formatSportsIntoTree(this.sportsAsTree);
+      this.route.paramMap.subscribe(params => {
+        this.editCode = params.get("code");
+        this.configService.getByCode(this.editCode).subscribe(res => {
+          if (res) {
+            this.fillUpdateConfiguration(res);
+          } else {
+            this.redirectoToDashboard();
+          }
+        });
+      })
     });
   }
 
@@ -57,7 +70,7 @@ export class CreateComponent implements OnInit {
 
   updateSelectedItems($event) {
     this.updatetSelectedSections();
-    this.modelIsValid = this.selectedSections.length > 0;
+   
   }
 
   getSelectedItems(): TreeviewItem[] {
@@ -78,7 +91,7 @@ export class CreateComponent implements OnInit {
     const timeZone = this.getSelectedTimeZone();
     if (this.modelIsValid) {
       model = {
-        code: "",
+        code: this.editCode ? this.editCode : "",
         viewType: this.selectedViewType == 1 ? 'h': 'v',
         lineType: this.selectedLineType == 1 ? 'd': 'a' ,
         time: timeZone.id,
@@ -94,10 +107,6 @@ export class CreateComponent implements OnInit {
 
   cancel() {
     this.redirectoToDashboard();
-  }
-  
-  private redirectoToDashboard(): void {
-    this.router.navigate(['manager']);
   }
 
   updatetSelectedSections() {
@@ -121,6 +130,7 @@ export class CreateComponent implements OnInit {
       });
       this.selectedSections.push(section);
     });
+    this.modelIsValid = this.selectedSections.length > 0;
   }
 
   formatSportsIntoTree(sports: Sport[]) {
@@ -206,6 +216,61 @@ export class CreateComponent implements OnInit {
         section.advertisingUrl = res;
       }
     });
+  }
+
+  private fillUpdateConfiguration(configurationLine: ConfigurationLine) {
+    if (configurationLine) {
+      this.selectedViewType = configurationLine.viewType == 'h' ? 1 : 2;
+      this.selectedLineType = configurationLine.lineType == 'd' ? 1 : 2;
+      this.timeZoneId = parseInt(configurationLine.time);
+
+      configurationLine.sections.forEach(section => {
+        var index = this.items.findIndex(x => x.value.trim() == section.name.trim());
+        if (index > -1) {
+          section.events.forEach(event => {
+            var eventIndex = this.items[index].children.findIndex(x => x.value.trim() == event.division);
+            if (eventIndex > -1) {
+              event.titles.forEach(title => {
+                var indexTitle = this.items[index].children[eventIndex].children.findIndex(x => x.value.trim() == title.trim());
+                if (indexTitle > -1) {
+                  this.items[index].children[eventIndex].children[indexTitle].checked = true;
+                } else {
+                  this.items[index].children[eventIndex].children.push(this.getNewTitleChild(title, true));
+                }
+                this.items[index].children[eventIndex].checked = undefined;
+                this.items[index].children[eventIndex].collapsed = false;
+                this.items[index].checked = undefined;
+                this.items[index].collapsed = false;
+              });
+            }
+            
+          });
+        }
+      })
+    }
+    this.updatetSelectedSections();
+    configurationLine.sections.forEach(section => {
+      var selected = this.selectedSections.find(x => x.name === section.name);
+      if (selected) { 
+        selected.advertisingUrl = section.advertisingUrl;
+        selected.bannerUrl = section.bannerUrl;
+      }
+    });
+  }
+
+  getNewTitleChild(title: string, checked: boolean) {
+    const titleTree = new TreeviewItem({
+      text: title,
+      value: title,
+      checked: checked,
+      collapsed: true,
+    });
+    return titleTree;
+  }
+
+
+  private redirectoToDashboard(): void {
+    this.router.navigate(['manager']);
   }
 
 }

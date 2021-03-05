@@ -19,15 +19,14 @@ module.exports = {
         return configurations;
     },
     async get(configurationCode) {
-        var configModels =  await PlasmaConfigurationModel.findOne({ code: configurationCode, active: true }, function (err, result) {
+        var configModel =  await PlasmaConfigurationModel.findOne({ code: configurationCode, active: true }, function (err, result) {
             if (err) throw err;
-            return configurations;
+            return result;
         });
-        var configurations = [];
-        configModels.forEach(function (config) {
-            configurations.push(map(config));
-        });
-        return configurations;
+        if (configModel) {
+            return map(configModel);
+        }
+        return null;
     },
     async validConfigurationCode(configurationCode) {
         return await this.get(configurationCode) !== null;
@@ -48,6 +47,20 @@ module.exports = {
             model.save(function (err, obj) {
                 if (err) throw err;
                 return obj;
+            });
+        } else {
+            var model = PlasmaConfigurationModel.updateOne(
+                { code: configuration.code }, 
+                { 
+                    viewType: configuration.viewType,
+                    lineType: configuration.lineType,
+                    time: configuration.time,
+                    active: true,
+                    sections: configuration.sections 
+                }, 
+                function (err, result) {
+                if (err) throw err;
+                return result;
             });
         }
     },
