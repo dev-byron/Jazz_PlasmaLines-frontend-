@@ -1,46 +1,5 @@
-
 .no-padding {
     padding: 0;
-}
-
-.no-margin {
-    margin: 0;
-}
-
-.table {
-    color: #138bb0;
-}
-
-.table-title {
-    background-color: #138bb0;
-    color: white;
-    padding: 7px 10px;
-    font-size: 20px;
-    margin: 0;
-    border: 0;
-    font-weight: 700;
-}
-
-.table-subtitle > th {
-    background-color: #4C4C4C;
-    color: white;
-    padding: 6px 10px;
-    font-size: 16px;
-    margin: 0;
-    border: 0;
-    font-weight: 700;
-}
-
-.col-th-1 {
-    width: 8%;
-}
-
-.col-th-2 {
-    width: 40%;
-}
-
-.col-th-3 {
-    width: 12%;
 }
 
 .card {
@@ -52,7 +11,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    max-height: 150px;
+    max-height: 140px;
 }
 
 .img-section img {

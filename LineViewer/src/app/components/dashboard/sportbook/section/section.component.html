@@ -3,24 +3,16 @@
         <img  src="{{imageUrl}}" class="card-img-top">
     </div>
     <div class="card-body no-padding">
-        <div *ngFor="let schedule of schedules">
-            <table class="table table-striped no-margin">
-                <thead>
-                    <tr>
-                        <th colspan="5" class="table-title">{{schedule.title}}</th>
-                    </tr>
-                    <tr class="table-subtitle">
-                        <th scope="col" class="col-th-1">HORA</th>
-                        <th scope="col" class="col-th-2">EQUIPOS</th>
-                        <th scope="col" class="col-th-3">HANDICAP</th>
-                        <th scope="col" class="col-th-3">TOTAL</th>
-                        <th scope="col" class="col-th-3">GANADOR</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr *ngFor="let game of schedule.games" ngx-line [game]="game"></tr>
-                </tbody>
-            </table>
+        <div *ngFor="let schedule of schedules" >
+            
+            <div [ngSwitch]="getScheduleType(schedule)">
+                <ngx-futures-odds-to-win *ngSwitchCase="1"  [schedule]="schedule"></ngx-futures-odds-to-win>
+                <ngx-team-totals *ngSwitchCase="2"  [schedule]="schedule"></ngx-team-totals>
+                <ngx-draw-participant *ngSwitchCase="3"  [schedule]="schedule"></ngx-draw-participant>
+                <ngx-line-default *ngSwitchCase="4" [schedule]="schedule"></ngx-line-default>
+            </div>
+          
+            
         </div>
     </div>
 </div>

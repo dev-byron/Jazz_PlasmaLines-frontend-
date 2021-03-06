@@ -1,7 +1,10 @@
+.main-container {
+    padding: 0 15px;
+}
+
 .main-wrapper-v {
     max-height: 1600px; 
     overflow-y: scroll;
-    scroll-behavior: smooth;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -11,7 +14,6 @@
 .main-wrapper-h {
     max-height: 850px; 
     overflow-y: scroll;
-    scroll-behavior: smooth;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -37,7 +39,7 @@
 }
 
 .modal-header {
-    background-color: #138bb0 !important;
+    background-color: #1C5EAC !important;
     padding: 10px 10px;
     color: white;
 }

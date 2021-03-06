@@ -1,6 +1,4 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Game } from '../../../../models/game.model';
 import { Schedule } from '../../../../models/schedule.model';
 
 @Component({
@@ -17,7 +15,21 @@ export class SectionComponent implements OnInit {
   imageUrl: string;
 
   ngOnInit(): void {
-    console.log(this.imageUrl);
+  }
+
+  getScheduleType(section: Schedule) {
+    if (section.title.toLowerCase().includes("futures") || section.title.toLowerCase().includes("odds to win")) {
+      return 1;
+    }
+    else if (section.title.toLowerCase().includes("team totals")) {
+      return 2;
+    }
+    else if(section.sport.toLowerCase().includes("soc")) {
+      return 3;
+    }
+    else {
+      return 4;
+    }
   }
   
 

@@ -63,7 +63,7 @@ function getGames(schedule) {
         schedule.game.forEach(function (game) {
             var participants = getParticipants(game);
             var total = getTotal(game);
-            var gameModel = new Game(game.$.id, game.$.time, participants, participants, total);
+            var gameModel = new Game(game.$.id, game.$.time, participants, total);
             games.push(gameModel);
         });
     }

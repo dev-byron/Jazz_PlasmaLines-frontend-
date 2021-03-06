@@ -33,6 +33,11 @@ import { NavbarComponent } from './components/dashboard/navbar/navbar.component'
 import { EventAggregator } from './services/utils/event-aggregator';
 import { SportBookComponent } from './components/dashboard/sportbook/sportbook.component';
 import { SectionComponent } from './components/dashboard/sportbook/section/section.component';
+import { DefaultComponent } from './components/dashboard/sportbook/section/default/default.component';
+import { DrawParticipantComponent } from './components/dashboard/sportbook/section/draw-participant/draw-participant.component';
+import { FutureOddsToWinComponent } from './components/dashboard/sportbook/section/futures-odds-to-win/futures-odds-to-win.component';
+import { TeamTotalsComponent } from './components/dashboard/sportbook/section/team-totals/team-totals.component';
+
 import { LineComponent } from './components/dashboard/sportbook/section/line/line.component';
 import {ConfigurationService } from "./services/component/configuration.service";
 import { ConfigurationRestService } from "./services/rest/configuration.rest.service";
@@ -50,6 +55,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SectionComponent, 
     LineComponent, 
     ContainerWrapperDirective, 
+    DefaultComponent,
+    DrawParticipantComponent,
+    FutureOddsToWinComponent,
+    TeamTotalsComponent
   ],
   imports: [
     NbSelectModule,

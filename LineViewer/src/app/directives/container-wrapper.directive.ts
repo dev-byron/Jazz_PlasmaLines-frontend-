@@ -14,7 +14,7 @@ export class ContainerWrapperDirective implements AfterViewInit {
 
   ngAfterViewInit() {
     //time must be configurable
-    interval(3000).subscribe(() => {
+    interval(1500).subscribe(() => {
       var childHeightTotal = 0;
       var firstChildHeight = 0
       var scrollPosition = 0;
@@ -33,7 +33,7 @@ export class ContainerWrapperDirective implements AfterViewInit {
             scrollPosition = this.ref.nativeElement.scrollTop + 75;
             this.ref.nativeElement.scroll({
               top: scrollPosition,
-              left: 0,
+              left: 10,
               behavior: 'smooth'
             });
           }

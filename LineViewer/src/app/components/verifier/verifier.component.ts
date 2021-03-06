@@ -22,15 +22,20 @@ export class VerifierComponent implements OnInit {
   }
 
   verifyCode() {
-    this.isLoading = true;
-    this.configurationService.validConfigurationCode(this.verificationCode)
-    .subscribe(isValid => {
-      this.isLoading = false;
-      this.validVerificationCode = isValid;
-      if (isValid) {
-        this.router.navigateByUrl('/live/'+this.verificationCode);
-      } 
-    })
+    if (this.verificationCode && this.verificationCode.trim() !== '') {
+      this.isLoading = true;
+      this.validVerificationCode = true;
+      this.configurationService.validConfigurationCode(this.verificationCode)
+      .subscribe(isValid => {
+        this.isLoading = false;
+        this.validVerificationCode = isValid;
+        if (isValid) {
+          this.router.navigateByUrl('/live/'+this.verificationCode);
+        } 
+      })
+    } else {
+      this.validVerificationCode = false;
+    }
     
   }
 

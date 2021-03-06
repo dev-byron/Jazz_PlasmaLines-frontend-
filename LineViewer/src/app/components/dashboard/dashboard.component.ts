@@ -16,9 +16,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.activateRoute.paramMap.subscribe(params => { 
        this.code = params.get('code'); 
-      //  if (this.code !== null) {
-      //   this.router.navigateByUrl('/verifier');
-      //  }
+       if (this.code == null) {
+        this.router.navigateByUrl('/verifier');
+       }
    });
   }
 
