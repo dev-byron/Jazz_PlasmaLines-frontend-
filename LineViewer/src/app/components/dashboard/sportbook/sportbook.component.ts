@@ -23,6 +23,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('content') loadingInfoModal: NgbModalRef;
   modalReference = null;
+  stopAutoScroll: boolean;
 
   sections = [];
   plasmaLineConfig: PlasmaLineConfig;
@@ -32,12 +33,15 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   } as ViewConfig;
 
   viewTypeEnum = ViewTypeEnum;
-
+  advertisingImages: string[];
   rooms: Room[];
   sportbookSections: SportbookSection[];
   loadingData: boolean;
   deletedFirst = false;
   counter = 0;
+
+  everySeconds = 60000;
+  staySeconds = 10000;
 
   // necesito dos arreglos diferentes, uno para vizualizar la vara y otro que es es socket que va a actualizar lo que esta en pantalla si es necesario
   constructor(private eventAggregator: EventAggregator,
@@ -48,6 +52,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.loadingData = true;
     this.sportbookSections = [];
+    this.stopAutoScroll = false;
   }
 
   ngAfterViewInit() {
@@ -71,6 +76,10 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     //this.sportbookSections.shift();
   }
 
+  stopScroll($event) {
+    this.stopAutoScroll = !this.stopAutoScroll;
+  }
+
   private unsubscribeRooms() {
     if (this.rooms && this.rooms.length > 0) {
       this.socketService.closeSocketConnection(this.rooms);
@@ -84,12 +93,25 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           this.plasmaLineConfig = plasmaLineConfig;
           this.configureSocketRooms(this.plasmaLineConfig);
           this.configureView(this.plasmaLineConfig);
+          this.getAdvertisingImages(this.plasmaLineConfig);
         }
       });
 
       this.eventAggregator.featuredSchedules.subscribe(featuredSchedule => {
         if (featuredSchedule != null && this.plasmaLineConfig) {
           this.filterSportbookSections(featuredSchedule.schedules, this.plasmaLineConfig.sections);
+        }
+      });
+    }
+  }
+  
+  private getAdvertisingImages(plasmaLineConfig: PlasmaLineConfig) {
+    this.advertisingImages = [];
+    if (plasmaLineConfig && plasmaLineConfig.sections) {
+      plasmaLineConfig.sections.forEach(section => {
+        if (section.advertisingUrl) {
+          this.advertisingImages.push(section.advertisingUrl)
+          console.log(section.advertisingUrl);
         }
       });
     }

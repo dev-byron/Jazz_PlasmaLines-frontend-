@@ -43,6 +43,7 @@ import {ConfigurationService } from "./services/component/configuration.service"
 import { ConfigurationRestService } from "./services/rest/configuration.rest.service";
 import { ContainerWrapperDirective } from './directives/container-wrapper.directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdvertisingComponent } from "./components/dashboard/sportbook/advertising/advertising.component";
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DefaultComponent,
     DrawParticipantComponent,
     FutureOddsToWinComponent,
-    TeamTotalsComponent
+    TeamTotalsComponent,
+    AdvertisingComponent
   ],
   imports: [
     NbSelectModule,

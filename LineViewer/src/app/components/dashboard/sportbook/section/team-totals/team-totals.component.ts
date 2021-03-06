@@ -17,9 +17,7 @@ export class TeamTotalsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
   }
-
   
   getIcon(game: Game) {
     return "https://jazz-lines.s3.amazonaws.com/icons/BOX.png";
@@ -39,7 +37,6 @@ export class TeamTotalsComponent implements OnInit {
       return '-';
     }
   }
-
 
   isNotDraw(participant: Participant) {
     return participant.name.toLowerCase() != 'draw';
