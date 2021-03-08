@@ -5,7 +5,7 @@
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ThemeModule } from './shared/theme.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,7 @@ import { TokenStorageService } from './services/token-storage.service';
 import { UserService } from './services/user.service';
 import { ConfigurationLinesService } from './services/configuration-lines.service';
 import { ImageManagerService } from './services/images-manager.service';
+import { AppConfig } from './app.config';
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,7 +49,9 @@ import { ImageManagerService } from './services/images-manager.service';
     TokenStorageService, 
     UserService,
     ConfigurationLinesService,
-    ImageManagerService
+    ImageManagerService,
+    AppConfig,
+    { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => config.load(), deps: [AppConfig], multi: true }
   ],
   bootstrap: [AppComponent],
 })

@@ -3,20 +3,15 @@ import { io, Socket } from 'socket.io-client';
 import { Room } from '../../models/rooms.model';
 import { FeaturedSchedules } from '../../models/featured-schedules.model';
 import { EventAggregator } from '../utils/event-aggregator';
-import { PlasmaSection } from '../../models/plasma-section.model';
-
-
-export const environment = {
-  production: false,
-  SOCKET_ENDPOINT: 'http://localhost:3000'
-};
+import { AppConfig } from '../../app.config';
 
 @Injectable()
 export class SocketService {
   private socket: Socket;
+  protected apiServer = AppConfig.settings.serverUrl;
 
   constructor(private eventAggregator: EventAggregator) {
-    this.socket = io(environment.SOCKET_ENDPOINT);
+    this.socket = io(this.apiServer);
   }
 
   setupSocketRooms(rooms: Room[]) {

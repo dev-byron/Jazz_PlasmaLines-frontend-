@@ -80,6 +80,10 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stopAutoScroll = !this.stopAutoScroll;
   }
 
+  displaySection(section: SportbookSection) {
+    return section.schedules && section.schedules.length > 0;
+  }
+
   private unsubscribeRooms() {
     if (this.rooms && this.rooms.length > 0) {
       this.socketService.closeSocketConnection(this.rooms);

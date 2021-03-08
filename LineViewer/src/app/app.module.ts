@@ -6,7 +6,7 @@
 import { CommonModule } from "@angular/common";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
@@ -37,14 +37,13 @@ import { DefaultComponent } from './components/dashboard/sportbook/section/defau
 import { DrawParticipantComponent } from './components/dashboard/sportbook/section/draw-participant/draw-participant.component';
 import { FutureOddsToWinComponent } from './components/dashboard/sportbook/section/futures-odds-to-win/futures-odds-to-win.component';
 import { TeamTotalsComponent } from './components/dashboard/sportbook/section/team-totals/team-totals.component';
-
 import { LineComponent } from './components/dashboard/sportbook/section/line/line.component';
 import {ConfigurationService } from "./services/component/configuration.service";
 import { ConfigurationRestService } from "./services/rest/configuration.rest.service";
 import { ContainerWrapperDirective } from './directives/container-wrapper.directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdvertisingComponent } from "./components/dashboard/sportbook/advertising/advertising.component";
-
+import { AppConfig } from './app.config';
 
 @NgModule({
   declarations: [
@@ -90,7 +89,9 @@ import { AdvertisingComponent } from "./components/dashboard/sportbook/advertisi
       EventAggregator,
       ConfigurationService,
       ConfigurationRestService,
-      NbDialogService
+      NbDialogService,
+      AppConfig,
+      { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => config.load(), deps: [AppConfig], multi: true }
     ],
   bootstrap: [AppComponent],
 })

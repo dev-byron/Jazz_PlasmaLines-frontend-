@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as AWS from 'aws-sdk/global';
 import * as S3 from 'aws-sdk/clients/s3';
-import { Observable } from 'rxjs';
-import { exception } from 'console';
-
+import { AppConfig } from '../app.config';
 
 @Injectable()
 export class ImageManagerService {
     bucket = new S3({
-            accessKeyId: 'AKIA5QW2NI33TYB3KSPV',
-            secretAccessKey: '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',
-            region: 'us-east-1'
+            accessKeyId: AppConfig.settings.s3.accessKeyId,
+            secretAccessKey: AppConfig.settings.s3.secretAccessKey,
+            region: AppConfig.settings.s3.region
         }
     );
     params = {
-        Bucket: 'jazz-lines',
+        Bucket:  AppConfig.settings.s3.bucket,
         Key: '',
         Body: null,
         ACL: 'public-read',

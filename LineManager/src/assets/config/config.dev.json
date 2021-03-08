@@ -1,0 +1,10 @@
+{
+    "env": "dev",
+    "serverUrl": "http://localhost:3000",
+    "s3": {
+        "accessKeyId": "AKIA5QW2NI33TYB3KSPV",
+        "secretAccessKey": "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",
+        "region": "us-east-1",
+        "bucket": "jazz-lines"
+    }
+}

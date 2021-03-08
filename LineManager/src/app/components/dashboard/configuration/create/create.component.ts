@@ -53,13 +53,15 @@ export class CreateComponent implements OnInit {
       this.formatSportsIntoTree(this.sportsAsTree);
       this.route.paramMap.subscribe(params => {
         this.editCode = params.get("code");
-        this.configService.getByCode(this.editCode).subscribe(res => {
-          if (res) {
-            this.fillUpdateConfiguration(res);
-          } else {
-            this.redirectoToDashboard();
-          }
-        });
+        if (this.editCode) {
+          this.configService.getByCode(this.editCode).subscribe(res => {
+            if (res) {
+              this.fillUpdateConfiguration(res);
+            } else {
+              this.redirectoToDashboard();
+            }
+          });
+        }
       })
     });
   }

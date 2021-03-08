@@ -4,7 +4,7 @@
     [ngClass]="{'main-wrapper-v': viewConfig.viewType === viewTypeEnum.Vertical, 'main-wrapper-h': viewConfig.viewType === viewTypeEnum.Horizontal }"  
       ngxContainerWrapper (push)="push($event)" (pop)="pop($event)" [stopAutoScroll]="stopAutoScroll">
       <div *ngFor="let section of sportbookSections" class="main-wrapper-section">
-        <ngx-section [schedules]="section.schedules" [imageUrl]="section.bannerUrl">
+        <ngx-section [schedules]="section.schedules" [imageUrl]="section.bannerUrl" *ngIf="displaySection(section)">
         </ngx-section>
       </div>
     </div>
