@@ -1,4 +1,4 @@
-<table class="table table-striped no-margin">
+<table class="table table-striped table-bordered no-margin">
   <thead>
     <tr>
       <th colspan="5" class="table-title">{{schedule.title}}</th>
@@ -18,7 +18,7 @@
     <tr *ngFor="let game of schedule.games">
       <td class="game-time">
         {{ getTime(game) }}
-        <img class="game-icon" src="{{ getIcon(game) }}">
+        <img class="game-icon" src="{{ getIcon() }}">
       </td>
       <td class="participants">
         <div *ngFor="let participant of game.participants">

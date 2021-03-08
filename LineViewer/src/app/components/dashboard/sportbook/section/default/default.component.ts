@@ -5,6 +5,7 @@ import { Schedule } from '../../../../../models/schedule.model';
 import { ViewConfig } from '../../../../../models/view-config.model';
 import { TimeZones } from '../../../../../data/time-zones'
 import { CustomDateFormatter } from '../../../../../utils/custom-date-formatter'
+import { ImageService } from '../../../../../services/utils/image.service';
 
 @Component({
   selector: 'ngx-line-default',
@@ -22,14 +23,14 @@ export class DefaultComponent implements OnInit {
   timeZones: TimeZones = new TimeZones();
   hourToadd: string;
 
-  constructor() { }
+  constructor(private imageService: ImageService) { }
+  
   ngOnInit(): void {
     this.hourToadd = this.timeZones.getTimeZoneList().find(x => x.id == this.viewConfig.timeZoneId).value;
   }
 
-
-  getIcon(game: Game) {
-    return "https://jazz-lines.s3.amazonaws.com/icons/BOX.png";
+  getIcon() {
+    return this.imageService.getIcon(this.schedule.sport, this.schedule.bannerUrl);;
   }
 
   getTime(game: Game) {

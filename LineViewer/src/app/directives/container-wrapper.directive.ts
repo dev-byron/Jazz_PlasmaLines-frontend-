@@ -19,7 +19,6 @@ export class ContainerWrapperDirective implements AfterViewInit {
     this.stopAutoScroll = false;
     //time must be configurable
     interval(2000).subscribe(() => {
-      console.log(this.stopAutoScroll);
       if (!this.stopAutoScroll) {
         var childHeightTotal = 0;
         var firstChildHeight = 0

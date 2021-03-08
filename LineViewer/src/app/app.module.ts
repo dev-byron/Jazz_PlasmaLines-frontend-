@@ -44,6 +44,7 @@ import { ContainerWrapperDirective } from './directives/container-wrapper.direct
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdvertisingComponent } from "./components/dashboard/sportbook/advertising/advertising.component";
 import { AppConfig } from './app.config';
+import { ImageService } from "./services/utils/image.service";
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { AppConfig } from './app.config';
       ConfigurationRestService,
       NbDialogService,
       AppConfig,
+      ImageService,
       { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => config.load(), deps: [AppConfig], multi: true }
     ],
   bootstrap: [AppComponent],

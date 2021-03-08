@@ -112,12 +112,13 @@ export class CreateComponent implements OnInit {
   }
 
   updatetSelectedSections() {
-    this.selectedSections = [];
+    var tmpSections = [];
     this.getSelectedItems().forEach(item => {
+      var oldSection = this.selectedSections.find(x => x.name === item.value);
       const section = {
         name: item.value,
-        bannerUrl: '',
-        advertisingUrl: '',
+        bannerUrl: oldSection ? oldSection.bannerUrl : '',
+        advertisingUrl:  oldSection ? oldSection.advertisingUrl : '',
         events: []
       } as Section;
       const children = item.children.filter(x => x.checked || x.checked === undefined);
@@ -130,9 +131,11 @@ export class CreateComponent implements OnInit {
         } as Event;
         section.events.push(event);
       });
-      this.selectedSections.push(section);
+      tmpSections.push(section);
     });
+    this.selectedSections = tmpSections; 
     this.modelIsValid = this.selectedSections.length > 0;
+
   }
 
   formatSportsIntoTree(sports: Sport[]) {
