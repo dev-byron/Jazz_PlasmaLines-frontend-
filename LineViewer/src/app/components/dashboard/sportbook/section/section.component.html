@@ -6,12 +6,11 @@
         <div *ngFor="let schedule of schedules" >
             
             <div [ngSwitch]="getScheduleType(schedule)">
-                <ngx-futures-odds-to-win *ngSwitchCase="1"  [schedule]="schedule"></ngx-futures-odds-to-win>
-                <ngx-team-totals *ngSwitchCase="2"  [schedule]="schedule"></ngx-team-totals>
-                <ngx-draw-participant *ngSwitchCase="3"  [schedule]="schedule"></ngx-draw-participant>
-                <ngx-line-default *ngSwitchCase="4" [schedule]="schedule"></ngx-line-default>
+                <ngx-futures-odds-to-win *ngSwitchCase="1"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-futures-odds-to-win>
+                <ngx-team-totals *ngSwitchCase="2"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-team-totals>
+                <ngx-draw-participant *ngSwitchCase="3"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-draw-participant>
+                <ngx-line-default *ngSwitchCase="4" [schedule]="schedule" [viewConfig]="viewConfig"></ngx-line-default>
             </div>
-          
             
         </div>
     </div>

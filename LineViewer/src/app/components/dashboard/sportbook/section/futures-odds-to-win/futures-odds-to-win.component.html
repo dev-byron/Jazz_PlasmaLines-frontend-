@@ -10,6 +10,9 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td class="time-td" colspan="3">{{schedule.date | date: 'mediumDate'}}</td>
+        </tr>
         <tr *ngFor="let game of schedule.games">
             <td class="game-time">
                 <div *ngFor="let participant of game.participants">

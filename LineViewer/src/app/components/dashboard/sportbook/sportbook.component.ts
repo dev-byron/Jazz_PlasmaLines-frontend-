@@ -39,6 +39,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   loadingData: boolean;
   deletedFirst = false;
   counter = 0;
+  timeZoneId: number;
 
   everySeconds = 60000;
   staySeconds = 10000;
@@ -108,14 +109,13 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-  
+
   private getAdvertisingImages(plasmaLineConfig: PlasmaLineConfig) {
     this.advertisingImages = [];
     if (plasmaLineConfig && plasmaLineConfig.sections) {
       plasmaLineConfig.sections.forEach(section => {
         if (section.advertisingUrl) {
           this.advertisingImages.push(section.advertisingUrl)
-          console.log(section.advertisingUrl);
         }
       });
     }
@@ -135,7 +135,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     this.viewConfig = {
       viewType: (plasmaLineConfig.viewType == 'v' ? ViewTypeEnum.Vertical : ViewTypeEnum.Horizontal),
       lineType: (plasmaLineConfig.lineType == 'a' ? LineTypeEnum.American : LineTypeEnum.Decimal),
-      time: plasmaLineConfig.time
+      timeZoneId: plasmaLineConfig.time
     } as ViewConfig;
   }
 

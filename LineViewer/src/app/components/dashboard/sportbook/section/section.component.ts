@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Schedule } from '../../../../models/schedule.model';
+import { ViewConfig } from '../../../../models/view-config.model';
 
 @Component({
   selector: 'ngx-section',
@@ -13,6 +14,10 @@ export class SectionComponent implements OnInit {
 
   @Input()
   imageUrl: string;
+
+  @Input()
+  viewConfig: ViewConfig;
+
 
   ngOnInit(): void {
   }

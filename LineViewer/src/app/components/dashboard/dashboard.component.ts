@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   
   code: string;
   constructor(private router: Router, 
-              private activateRoute:ActivatedRoute) { }
+              private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activateRoute.paramMap.subscribe(params => { 

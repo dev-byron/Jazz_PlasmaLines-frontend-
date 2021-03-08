@@ -1,8 +1,11 @@
 import { Component,  Input,  OnInit } from '@angular/core';
+import { TimeZones } from '../../../../../data/time-zones';
 import { Game } from '../../../../../models/game.model';
 import { Participant } from '../../../../../models/participant.model';
 import { Schedule } from '../../../../../models/schedule.model';
 import { Total } from '../../../../../models/total.model';
+import { ViewConfig } from '../../../../../models/view-config.model';
+import { CustomDateFormatter } from '../../../../../utils/custom-date-formatter';
 
 
 @Component({
@@ -15,9 +18,15 @@ export class DrawParticipantComponent implements OnInit {
   @Input()
   schedule: Schedule;
   
-  constructor() { }
+  @Input()
+  viewConfig: ViewConfig;
+  
+  timeZones: TimeZones = new TimeZones();
+  hourToadd: string;
 
+  constructor() { }
   ngOnInit(): void {
+    this.hourToadd = this.timeZones.getTimeZoneList().find(x => x.id == this.viewConfig.timeZoneId).value;
   }
   
   getIcon(game: Game) {
@@ -25,7 +34,16 @@ export class DrawParticipantComponent implements OnInit {
   }
 
   getTime(game: Game) {
-    return game.time;
+    if (game.time) {
+      return CustomDateFormatter.formatTime(game.time, this.hourToadd);
+     }
+  }
+  
+  getDateFormatted(date) {
+    if (date) {
+      const stringDate = Date.parse(date);
+      console.log(stringDate);
+    }
   }
 
   getSpread (participant: Participant) {

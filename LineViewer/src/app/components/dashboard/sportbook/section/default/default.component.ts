@@ -2,7 +2,9 @@ import { Component,  Input,  OnInit } from '@angular/core';
 import { Game } from '../../../../../models/game.model';
 import { Participant } from '../../../../../models/participant.model';
 import { Schedule } from '../../../../../models/schedule.model';
-
+import { ViewConfig } from '../../../../../models/view-config.model';
+import { TimeZones } from '../../../../../data/time-zones'
+import { CustomDateFormatter } from '../../../../../utils/custom-date-formatter'
 
 @Component({
   selector: 'ngx-line-default',
@@ -14,11 +16,15 @@ export class DefaultComponent implements OnInit {
   @Input()
   schedule: Schedule;
   
+  @Input()
+  viewConfig: ViewConfig;
+
+  timeZones: TimeZones = new TimeZones();
+  hourToadd: string;
 
   constructor() { }
-
   ngOnInit(): void {
-
+    this.hourToadd = this.timeZones.getTimeZoneList().find(x => x.id == this.viewConfig.timeZoneId).value;
   }
 
 
@@ -27,12 +33,15 @@ export class DefaultComponent implements OnInit {
   }
 
   getTime(game: Game) {
-    return game.time;
+    if (game.time) {
+     return CustomDateFormatter.formatTime(game.time, this.hourToadd);
+    }
   }
 
+  
   getSpread (participant: Participant) {
     if (participant.line.spread && participant.line.spreadOdds) {
-      return this.format(participant.line.spread) + this.format(participant.line.spreadOdds);
+      return  this.format(participant.line.spread) + this.format(participant.line.spreadOdds);
     }
     return '-';
   }

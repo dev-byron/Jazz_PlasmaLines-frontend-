@@ -1,6 +1,7 @@
 import { Component,  Input,  OnInit } from '@angular/core';
 import { Schedule } from '../../../../../models/schedule.model';
 import { Participant } from '../../../../../models/participant.model';
+import { ViewConfig } from '../../../../../models/view-config.model';
 
 @Component({
   selector: 'ngx-futures-odds-to-win',
@@ -11,6 +12,10 @@ export class FutureOddsToWinComponent implements OnInit {
 
   @Input()
   schedule: Schedule;
+  
+  @Input()
+  viewConfig: ViewConfig;
+
   
   constructor() { }
 
