@@ -69,7 +69,6 @@ mongoose.connect(config.mongoConnectionString, (err) => {
   
     lineController.load();
     io.on('connection', async (socket) => {
-      //notas
       //TEMPORAL, verificar si hay alguien escuchando por room para enviar mensaje
       setInterval(function() {
         configController.getRooms().then(function (rooms) {
@@ -82,8 +81,8 @@ mongoose.connect(config.mongoConnectionString, (err) => {
               });
           }
         });
-      }, 10000);
-      //TEMPORAL
+      }, parseInt(config.socket.notifyEvery) * 1000);
+     
 
       socket.on('subscribe', function(room) { 
         console.log('joining room', room);

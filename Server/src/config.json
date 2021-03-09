@@ -8,8 +8,11 @@
         ]
     },
     "notifications": {
-        "email": "zyo1994@gmail.com",
-        "pwd": "7654321byron",
+        "email": "",
+        "pwd": "",
         "service": "gmail"
+    },
+    "socket": {
+        "notifyEvery": "180"
     }
 }   
