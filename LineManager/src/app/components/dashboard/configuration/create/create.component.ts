@@ -17,17 +17,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  selectedViewType: number;
-  selectedLineType: number;
-  selectedViewTheme: number;
+  selectedViewType: string;
+  selectedLineType: string;
+  selectedViewTheme: string;
   timeZoneId: number;
   modelIsValid: boolean;
   isSubmitting: boolean;
   isFormTwoValid: boolean;
   
+  showCustomUpdateScreenTime: boolean;
+  customShowAdvertisingTime: boolean;
+
   editCode: string;
 
   timeZones: TimeZones = new TimeZones();
+
   config = {
     hasAllCheckBox: false,
     hasFilter: true,
@@ -36,12 +40,27 @@ export class CreateComponent implements OnInit {
     maxHeight: 500,
   };
 
+  updateScreenConfig = [
+    {id: 1, text: "20 segundos", time: 20},
+    {id: 2, text: "30 segundos", time: 30},
+    {id: 3, text: "40 segundos", time: 40},
+    {id: 3, text: "Otro", time: 0},
+  ];
+
+  updateAdvertisingConfig = [
+    {id: 1, text: "5 minutos", time: 300},
+    {id: 2, text: "10 minutos", time: 600},
+    {id: 3, text: "20 minutos", time: 1200},
+    {id: 3, text: "Otro", time: 0},
+  ];
+
   sportsAsTree: Sport[];
   items: TreeviewItem[] = [];
   selectedSections: Section[];
 
   firstForm: FormGroup;
   secondForm: FormGroup;
+  thirdForm: FormGroup;
 
   constructor(private configService: ConfigurationLinesService, 
              private router: Router, 
@@ -50,9 +69,9 @@ export class CreateComponent implements OnInit {
              private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.selectedViewType = 1;
-    this.selectedLineType = 1;
-    this.selectedViewTheme = 1;
+    this.selectedViewType = 'v';
+    this.selectedLineType = 'd';
+    this.selectedViewTheme = 'l';
     this.timeZoneId = 5;
     this.selectedSections = [];
     this.modelIsValid = false;
@@ -85,9 +104,9 @@ export class CreateComponent implements OnInit {
       viewTheme: ['', Validators.required],
       timeZone: ['', Validators.required]
     });
-    this.firstForm.controls['lineType'].setValue('d', {onlySelf: true});
-    this.firstForm.controls['viewType'].setValue('h', {onlySelf: true});
-    this.firstForm.controls['viewTheme'].setValue('l', {onlySelf: true});
+    this.firstForm.controls['lineType'].setValue(this.selectedLineType, {onlySelf: true});
+    this.firstForm.controls['viewType'].setValue(this.selectedViewType, {onlySelf: true});
+    this.firstForm.controls['viewTheme'].setValue(this.selectedViewTheme, {onlySelf: true});
     this.firstForm.controls['timeZone'].setValue(this.timeZoneId, {onlySelf: true});
 
 
@@ -96,6 +115,13 @@ export class CreateComponent implements OnInit {
     });
     this.secondForm.controls['category'].setValue('1', {onlySelf: true});
    
+    this.thirdForm =  this.fb.group({
+      updateScreenTime: ['', Validators.required],
+      customUpdateScreenTime: [''],
+      showAdvertisingTime: ['', Validators.required],
+      customShowAdvertisingTime: [''],
+    });
+
     this.onFormChanges();
   }
 
@@ -111,6 +137,23 @@ export class CreateComponent implements OnInit {
         this.isFormTwoValid = true;
       }
     });
+
+    this.thirdForm.controls['updateScreenTime'].valueChanges.subscribe(val => {
+      if (val == 0) {
+        this.showCustomUpdateScreenTime = true;
+      } else {
+        this.showCustomUpdateScreenTime = false;
+      }
+    });
+
+    this.thirdForm.controls['showAdvertisingTime'].valueChanges.subscribe(val => {
+      if (val == 0) {
+        this.customShowAdvertisingTime = true;
+      } else {
+        this.customShowAdvertisingTime = false;
+      }
+    });
+    
   }
 
   enableTreeChecboxes(items: TreeviewItem[]) {
@@ -159,8 +202,8 @@ export class CreateComponent implements OnInit {
     if (this.modelIsValid) {
       model = {
         code: this.editCode ? this.editCode : "",
-        viewType: this.selectedViewType == 1 ? 'h': 'v',
-        lineType: this.selectedLineType == 1 ? 'd': 'a' ,
+        viewType: this.selectedViewType,
+        lineType: this.selectedLineType ,
         time: timeZone.id,
         createdDate: "",
         sections: this.selectedSections
@@ -290,8 +333,8 @@ export class CreateComponent implements OnInit {
 
   private fillUpdateConfiguration(configurationLine: ConfigurationLine) {
     if (configurationLine) {
-      this.selectedViewType = configurationLine.viewType == 'h' ? 1 : 2;
-      this.selectedLineType = configurationLine.lineType == 'd' ? 1 : 2;
+      this.selectedViewType = configurationLine.viewType ;
+      this.selectedLineType = configurationLine.lineType;
       this.timeZoneId = parseInt(configurationLine.time);
 
       configurationLine.sections.forEach(section => {

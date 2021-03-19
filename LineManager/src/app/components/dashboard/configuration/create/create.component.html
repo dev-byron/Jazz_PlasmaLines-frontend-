@@ -11,7 +11,7 @@
                         <h6>1. Configuración:</h6>
                     </div>
                 </div>
-                <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+                <form [formGroup]="firstForm"  class="step-container">
                     <div class="row mt-3">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -58,7 +58,7 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label class="label">Zona Horario a Elegir: </label>
-                                <nb-select fullWidth placeholder="Select the time zone" formControlName="timeZone">
+                                <nb-select fullWidth placeholder="Selecciona una zona horaria" formControlName="timeZone">
                                     <nb-option *ngFor="let zone of timeZones.getTimeZoneList()" [value]="zone.id">
                                         {{zone.text}}</nb-option>
                                 </nb-select>
@@ -89,7 +89,7 @@
 
                 <div class="row mt-3">
                     <div class="col-sm-12">
-                        <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+                        <form [formGroup]="secondForm" class="step-container">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label class="label">Seleccione el tipo de ligas que desea mostrar:</label>
@@ -157,14 +157,69 @@
                         <h6>3. Encabezados y publicidad:</h6>
                     </div>
                 </div>
-                <hr>
-                <div class="row ">
+
+                <div class="row mt-3">
                     <div class="col-sm-12">
-                        <button nbButton nbStepperPrevious>Anterior</button>
-                        <button nbButton class="float-right mr-2" status="primary" nbStepperNext>Siguiente</button>
+                        <form [formGroup]="thirdForm"  class="step-container">
+                            <div class="row mt-3">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="label">Actualizar pantalla de lineas cada:</label>
+                                        <nb-select fullWidth placeholder="Seleccione cada cuando desea actualizar la pantalla"  formControlName="updateScreenTime">
+                                            <nb-option *ngFor="let config of updateScreenConfig" [value]="config.time">
+                                                {{config.text}}</nb-option>
+                                        </nb-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" *ngIf="showCustomUpdateScreenTime">
+                                    <div class="form-group">
+                                        <label class="label">Otro: (segundos)</label>
+                                        <input type="number" nbInput formControlName="customUpdateScreenTime"
+                                        fullWidth status="basic" placeholder="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-2">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="label">Mostrar publicidad cada:</label>
+                                        <nb-select fullWidth placeholder="Seleccione cada cuando desea ver la publicidad"  
+                                        formControlName="showAdvertisingTime">
+                                            <nb-option *ngFor="let config of updateAdvertisingConfig" [value]="config.time">
+                                                {{config.text}}</nb-option>
+                                        </nb-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" *ngIf="customShowAdvertisingTime">
+                                    <div class="form-group">
+                                        <label class="label">Otro: (minutos)</label>
+                                        <input type="number" nbInput formControlName="customShowAdvertisingTime"
+                                        fullWidth status="basic" placeholder="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-sm-5">
+                                </div>
+                                <div class="col-sm-3" >
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row ">
+                                <div class="col-sm-12">
+                                    <button nbButton nbStepperPrevious>Anterior</button>
+                                    <button nbButton class="float-right mr-2" status="primary" nbStepperNext>Siguiente</button>
+                                </div>
+                            </div>
+                        </form>
+                       
                     </div>
                 </div>
             </nb-step>
+
             <nb-step [label]="labelFour">
                 <ng-template #labelFour>Resumen</ng-template>
                 <div class="row">
