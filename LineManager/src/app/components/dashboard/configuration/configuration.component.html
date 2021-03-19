@@ -1,11 +1,11 @@
 <nb-card accent="info">
   <nb-card-header>
-    Lines Manager 
+    Configurador de lineas 
   </nb-card-header>
   <nb-card-body>
     <div class="row">
       <div class="col-sm-12">
-          <button class="float-right btn-add" (click)="addNew()" routerLinkActive="active" nbButton status="info"><i class="fas fa-plus"></i> Add new</button>
+          <button class="float-right btn-add" (click)="addNew()" routerLinkActive="active" nbButton status="info"><i class="fas fa-plus"></i> Crear Nueva</button>
       </div>
     </div>
     <div class="row my-4">
@@ -13,22 +13,25 @@
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
-              <th scope="col">Code</th>
-              <th scope="col">Time Zone</th>
-              <th scope="col">View Type</th>
-              <th scope="col">Line Type</th>
-              <th scope="col">Created By</th>
-              <th scope="col">Created Date</th>
+              <th scope="col">Código</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Zona Horaria</th>
+              <th scope="col">Tipo de Linea</th>
+              <th scope="col">Tipo de Vista</th>
+              <th scope="col">Creado por</th>
+              <th scope="col">Día de Creación</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let config of models">
               <td>{{config.code}}</td>
+              <td>{{config.name}}</td>
               <td>{{getTimeZone(config.time)}}</td>
-              <td>{{getViewType(config.viewType)}}</td>
               <td>{{getLineType(config.lineType)}}</td>
-              <td>bserrano</td>
+              <td>{{getViewType(config.viewType)}}</td>
+              <td></td>
+              <!-- <td>{{config.createdBy.name}}</td> -->
               <td>{{config.createdDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
               <td>
                 <button type="button" class="btn btn-success btn-table" (click)="edit(config.code)"><i class="fas fa-edit"></i></button>

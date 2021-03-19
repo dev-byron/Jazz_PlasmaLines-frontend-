@@ -1,14 +1,150 @@
+<nb-card>
+    <nb-card-header>
+        Configuración de líneas
+    </nb-card-header>
+    <nb-card-body>
+        <nb-stepper orientation="horizontal" disableStepNavigation>
+            <nb-step [label]="labelOne">
+                <ng-template #labelOne>Configuración</ng-template>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h6>1. Configuración:</h6>
+                    </div>
+                </div>
+                <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="label">Nombre:</label>
+                                <input type="text" maxlength="50" nbInput formControlName="name"
+                                    [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"
+                                    fullWidth status="basic" placeholder="Football">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label class="label">Tipo de Línea:</label>
+                                <nb-radio-group status="primary">
+                                    <nb-radio formControlName="lineType" value="d" ngDefaultControl checked>Decimal
+                                    </nb-radio>
+                                    <nb-radio formControlName="lineType" value="a" ngDefaultControl>Americana</nb-radio>
+                                </nb-radio-group>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label class="label">Tipo de Vista:</label>
+                                <nb-radio-group status="success" name="viewType">
+                                    <nb-radio formControlName="viewType" value="h" ngDefaultControl checked>Horizontal
+                                    </nb-radio>
+                                    <nb-radio formControlName="viewType" value="v" ngDefaultControl>Vertical</nb-radio>
+                                </nb-radio-group>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label class="label">Tema:</label>
+                                <nb-radio-group status="warning" name="viewTheme">
+                                    <nb-radio formControlName="viewTheme" value="l" ngDefaultControl checked>Claro
+                                    </nb-radio>
+                                    <nb-radio formControlName="viewTheme" value="d" ngDefaultControl>Oscuro</nb-radio>
+                                </nb-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="label">Zona Horario a Elegir: </label>
+                                <nb-select fullWidth placeholder="Select the time zone" formControlName="timeZone">
+                                    <nb-option *ngFor="let zone of timeZones.getTimeZoneList()" [value]="zone.id">
+                                        {{zone.text}}</nb-option>
+                                </nb-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label fullWidth class="label mr-3">Zona Horario Original: </label>
+                            <label fullWidth status="info">
+                                <i class="fas fa-clock"></i> (GMT-08:00) Pacific Time (US & Canada)</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-12">
+                            <button nbButton class="float-right mr-2" status="primary" [disabled]="firstForm.invalid" nbStepperNext>Siguiente</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </nb-step>
+
+            <nb-step [label]="labelTwo">
+                <ng-template #labelTwo>Líneas</ng-template>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h6>2. Líneas:</h6>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="row ">
+                    <div class="col-sm-12">
+                        <button nbButton nbStepperPrevious>Anterior</button>
+                        <button nbButton class="float-right mr-2" status="primary" nbStepperNext>Siguiente</button>
+                    </div>
+                </div>
+            </nb-step>
+
+            <nb-step [label]="labelThree">
+                <ng-template #labelThree>Encabezados y publicidad</ng-template>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h6>3. Encabezados y publicidad:</h6>
+                    </div>
+                </div>
+                <hr>
+                <div class="row ">
+                    <div class="col-sm-12">
+                        <button nbButton nbStepperPrevious>Anterior</button>
+                        <button nbButton class="float-right mr-2" status="primary" nbStepperNext>Siguiente</button>
+                    </div>
+                </div>
+            </nb-step>
+            <nb-step [label]="labelFour">
+                <ng-template #labelFour>Resumen</ng-template>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h6>4. Resumen:</h6>
+                    </div>
+                </div>
+                <hr>
+                <div class="row ">
+                    <div class="col-sm-12">
+                        <button nbButton nbStepperPrevious>Anterior</button>
+                        <button nbButton class="float-right mr-2" (click)="submit()" [disabled]="!modelIsValid"
+                            status="success">Guardar</button>
+                        <button nbButton class="float-right mr-2" (click)="cancel()" status="danger">Cancelar</button>
+                    </div>
+                </div>
+            </nb-step>
+        </nb-stepper>
+    </nb-card-body>
+</nb-card>
+<!-- 
 <div class="row">
     <div class="col-sm-12">
         <nb-card accent="info">
             <nb-card-header>
-                Configuration
+                Configuración de líneas
             </nb-card-header>
             <nb-card-body>
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="row form-group">
-                            <label class="label col-sm-4">View Type:</label>
+                            <label class="label col-sm-4">Tipo de Vista:</label>
                             <nb-radio-group class="col-sm-8" name="viewType" [(ngModel)]="selectedViewType">
                                 <nb-radio [value]="1">Horizontal</nb-radio>
                                 <nb-radio [value]="2">Vertical</nb-radio>
@@ -17,21 +153,21 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="row form-group">
-                            <label class="label col-sm-4">Line Type:</label>
+                            <label class="label col-sm-4">Tipo de Línea:</label>
                             <nb-radio-group class="col-sm-8" name="lineType" [(ngModel)]="selectedLineType">
                                 <nb-radio [value]="1">Decimal</nb-radio>
-                                <nb-radio [value]="2" disabled>American</nb-radio>
+                                <nb-radio [value]="2">Americana</nb-radio>
                             </nb-radio-group>
                         </div>
                     </div>
                     <div class="col-sm-5">
                         <div class="row form-group">
-                            <label class="label col-sm-3">Origin Time Zone:</label>
+                            <label class="label col-sm-3">Zona horario Original:</label>
                             <label type="text" class="col-sm-9" status="info">(GMT-08:00) Pacific Time (US &
                                 Canada)</label>
                         </div>
                         <div class="row form-group">
-                            <label class="label col-sm-3">Time Zone:</label>
+                            <label class="label col-sm-3">Zona Horario a Elegir</label>
                             <nb-select class="col-sm-9" placeholder="Select the time zone" [(ngModel)]="timeZoneId"
                                 [selected]="timeZoneId">
                                 <nb-option *ngFor="let zone of timeZones.getTimeZoneList()" [value]="zone.id">
@@ -44,12 +180,12 @@
         </nb-card>
         <nb-card accent="info">
             <nb-card-header>
-                Events
+                Selección de ligas
             </nb-card-header>
             <nb-card-body>
                 <div class="row">
                     <div class="form-group">
-                        <label class="label col-sm-12">Select the leagues you want to add to the configuration:</label>
+                        <label class="label col-sm-12">Seleccione las ligas que desea agregar a su configuración:</label>
                     </div>
                     <div class="col-sm-12">
                         <ngx-treeview [config]="config" [items]="items" (selectedChange)="onSelectedChange($event)">
@@ -134,8 +270,14 @@
 <div class="row">
     <div class="col-sm-12">
         <button class="float-right btn-success mr-3" nbButton (click)="submit()" [disabled]="!modelIsValid"
-            status="success">Save
+            status="success">Guardar
             <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i></button>
-        <button class="float-right mr-2" nbButton (click)="cancel()" status="danger">Cancel</button>
+        <button class="float-right mr-2" nbButton (click)="cancel()" status="danger">Cancelar</button>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-sm-12">
+
     </div>
 </div>

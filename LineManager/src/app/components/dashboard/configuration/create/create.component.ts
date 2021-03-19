@@ -9,6 +9,7 @@ import { Event } from '../../../../models/event.model';
 import { NbDialogService } from '@nebular/theme';
 import { ImageManageModalComponent } from '../../../utils/modals/image-manager/image-manager-modal.component';
 import { ConfigurationLine } from '../../../../models/configuration-line.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'ngx-create',
@@ -18,6 +19,7 @@ import { ConfigurationLine } from '../../../../models/configuration-line.model';
 export class CreateComponent implements OnInit {
   selectedViewType: number;
   selectedLineType: number;
+  selectedViewTheme: number;
   timeZoneId: number;
   modelIsValid: boolean;
   isSubmitting: boolean;
@@ -36,14 +38,18 @@ export class CreateComponent implements OnInit {
   items: TreeviewItem[] = [];
   selectedSections: Section[];
 
+  firstForm: FormGroup;
+  
   constructor(private configService: ConfigurationLinesService, 
              private router: Router, 
              private route: ActivatedRoute,
-             private dialogService: NbDialogService) { }
+             private dialogService: NbDialogService,
+             private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.selectedViewType = 1;
     this.selectedLineType = 1;
+    this.selectedViewTheme = 1;
     this.timeZoneId = 5;
     this.selectedSections = [];
     this.modelIsValid = false;
@@ -64,6 +70,22 @@ export class CreateComponent implements OnInit {
         }
       })
     });
+
+    this.setForms();
+  }
+
+  setForms() {
+    this.firstForm = this.fb.group({
+      name: ['', Validators.required],
+      lineType:  ['1', Validators.required],
+      viewType:  ['', Validators.required],
+      viewTheme: ['', Validators.required],
+      timeZone: ['', Validators.required]
+    });
+    this.firstForm.controls['lineType'].setValue('d', {onlySelf: true});
+    this.firstForm.controls['viewType'].setValue('h', {onlySelf: true});
+    this.firstForm.controls['viewTheme'].setValue('l', {onlySelf: true});
+    this.firstForm.controls['timeZone'].setValue(this.timeZoneId, {onlySelf: true});
   }
 
   onSelectedChange(selectedTitles: string[]): void {

@@ -4,7 +4,7 @@
     </nb-card-header>
     <nb-card-body>
         <div class="span-resolution-container">
-            <span status="danger" class="span-resolution"><i class="fas fa-exclamation"></i> Recommended resolution: {{resolutionMessage}} </span>
+            <span status="danger" class="span-resolution"><i class="fas fa-exclamation"></i> Resolucion recomendada: {{resolutionMessage}} </span>
         </div>
         <div class="img-container">
             <div [ngClass]="{'container-responsive-banner': isBanner, 'container-responsive-adv': isAdvertising }">
@@ -19,7 +19,7 @@
     </nb-card-body>
     <nb-card-footer>
         <button class="float-right mr-2" nbButton status="success" [disabled]="!selectedFiles || isSubmitting"
-            (click)="upload()">Upload <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i></button>
-        <button class="float-right btn-success mr-3" nbButton status="danger" [disabled]="isSubmitting" (click)="cancel()">Cancel</button>
+            (click)="upload()">Subir <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i></button>
+        <button class="float-right btn-success mr-3" nbButton status="danger" [disabled]="isSubmitting" (click)="cancel()">Cancelar</button>
     </nb-card-footer>
 </nb-card>

@@ -48,4 +48,16 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  showPwd(id) {
+    var user = this.models.find(x => x.id === id);
+    if (user.password.includes('*****')){
+      this.service.getPwd(id).subscribe(res => {
+        if (res) {
+          user.password = res.password;
+        }
+      });
+    } else {
+      user.password = user.password.replace(/./g, '*');
+    }
+  }
 }

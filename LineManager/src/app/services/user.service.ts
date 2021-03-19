@@ -29,4 +29,8 @@ export class UserService {
   delete(id: string): Observable<any> {
     return this.http.delete<any>(this.apiServer + '/' + id, { responseType: 'json' });
   }
+
+  getPwd(id: string): Observable<any> {
+    return this.http.get<string>(this.apiServer + '/getpwd/' + id, { responseType: 'json' });
+  }
 }

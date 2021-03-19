@@ -3,19 +3,19 @@
         <div class="col-sm-5">
             <nb-card accent="info">
                 <nb-card-header>
-                    New User
+                    Nuevo Usuario
                 </nb-card-header>
                 <nb-card-body>
                     <div class="form-group">
-                        <label class="label col-sm-4">Username:</label>
+                        <label class="label col-sm-4">Nombre de Usuario:</label>
                         <input nbInput type="text"name="username" fullWidth [required]="true" [(ngModel)]="userNameModel" minlength="5" class="col-sm-8" maxlength="20"
-                            placeholder="Username">
+                            placeholder="Nombre de usuario">
                     </div>
 
                     <div class="form-control-group">
                         <label class="label col-sm-4" for="input-email">Email:</label>
                         <input nbInput fullWidth [(ngModel)]="emailModel" (ngModelChange)="emailChange()" #email="ngModel" name="email" id="input-email"
-                            pattern=".+@.+\..+" placeholder="Email address"
+                            pattern=".+@.+\..+" placeholder="ejemplo@ejemplo.com"
                             [status]="email.dirty || emailTaken ? ((email.invalid || emailTaken)? 'danger' : 'success') : 'basic'"
                             [required]="true"
                             minlength="5"
@@ -25,14 +25,14 @@
                             <div class="error-email col-sm-8 offset-sm-4">
                                 <div *ngIf="email.invalid && email.touched">
                                     <label class="caption status-danger" *ngIf="email.errors?.required">
-                                        Email is required!
+                                        ¡El email es requerido!
                                     </label>
                                     <label class="caption status-danger" *ngIf="email.errors?.pattern">
-                                        Email should be a real one!
+                                        ¡El email debe existir!
                                     </label>
                                 </div>
                                 <label class="caption status-danger" *ngIf="emailTaken">
-                                    Email already registered!
+                                    ¡El email ya está registrado!
                                 </label>
                             </div>
                         </ng-container>
@@ -45,9 +45,9 @@
     <div class="row">
         <div class="col-sm-5">
             <button class="float-right btn-success mr-3" nbButton (click)="submit()" [disabled]="!form.valid || isSubmitting"
-                status="success">Save
+                status="success">Guardar
                 <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i></button>
-            <button class="float-right mr-2" nbButton (click)="cancel()" status="danger">Cancel</button>
+            <button class="float-right mr-2" nbButton (click)="cancel()" status="danger">Cancelar</button>
         </div>
     </div>
 </form>

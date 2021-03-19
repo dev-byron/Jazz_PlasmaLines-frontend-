@@ -41,7 +41,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   getTimeZone(timeZoneId) {
-    return this.timeZones.getTimeZoneList().find(x => x.id == timeZoneId).text;
+    return this.timeZones.getTimeZoneList().find(x => x.id == timeZoneId).gmtAdjustment;
   }
  
   addNew() {
