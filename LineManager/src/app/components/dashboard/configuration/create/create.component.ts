@@ -23,6 +23,8 @@ export class CreateComponent implements OnInit {
   timeZoneId: number;
   modelIsValid: boolean;
   isSubmitting: boolean;
+  isFormTwoValid: boolean;
+  
   editCode: string;
 
   timeZones: TimeZones = new TimeZones();
@@ -39,7 +41,8 @@ export class CreateComponent implements OnInit {
   selectedSections: Section[];
 
   firstForm: FormGroup;
-  
+  secondForm: FormGroup;
+
   constructor(private configService: ConfigurationLinesService, 
              private router: Router, 
              private route: ActivatedRoute,
@@ -86,6 +89,46 @@ export class CreateComponent implements OnInit {
     this.firstForm.controls['viewType'].setValue('h', {onlySelf: true});
     this.firstForm.controls['viewTheme'].setValue('l', {onlySelf: true});
     this.firstForm.controls['timeZone'].setValue(this.timeZoneId, {onlySelf: true});
+
+
+    this.secondForm = this.fb.group({
+      category: ['', Validators.required],
+    });
+    this.secondForm.controls['category'].setValue('1', {onlySelf: true});
+   
+    this.onFormChanges();
+  }
+
+  onFormChanges() {
+    this.secondForm.controls['category'].valueChanges.subscribe(val => {
+      if (val == '1') {
+        this.config.hasFilter = true;
+        this.enableTreeChecboxes(this.items);
+        this.isFormTwoValid = this.getSelectedItems().length > 0;
+      } else {
+        this.config.hasFilter = false;
+        this.disableTreeChecboxes(this.items);
+        this.isFormTwoValid = true;
+      }
+    });
+  }
+
+  enableTreeChecboxes(items: TreeviewItem[]) {
+    items.forEach(item => {
+      if (item.children && item.children.length > 0) {
+        this.enableTreeChecboxes(item.children);
+      }
+      item.disabled = false;
+    });
+  }
+
+  disableTreeChecboxes(items: TreeviewItem[]) {
+    items.forEach(item => {
+      if (item.children && item.children.length > 0) {
+        this.enableTreeChecboxes(item.children);
+      }
+      item.disabled = true;
+    });
   }
 
   onSelectedChange(selectedTitles: string[]): void {
@@ -94,7 +137,7 @@ export class CreateComponent implements OnInit {
 
   updateSelectedItems($event) {
     this.updatetSelectedSections();
-   
+    this.isFormTwoValid = this.getSelectedItems().length > 0;
   }
 
   getSelectedItems(): TreeviewItem[] {

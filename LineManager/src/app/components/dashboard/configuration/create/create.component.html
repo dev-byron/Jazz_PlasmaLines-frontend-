@@ -77,23 +77,75 @@
                         </div>
                     </div>
                 </form>
-
-
             </nb-step>
 
             <nb-step [label]="labelTwo">
-                <ng-template #labelTwo>Líneas</ng-template>
+                <ng-template #labelTwo>Ligas</ng-template>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h6>2. Líneas:</h6>
+                        <h6>2. Selección de Ligas:</h6>
                     </div>
                 </div>
 
-                <hr>
-                <div class="row ">
+                <div class="row mt-3">
                     <div class="col-sm-12">
-                        <button nbButton nbStepperPrevious>Anterior</button>
-                        <button nbButton class="float-right mr-2" status="primary" nbStepperNext>Siguiente</button>
+                        <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="label">Seleccione el tipo de ligas que desea mostrar:</label>
+                                    <div class="info-type col-sm-8">
+                                        <span><i class="fas fa-info-circle"></i> 
+                                            "Selección de Próximos Eventos" no permite incluir ligas y  
+                                             crea una configuración mostrando todos los eventos 30 minutos a futuro
+                                        </span>
+                                    </div>
+                                    <nb-radio-group status="primary" name="category">
+                                        <nb-radio formControlName="category" value="1" ngDefaultControl checked>Selección por Ligas </nb-radio>
+                                        <nb-radio formControlName="category" value="2" ngDefaultControl>Selección de Próximos Eventos</nb-radio>
+                                    </nb-radio-group>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="label">Seleccióne las ligas que desea incluir: </label>
+                                        <ngx-treeview [config]="config" [items]="items" (selectedChange)="onSelectedChange($event)">
+                                        </ngx-treeview>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="label">Ligas Seleccionadas:</label>
+                                    <div class="accordion-selected" *ngIf="config.hasFilter">
+                                        <nb-accordion>
+                                            <nb-accordion-item *ngFor="let selectedSport of getSelectedItems()">
+                                              <nb-accordion-item-header>
+                                                Sport: {{selectedSport.value}}
+                                              </nb-accordion-item-header>
+                                              <nb-accordion-item-body>
+                                                <nb-list>
+                                                    <div class="divison-selected" *ngFor="let selectedDivision of getSelectedChild(selectedSport)">
+                                                        <nb-list-item class="title-selected"*ngFor="let title of getSelectedChild(selectedDivision)">
+                                                            {{title.value}}
+                                                        </nb-list-item>
+                                                    </div>
+                                                  </nb-list>
+                                              </nb-accordion-item-body>
+                                            </nb-accordion-item>
+                                        </nb-accordion>
+                                    </div>
+                                    <div *ngIf="!config.hasFilter">
+                                        No hay ligas seleccionadas en esta categoria
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col-sm-12">
+                                    <button nbButton nbStepperPrevious>Anterior</button>
+                                    <button nbButton class="float-right mr-2" status="primary" [disabled]="secondForm.invalid || !isFormTwoValid"  nbStepperNext>Siguiente</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </nb-step>

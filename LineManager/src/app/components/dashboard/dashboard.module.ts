@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbInputModule, NbButtonModule, NbRadioModule, NbSelectModule, NbStepperModule } from '@nebular/theme';
+import { NbCardModule, NbInputModule, NbButtonModule, NbRadioModule, NbSelectModule, NbStepperModule, NbAccordionModule } from '@nebular/theme';
 import { ThemeModule } from '../../shared/theme.module';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { DashboardComponent } from './dashboard.component';
@@ -18,7 +18,8 @@ import { TreeviewModule } from 'ngx-treeview';
     NbButtonModule,
     ThemeModule,
     NbStepperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NbAccordionModule 
   ],
   declarations: [
     DashboardComponent,
