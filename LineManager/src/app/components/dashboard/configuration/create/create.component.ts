@@ -10,6 +10,9 @@ import { NbDialogService } from '@nebular/theme';
 import { ImageManageModalComponent } from '../../../utils/modals/image-manager/image-manager-modal.component';
 import { ConfigurationLine } from '../../../../models/configuration-line.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DeleteConfirmationModalComponent } from '../../../utils/modals/delete-confirmation/delete-confirmation-modal.component';
+import { Advertising } from '../../../../models/advertising-model';
+import { TokenStorageService } from '../../../../services/token-storage.service';
 
 @Component({
   selector: 'ngx-create',
@@ -21,6 +24,7 @@ export class CreateComponent implements OnInit {
   selectedLineType: string;
   selectedViewTheme: string;
   timeZoneId: number;
+  
   modelIsValid: boolean;
   isSubmitting: boolean;
   isFormTwoValid: boolean;
@@ -57,6 +61,8 @@ export class CreateComponent implements OnInit {
   sportsAsTree: Sport[];
   items: TreeviewItem[] = [];
   selectedSections: Section[];
+  advertisings: Advertising[];
+  nextEventsSection: Section[];
 
   firstForm: FormGroup;
   secondForm: FormGroup;
@@ -66,6 +72,7 @@ export class CreateComponent implements OnInit {
              private router: Router, 
              private route: ActivatedRoute,
              private dialogService: NbDialogService,
+             private tokenStorage: TokenStorageService,
              private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -74,7 +81,22 @@ export class CreateComponent implements OnInit {
     this.selectedViewTheme = 'l';
     this.timeZoneId = 5;
     this.selectedSections = [];
+    this.advertisings = [];
     this.modelIsValid = false;
+
+    this.nextEventsSection = [
+      {
+        name: 'Próximos Eventos',
+        bannerUrl: '',
+        events: [
+          {
+            sport: 'all',
+            division: 'all',
+            titles: []
+          }
+        ]
+      } as Section
+    ];
 
     this.configService.getSportsAsTree().subscribe(res => {
       this.sportsAsTree = res;
@@ -92,6 +114,7 @@ export class CreateComponent implements OnInit {
         }
       })
     });
+
 
     this.setForms();
   }
@@ -125,6 +148,52 @@ export class CreateComponent implements OnInit {
     this.onFormChanges();
   }
 
+  updateFormsSelect(configuration: ConfigurationLine): void {
+
+    this.firstForm.controls['name'].setValue(configuration.name, {onlySelf: true});
+    this.firstForm.controls['lineType'].setValue(configuration.lineType, {onlySelf: true});
+    this.firstForm.controls['viewType'].setValue(configuration.viewType, {onlySelf: true});
+    this.firstForm.controls['viewTheme'].setValue(configuration.viewTheme, {onlySelf: true});
+    this.firstForm.controls['timeZone'].setValue(configuration.time, {onlySelf: true});
+    
+    /*
+
+      this.thirdForm =  this.fb.group({
+        updateScreenTime: ['', Validators.required],
+        customUpdateScreenTime: [''],
+        showAdvertisingTime: ['', Validators.required],
+        customShowAdvertisingTime: [''],
+      });
+
+       this.firstForm = this.fb.group({
+      name: ['', Validators.required],
+      lineType:  ['1', Validators.required],
+      viewType:  ['', Validators.required],
+      viewTheme: ['', Validators.required],
+      timeZone: ['', Validators.required]
+    });
+
+     this.secondForm = this.fb.group({
+      category: ['', Validators.required],
+    });
+
+    id: string;
+    code: string;
+    name: string;
+    viewType: string;
+    lineType: string;
+    viewTheme: string;
+    screenTime: number;
+    advertisingLapseTime: string;
+    createdBy: any;
+    time: string;
+    createdDate: string;
+    sections: Section[];
+    advertisings: any
+    
+    */
+  }
+
   onFormChanges() {
     this.secondForm.controls['category'].valueChanges.subscribe(val => {
       if (val == '1') {
@@ -141,19 +210,22 @@ export class CreateComponent implements OnInit {
     this.thirdForm.controls['updateScreenTime'].valueChanges.subscribe(val => {
       if (val == 0) {
         this.showCustomUpdateScreenTime = true;
+        this.thirdForm.controls['customUpdateScreenTime'].setValidators(Validators.required);
       } else {
         this.showCustomUpdateScreenTime = false;
+        this.thirdForm.controls['customUpdateScreenTime'].clearValidators();
       }
     });
 
     this.thirdForm.controls['showAdvertisingTime'].valueChanges.subscribe(val => {
       if (val == 0) {
         this.customShowAdvertisingTime = true;
+        this.thirdForm.controls['customShowAdvertisingTime'].setValidators(Validators.required);
       } else {
         this.customShowAdvertisingTime = false;
+        this.thirdForm.controls['customShowAdvertisingTime'].clearValidators();
       }
     });
-    
   }
 
   enableTreeChecboxes(items: TreeviewItem[]) {
@@ -198,21 +270,42 @@ export class CreateComponent implements OnInit {
   submit() {
     this.isSubmitting = true;
     var model = {};
-    const timeZone = this.getSelectedTimeZone();
     if (this.modelIsValid) {
       model = {
         code: this.editCode ? this.editCode : "",
-        viewType: this.selectedViewType,
-        lineType: this.selectedLineType ,
-        time: timeZone.id,
-        createdDate: "",
+        name: this.firstForm.controls['name'].value,
+        viewType: this.firstForm.controls['viewType'].value,
+        lineType: this.firstForm.controls['lineType'].value,
+        viewTheme: this.firstForm.controls['viewTheme'].value,
+        time:  this.firstForm.controls['timeZone'].value,
+        createdDate: new Date().toDateString(),
+        createdBy: this.getUserId(),
+        screenTime: this.getUpdateScreenTime(),
+        advertisingLapseTime: this.getAdvertisingLapseTime(),
+        advertisings: this.advertisings,
         sections: this.selectedSections
       }
+
       this.configService.save(model).subscribe(res => {
         this.isSubmitting = false;
         this.redirectoToDashboard();
       });
+
     }
+  }
+
+  private getUpdateScreenTime(): number {
+    const time = this.thirdForm.controls['updateScreenTime'].value !== 0 ? 
+      this.thirdForm.controls['updateScreenTime'].value : 
+      this.thirdForm.controls['customUpdateScreenTime'].value;
+    return time * 1000;
+  }
+
+  private getAdvertisingLapseTime() : number {
+    const time = this.thirdForm.controls['showAdvertisingTime'].value !== 0 ? 
+      this.thirdForm.controls['showAdvertisingTime'].value : 
+      this.thirdForm.controls['customShowAdvertisingTime'].value;
+   return time * 60 * 1000 ;
   }
 
   cancel() {
@@ -301,36 +394,6 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  manageBanner(section: Section) {
-    const imageManager = this.dialogService.open(ImageManageModalComponent, {
-      context: {
-        type: 'banner',
-        sectionName: section.name,
-        imageUrl: section.bannerUrl
-      } 
-    });
-    imageManager.onClose.subscribe(res => {
-      if (res) {
-        section.bannerUrl = res;
-      }
-    });
-  }
-
-  manageAdvertising(section: Section) {
-    const imageManager =  this.dialogService.open(ImageManageModalComponent, {
-      context: {
-        type: 'advertising',
-        sectionName: section.name,
-        imageUrl: section.advertisingUrl
-      } 
-    })
-    imageManager.onClose.subscribe(res => {
-      if (res) {
-        section.advertisingUrl = res;
-      }
-    });
-  }
-
   private fillUpdateConfiguration(configurationLine: ConfigurationLine) {
     if (configurationLine) {
       this.selectedViewType = configurationLine.viewType ;
@@ -385,5 +448,66 @@ export class CreateComponent implements OnInit {
   private redirectoToDashboard(): void {
     this.router.navigate(['manager']);
   }
+  
+  private getUserId() {
+    return this.tokenStorage.getUser().id;
+  }
+  
+  manageBanner(section: Section) {
+    const imageManager = this.dialogService.open(ImageManageModalComponent, {
+      context: {
+        type: 'banner',
+        sectionName: section.name,
+        imageUrl: section.bannerUrl
+      } 
+    });
+    imageManager.onClose.subscribe(res => {
+      if (res) {
+        section.bannerUrl = res;
+      }
+    });
+  }
+
+  deleteBanner(section: Section) {
+    const deleteModal = this.dialogService.open(DeleteConfirmationModalComponent);
+    deleteModal.onClose.subscribe(res => {
+      if (res) {
+        section.bannerUrl = '';
+      }
+    });
+  }
+
+  manageAdvertising() {
+    const imageManager =  this.dialogService.open(ImageManageModalComponent, {
+      context: {
+        type: 'advertising',
+        sectionName: '',
+        imageUrl: ''
+      } 
+    })
+    imageManager.onClose.subscribe(res => {
+      if (res) {
+        this.advertisings.push({
+          imageUrl: res
+        } as Advertising);
+      }
+    });
+  }
+
+  deleteAdvertising(advertising: Advertising) {
+    const deleteModal = this.dialogService.open(DeleteConfirmationModalComponent);
+    deleteModal.onClose.subscribe(res => {
+      if (res) {
+        const index = this.advertisings.findIndex(x => x.imageUrl === advertising.imageUrl);
+        this.advertisings.splice(index, 1);
+      }
+    });
+  }
+
+  hasBanner(section: Section) {
+    return section.bannerUrl !== '';
+  }
+
+
 
 }

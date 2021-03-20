@@ -27,6 +27,7 @@ export class ConfigurationComponent implements OnInit {
 
   loadAll() {
     this.service.getAll().subscribe(res => {
+      console.log(res);
       this.models = res.sort((val1, val2)=> {return new Date(val2.createdDate).getTime() - new 
         Date(val1.createdDate).getTime()})
     });

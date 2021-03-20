@@ -25,17 +25,17 @@ export class ImageManageModalComponent implements OnInit {
   ngOnInit() {
     if (this.type == 'banner') {
       this.isBanner = true;
-      this.resolutionMessage = '1500x150'
+      this.resolutionMessage = '1920x150'
       this.folderName = 'banner';
       if (this.imageUrl == '') {
-        this.imageUrl = "https://via.placeholder.com/1500x140";
+        this.imageUrl = "https://via.placeholder.com/1920x150";
       }
     } else {
       this.isAdvertising = true;
-      this.resolutionMessage = '800x600'
+      this.resolutionMessage = '1920x300'
       this.folderName = 'advertising';
       if (this.imageUrl == '') {
-        this.imageUrl = "https://via.placeholder.com/800x600";
+        this.imageUrl = "https://via.placeholder.com/1920x400";
       }
     }
   }
