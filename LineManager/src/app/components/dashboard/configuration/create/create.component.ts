@@ -144,66 +144,58 @@ export class CreateComponent implements OnInit {
       showAdvertisingTime: ['', Validators.required],
       customShowAdvertisingTime: [''],
     });
-
     this.onFormChanges();
   }
 
   updateFormsSelect(configuration: ConfigurationLine): void {
-
+    this.timeZoneId = parseInt(configuration.time);
     this.firstForm.controls['name'].setValue(configuration.name, {onlySelf: true});
-    this.firstForm.controls['lineType'].setValue(configuration.lineType, {onlySelf: true});
-    this.firstForm.controls['viewType'].setValue(configuration.viewType, {onlySelf: true});
-    this.firstForm.controls['viewTheme'].setValue(configuration.viewTheme, {onlySelf: true});
-    this.firstForm.controls['timeZone'].setValue(configuration.time, {onlySelf: true});
-    
-    /*
+    this.firstForm.controls['lineType'].setValue(configuration.lineType, {onlySelf: false});
+    this.firstForm.controls['viewType'].setValue(configuration.viewType, {onlySelf: false});
+    this.firstForm.controls['viewTheme'].setValue(configuration.viewTheme, {onlySelf: false});
+    this.firstForm.controls['timeZone'].setValue(parseInt(configuration.time), {onlySelf: false});
 
-      this.thirdForm =  this.fb.group({
-        updateScreenTime: ['', Validators.required],
-        customUpdateScreenTime: [''],
-        showAdvertisingTime: ['', Validators.required],
-        customShowAdvertisingTime: [''],
-      });
+    if (configuration.showOnlyNextEvents) {
+      this.secondForm.controls['category'].setValue('2', {onlySelf: false});
+      this.selectedSections = configuration.sections;
+      this.modelIsValid = true;
+    } else {
+      this.secondForm.controls['category'].setValue('1', {onlySelf: false});
+    }
+    this.isFormTwoValid = true;
 
-       this.firstForm = this.fb.group({
-      name: ['', Validators.required],
-      lineType:  ['1', Validators.required],
-      viewType:  ['', Validators.required],
-      viewTheme: ['', Validators.required],
-      timeZone: ['', Validators.required]
-    });
+    if (this.updateScreenConfig.findIndex(x=> x.time == configuration.screenTime) >= 0) {
+      this.thirdForm.controls['updateScreenTime'].setValue(configuration.screenTime, {onlySelf: false});
+      this.showCustomUpdateScreenTime = false;
+    } else {
+      this.thirdForm.controls['updateScreenTime'].setValue(0, {onlySelf: false});
+      this.thirdForm.controls['customUpdateScreenTime'].setValue(configuration.screenTime, {onlySelf: false});
+      this.showCustomUpdateScreenTime = true;
+    }
 
-     this.secondForm = this.fb.group({
-      category: ['', Validators.required],
-    });
-
-    id: string;
-    code: string;
-    name: string;
-    viewType: string;
-    lineType: string;
-    viewTheme: string;
-    screenTime: number;
-    advertisingLapseTime: string;
-    createdBy: any;
-    time: string;
-    createdDate: string;
-    sections: Section[];
-    advertisings: any
-    
-    */
+    if (this.updateAdvertisingConfig.findIndex(x=> x.time == configuration.advertisingLapseTime) >= 0) {
+      this.thirdForm.controls['showAdvertisingTime'].setValue(configuration.advertisingLapseTime, {onlySelf: false});
+      this.customShowAdvertisingTime = false;
+    } else {
+      this.thirdForm.controls['showAdvertisingTime'].setValue(0, {onlySelf: false});
+      this.thirdForm.controls['customShowAdvertisingTime'].setValue(configuration.advertisingLapseTime, {onlySelf: false});
+      this.customShowAdvertisingTime = true;
+    }
+    this.advertisings = configuration.advertisings;
   }
 
   onFormChanges() {
     this.secondForm.controls['category'].valueChanges.subscribe(val => {
-      if (val == '1') {
+      if (val == 1) {
         this.config.hasFilter = true;
-        this.enableTreeChecboxes(this.items);
+        this.enableTreeCheckboxes(this.items);
         this.isFormTwoValid = this.getSelectedItems().length > 0;
+        this.modelIsValid = this.selectedSections.length > 0;
       } else {
         this.config.hasFilter = false;
-        this.disableTreeChecboxes(this.items);
+        this.disableTreeCheckboxes(this.items);
         this.isFormTwoValid = true;
+        this.modelIsValid = true;
       }
     });
 
@@ -228,19 +220,21 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  enableTreeChecboxes(items: TreeviewItem[]) {
+
+  enableTreeCheckboxes(items: TreeviewItem[]) {
     items.forEach(item => {
       if (item.children && item.children.length > 0) {
-        this.enableTreeChecboxes(item.children);
+        this.enableTreeCheckboxes(item.children);
       }
       item.disabled = false;
     });
   }
 
-  disableTreeChecboxes(items: TreeviewItem[]) {
+  //check bug with disable
+  disableTreeCheckboxes(items: TreeviewItem[]) {
     items.forEach(item => {
       if (item.children && item.children.length > 0) {
-        this.enableTreeChecboxes(item.children);
+        this.enableTreeCheckboxes(item.children);
       }
       item.disabled = true;
     });
@@ -269,6 +263,12 @@ export class CreateComponent implements OnInit {
 
   submit() {
     this.isSubmitting = true;
+    var showOnlyNextEvents = !this.config.hasFilter;
+    if (showOnlyNextEvents)  {
+      this.selectedSections = this.nextEventsSection;
+    }
+    console.log(this.modelIsValid);
+   
     var model = {};
     if (this.modelIsValid) {
       model = {
@@ -280,6 +280,7 @@ export class CreateComponent implements OnInit {
         time:  this.firstForm.controls['timeZone'].value,
         createdDate: new Date().toDateString(),
         createdBy: this.getUserId(),
+        showOnlyNextEvents: showOnlyNextEvents,
         screenTime: this.getUpdateScreenTime(),
         advertisingLapseTime: this.getAdvertisingLapseTime(),
         advertisings: this.advertisings,
@@ -298,14 +299,14 @@ export class CreateComponent implements OnInit {
     const time = this.thirdForm.controls['updateScreenTime'].value !== 0 ? 
       this.thirdForm.controls['updateScreenTime'].value : 
       this.thirdForm.controls['customUpdateScreenTime'].value;
-    return time * 1000;
+    return time;
   }
 
   private getAdvertisingLapseTime() : number {
     const time = this.thirdForm.controls['showAdvertisingTime'].value !== 0 ? 
       this.thirdForm.controls['showAdvertisingTime'].value : 
       this.thirdForm.controls['customShowAdvertisingTime'].value;
-   return time * 60 * 1000 ;
+   return time;
   }
 
   cancel() {
@@ -396,6 +397,7 @@ export class CreateComponent implements OnInit {
 
   private fillUpdateConfiguration(configurationLine: ConfigurationLine) {
     if (configurationLine) {
+      this.updateFormsSelect(configurationLine);
       this.selectedViewType = configurationLine.viewType ;
       this.selectedLineType = configurationLine.lineType;
       this.timeZoneId = parseInt(configurationLine.time);

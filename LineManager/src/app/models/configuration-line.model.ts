@@ -8,9 +8,10 @@ export interface ConfigurationLine {
     lineType: string;
     viewTheme: string;
     screenTime: number;
-    advertisingLapseTime: string;
+    advertisingLapseTime: number;
     createdBy: any;
     time: string;
+    showOnlyNextEvents: boolean,
     createdDate: string;
     sections: Section[];
     advertisings: any

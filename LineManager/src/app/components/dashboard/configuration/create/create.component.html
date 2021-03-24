@@ -26,8 +26,8 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label class="label">Tipo de Línea:</label>
-                                <nb-radio-group status="primary">
-                                    <nb-radio formControlName="lineType" value="d" ngDefaultControl checked>Decimal
+                                <nb-radio-group formControlName="lineType" status="primary">
+                                    <nb-radio formControlName="lineType" value="d" ngDefaultControl >Decimal
                                     </nb-radio>
                                     <nb-radio formControlName="lineType" value="a" ngDefaultControl>Americana</nb-radio>
                                 </nb-radio-group>
@@ -36,8 +36,8 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label class="label">Tipo de Vista:</label>
-                                <nb-radio-group status="success" name="viewType">
-                                    <nb-radio formControlName="viewType" value="h" ngDefaultControl checked>Horizontal
+                                <nb-radio-group formControlName="viewType" status="success" name="viewType">
+                                    <nb-radio formControlName="viewType" value="h" ngDefaultControl >Horizontal
                                     </nb-radio>
                                     <nb-radio formControlName="viewType" value="v" ngDefaultControl>Vertical</nb-radio>
                                 </nb-radio-group>
@@ -46,8 +46,8 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label class="label">Tema:</label>
-                                <nb-radio-group status="warning" name="viewTheme">
-                                    <nb-radio formControlName="viewTheme" value="l" ngDefaultControl checked>Claro
+                                <nb-radio-group formControlName="viewTheme" status="warning" name="viewTheme">
+                                    <nb-radio formControlName="viewTheme" value="l" ngDefaultControl >Claro
                                     </nb-radio>
                                     <nb-radio formControlName="viewTheme" value="d" ngDefaultControl>Oscuro</nb-radio>
                                 </nb-radio-group>
@@ -58,9 +58,10 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label class="label">Zona horario a elegir: </label>
-                                <nb-select fullWidth placeholder="Selecciona una zona horaria" formControlName="timeZone">
-                                    <nb-option *ngFor="let zone of timeZones.getTimeZoneList()" [value]="zone.id">
-                                        {{zone.text}}</nb-option>
+                                <nb-select fullWidth placeholder="Selecciona una zona horaria" formControlName="timeZone" 
+                                    [(selected)]="timeZoneId">
+                                    <nb-option *ngFor="let zone of timeZones.getTimeZoneList()"
+                                    [value]="zone.id"> {{zone.text}}</nb-option>
                                 </nb-select>
                             </div>
                         </div>
@@ -99,8 +100,8 @@
                                              crea una configuración mostrando todos los eventos 30 minutos a futuro
                                         </span>
                                     </div>
-                                    <nb-radio-group status="primary" name="category">
-                                        <nb-radio formControlName="category" value="1" ngDefaultControl checked>Selección por Ligas </nb-radio>
+                                    <nb-radio-group status="primary" formControlName="category">
+                                        <nb-radio formControlName="category" value="1" ngDefaultControl>Selección por Ligas </nb-radio>
                                         <nb-radio formControlName="category" value="2" ngDefaultControl>Selección de Próximos Eventos</nb-radio>
                                     </nb-radio-group>
                                 </div>
