@@ -57,7 +57,7 @@ export class UsersComponent implements OnInit {
         }
       });
     } else {
-      user.password = user.password.replace(/./g, '*');
+      user.password = user.password.replace(/./g, '*').slice(0,6);
     }
   }
 }

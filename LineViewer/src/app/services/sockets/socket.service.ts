@@ -12,9 +12,7 @@ export class SocketService {
   protected socketUrl = AppConfig.settings.socketUrl;
 
   constructor(private eventAggregator: EventAggregator) {
-    this.socket = io(this.socketUrl, {
-      
-    });
+    this.socket = io(this.socketUrl);
   }
 
   setupSocketRooms(rooms: Room[]) {
