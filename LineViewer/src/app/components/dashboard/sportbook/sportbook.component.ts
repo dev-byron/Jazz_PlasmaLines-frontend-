@@ -11,6 +11,8 @@ import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstr
 import { ViewConfig } from '../../../models/view-config.model';
 import { ViewTypeEnum } from '../../../models/viewType.enum';
 import { LineTypeEnum } from '../../../models/lineType.enum';
+import { interval } from 'rxjs';
+import { Game } from '../../../models/game.model';
 
 @Component({
   selector: 'ngx-sportbook',
@@ -41,16 +43,20 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   counter = 0;
   timeZoneId: number;
 
-  everySeconds = 60000;
-  staySeconds = 10000;
+  sectionOnDisplay: SportbookSection = null;
+  scheduleOnDisplay: Schedule = null;
+  schedulesOnDisplay: Schedule[] = null;
+  gamesOnDisplay: Game[] = [];
 
   // necesito dos arreglos diferentes, uno para vizualizar la vara y otro que es es socket que va a actualizar lo que esta en pantalla si es necesario
   constructor(private eventAggregator: EventAggregator,
     private socketService: SocketService,
     private configurationService: ConfigurationService,
-    private modalService: NgbModal) {}
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    // console.log(window.innerHeight);
+    // console.log(window.innerHeight - 130);
     this.loadingData = true;
     this.sportbookSections = [];
     this.stopAutoScroll = false;
@@ -65,16 +71,54 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unsubscribeRooms();
   }
 
-  push($event) {
-    if (this.sportbookSections.length > 0) {
-      const sportbookSection: SportbookSection = this.sportbookSections[this.counter];
-      this.sportbookSections.push(sportbookSection);
-      this.counter++;
-    }
-  }
+  checkSectionOnDisplay() {
+    let gamesToDisplay = 8;
+    let paginationNumber = 0;
+    let jumpToNewSection = true;
+    let allGames: Game[] = [];
+    let diplayingGames: Game[] = [];
+    let sectionIndex = 0;
 
-  pop($event) {
-    //this.sportbookSections.shift();
+    interval(this.plasmaLineConfig.screenTime * 1000).subscribe(() => {
+      if (this.plasmaLineConfig && this.sportbookSections && this.sportbookSections.length > 0) {
+        if (jumpToNewSection) {
+          this.sectionOnDisplay = { ...this.sportbookSections[sectionIndex] };
+          this.sectionOnDisplay.schedules = this.sectionOnDisplay.schedules.filter(x => x.games.length > 0);
+          jumpToNewSection = false;
+          allGames = this.sectionOnDisplay.schedules.map(x => x.games)
+            .reduce(function (pre, cur) {
+              return pre.concat(cur);
+            })
+            .map((e) => e);
+
+            sectionIndex = sectionIndex < this.sportbookSections.length - 1 ? sectionIndex + 1 : 0;
+        }
+
+        const paginationIndex: number = ((paginationNumber) * gamesToDisplay);
+        diplayingGames = allGames.slice(paginationIndex, (paginationIndex + gamesToDisplay));
+
+        const schedules = [...this.sectionOnDisplay.schedules];
+        this.schedulesOnDisplay = schedules.map(function(schedule, index) {
+          let scheduleCopy = {...schedule};
+          scheduleCopy.games = schedule.games.filter(x => diplayingGames.find(y => y.id == x.id));
+          return scheduleCopy.games.length > 0 ? scheduleCopy : null;    
+        }).filter(x => x != null);
+
+
+        if ((paginationIndex + gamesToDisplay) <= allGames.length) {
+          paginationNumber++;
+        }
+        else {
+          paginationNumber = 0;
+          jumpToNewSection = true;
+        }
+
+      };
+    });
+
+    setTimeout(() => {
+      this.closeLoadingModal();
+    }, this.plasmaLineConfig.screenTime * 1000);
   }
 
   stopScroll($event) {
@@ -82,7 +126,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   displaySection(section: SportbookSection) {
-    return section.schedules && section.schedules.length > 0;
+    return section && section.schedules && section.schedules.length > 0;
   }
 
   private unsubscribeRooms() {
@@ -96,9 +140,10 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
       this.configurationService.getByCode(this.code).subscribe(plasmaLineConfig => {
         if (plasmaLineConfig) {
           this.plasmaLineConfig = plasmaLineConfig;
+          this.checkSectionOnDisplay();
           this.configureSocketRooms(this.plasmaLineConfig);
           this.configureView(this.plasmaLineConfig);
-          this.getAdvertisingImages(this.plasmaLineConfig);
+          // this.getAdvertisingImages(this.plasmaLineConfig);
         }
       });
 
@@ -156,18 +201,18 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           });
           if (!this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division)) {
-             this.sportbookSections.push(section);
+            this.sportbookSections.push(section);
           }
-           else {
-              const sportbookSection = this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division);
-              if(sportbookSection.schedules.length == 0) {
-                sportbookSection.schedules = section.schedules;
-              }
-           }
+          else {
+            const sportbookSection = this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division);
+            if (sportbookSection.schedules.length == 0) {
+              sportbookSection.schedules = section.schedules;
+            }
+          }
         });
       });
     }
-    this.closeLoadingModal();
+
   }
 
 
@@ -188,9 +233,9 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openLoadingModal() {
     let ngbModalOptions: NgbModalOptions = {
-      backdrop : 'static',
-      keyboard : false
-};
+      backdrop: 'static',
+      keyboard: false
+    };
     this.modalReference = this.modalService.open(this.loadingInfoModal, ngbModalOptions);
   }
 

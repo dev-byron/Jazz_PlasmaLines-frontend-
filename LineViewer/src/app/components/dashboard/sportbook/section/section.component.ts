@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Game } from '../../../../models/game.model';
 import { Schedule } from '../../../../models/schedule.model';
 import { ViewConfig } from '../../../../models/view-config.model';
 
@@ -10,7 +11,7 @@ import { ViewConfig } from '../../../../models/view-config.model';
 export class SectionComponent implements OnInit {
 
   @Input()
-  schedules: Schedule[];
+  schedulesOnDisplay: Schedule[];
 
   @Input()
   imageUrl: string;

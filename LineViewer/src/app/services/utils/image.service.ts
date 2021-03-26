@@ -15,7 +15,6 @@ export class ImageService {
     PROP     PROPOSITIONS
     TNT      TOURNAMENTS
     */
-   console.log(sportName)
     switch (sportName.toUpperCase().trim()) {
       case "CBB":
       case "NBA": 

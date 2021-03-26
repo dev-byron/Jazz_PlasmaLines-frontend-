@@ -1,11 +1,17 @@
+import { Advertising } from "./advertising.model";
 import { PlasmaSection } from "./plasma-section.model";
 
 export interface PlasmaLineConfig {
     code: string;
-    viewType: string,
-    lineType: string,
-    time: number,
-    imageUrl: string,
+    name: string;
+    viewType: string;
+    lineType: string;
+    viewTheme: string;
+    time: number;
+    screenTime: number;
+    advertisingLapseTime: number;
+    showOnlyNextEvents: boolean;
+    advertisings: Advertising[];
     createdDate: string,
     sections: PlasmaSection[]
 }

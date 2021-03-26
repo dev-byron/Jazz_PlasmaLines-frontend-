@@ -1,46 +1,46 @@
-<table class="table table-striped  table-bordered no-margin">
+<table class="table table-striped table-dark no-margin">
     <thead>
-    <tr>
-        <th colspan="5" class="table-title">{{schedule.title}}</th>
-    </tr>
-    <tr class="table-subtitle">
-        <th scope="col" class="col-th-1">TIME</th>
-        <th scope="col" class="col-th-2">TEAM</th>
-        <th scope="col" class="col-th-3">MLINE</th>
-        <th scope="col" class="col-th-3">SPREAD</th>
-        <th scope="col" class="col-th-3">TOTAL GOALS</th>
-    </tr>
-</thead>
-<tbody>
-    <tr>
-        <td class="time-td" colspan="5">{{schedule.date | date: 'mediumDate'}}</td>
-    </tr>
-    <tr *ngFor="let game of schedule.games">
-        <td class="game-time">
-            {{ getTime(game) }}
-            <img class="game-icon" src="{{ getIcon() }}">
-        </td>
-        <td class="participants">
-            <div *ngFor="let participant of game.participants">
-                <span class="rotation-number">{{ participant.rotationNumber }} </span>
-                <span class="participant-name">{{ participant.name }} </span>
-            </div>
-        </td>
-        <td class="line-details">
-            <div *ngFor="let participant of game.participants">
-                <span>{{ getMline(participant) }} </span>
-            </div>
-        </td>
-        <td class="line-details">
-            <div *ngFor="let participant of game.participants">
-                <span>{{ getSpread(participant) }} </span>
-            </div>
-        </td>
-        <td class="line-details">
-            <div *ngFor="let participant of game.participants; let i = index" [attr.data-index]="i">
-                <span>{{ getGoals(game.total, i) }} </span>
-            </div>
-        </td>
-    </tr>
-</tbody>
+        <tr  class="table-title" >
+            <th colspan="2">{{schedule.title}} | {{schedule.date | date: 'mediumDate'}}</th>
+            <th colspan="3"></th>
+          </tr>
+        <tr class="table-subtitle">
+            <th scope="col" class="col-th-1"><span>TIME</span></th>
+            <th scope="col" class="col-th-2"><span>TEAM</span></th>
+            <th scope="col" class="col-th-3"><span>MLINE</span></th>
+            <th scope="col" class="col-th-3"><span>SPREAD</span></th>
+            <th scope="col" class="col-th-3"><span>TOTAL GOALS</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let game of schedule.games">
+            <td class="game-time">
+                <span>
+                    {{ getTime(game) }}
+                    <img class="game-icon" src="{{ getIcon() }}">
+                </span>
+            </td>
+            <td class="participants">
+                <div *ngFor="let participant of game.participants">
+                    <span class="rotation-number">{{ participant.rotationNumber }} </span>
+                    <span class="participant-name">{{ participant.name }} </span>
+                </div>
+            </td>
+            <td class="line-details">
+                <div *ngFor="let participant of game.participants">
+                    <span>{{ getMline(participant) }} </span>
+                </div>
+            </td>
+            <td class="line-details">
+                <div *ngFor="let participant of game.participants">
+                    <span>{{ getSpread(participant) }} </span>
+                </div>
+            </td>
+            <td class="line-details">
+                <div *ngFor="let participant of game.participants; let i = index" [attr.data-index]="i">
+                    <span>{{ getGoals(game.total, i) }} </span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
 </table>

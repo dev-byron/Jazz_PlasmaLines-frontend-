@@ -20,6 +20,7 @@ export class DefaultComponent implements OnInit {
   @Input()
   viewConfig: ViewConfig;
 
+
   timeZones: TimeZones = new TimeZones();
   hourToadd: string;
 

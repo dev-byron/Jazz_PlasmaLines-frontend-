@@ -1,31 +1,29 @@
-<table class="table table-striped table-bordered no-margin">
+<table class="table table-striped table-dark no-margin">
     <thead>
-        <tr>
-            <th colspan="5" class="table-title">{{schedule.title}}</th>
+        <tr class="table-title">
+            <th colspan="2">{{schedule.title}} | {{schedule.date | date: 'mediumDate'}}</th>
+            <th colspan="1"></th>
         </tr>
         <tr class="table-subtitle">
-            <th scope="col" class="col-th-1">CUT OFF</th>
-            <th scope="col" class="col-th-8">DESCRIPTION</th>
-            <th scope="col" class="col-th-3">ODDS</th>
+            <th scope="col" class="col-th-1"><span>CUT OFF</span></th>
+            <th scope="col" class="col-th-8"><span>DESCRIPTION</span></th>
+            <th scope="col" class="col-th-3"><span>ODDS</span></th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td class="time-td" colspan="3">{{schedule.date | date: 'mediumDate'}}</td>
-        </tr>
-        <tr *ngFor="let game of schedule.games">
+        <tr *ngFor="let game of schedule.games" class="tr-v">
             <td class="game-time">
                 <div *ngFor="let participant of game.participants">
                     <span>{{ getDate() }} </span>
                 </div>
             </td>
             <td>
-                <div *ngFor="let participant of game.participants">
+                <div class="participants" *ngFor="let participant of game.participants">
                     <span class="rotation-number">{{ participant.rotationNumber }} </span>
                     <span class="participant-name">{{ participant.name }} </span>
                 </div>
             </td>
-            <td >
+            <td class="line-details">
                 <div *ngFor="let participant of game.participants">
                     <span class="rotation-number">{{ getOdds(participant) }} </span>
                 </div>

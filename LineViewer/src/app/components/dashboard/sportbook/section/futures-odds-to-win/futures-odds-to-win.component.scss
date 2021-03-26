@@ -4,44 +4,69 @@
 }
 
 .table {
-    color: #1C5EAC;
+    color: #164b89;
 }
 
 .table-title {
-    background-color: #1C5EAC;
+    height: 25px;
+}
+
+.table-subtitle {
+    height: 25px;
+}
+
+.table-title > th{
+    background-color: #164b89;
     color: white;
-    padding: 7px 8px;
-    font-size: 18px;
+    padding: 1px 8px;
+    font-size: 14px;
+    font-weight: 500;
     margin: 0;
     border: 0;
-    font-weight: 700;
 }
 
 .table-subtitle > th {
     color: white;
-    padding: 6px 8px !important;
-    font-size: 18px !important;
+    font-size: 14px;
     margin: 0;
     border: 0;
-    font-weight: 600;
+    padding: 3px 0px;
+    background-color: #2b3035 ;
+}
+
+.tr-v {
+    height: 50px;
 }
 
 td {
     color: white;
-    height: 20px;
-    font-size: 17px;
+    padding: 3px 3px;
+    font-size: 16px;
+}
+
+.game-time {
+    vertical-align: middle;
+}
+
+.game-time > span {
+    margin-left: 10px;
 }
 
 .col-th-1 {
-    width: 10%;
+    width: 11%;
+}
+
+.col-th-1 > span {
+    margin-left: 10px;
 }
 
 .col-th-2 {
-    width: 26%;
+    width: 20%;
 }
 
 .col-th-3 {
-    width: 12%;
+    width: 13%;
+    text-align: center;
 }
 
 .game-icon {
@@ -51,20 +76,18 @@ td {
 }
 
 .rotation-number {
-    font-size: 18px;
     font-weight: 700;
     margin-right: 8px;
 }
 
-.game-time {
-    font-size: 18px;
-    font-weight: 700;
+.line-details {
+    text-align: center;
+    font-weight: 600;
 }
 
 .time-td {
     padding: 3px 12px !important;
     font-size: 19px;
     font-weight: 700;
-    background-color: #4c4c4c;
     border: none;
 }

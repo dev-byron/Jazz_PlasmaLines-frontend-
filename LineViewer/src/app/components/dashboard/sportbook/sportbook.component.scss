@@ -1,9 +1,11 @@
 .main-container {
-    padding: 0 15px;
+    height: 100vh;
+    background-color: #2b3035 ;
+    padding: auto;
 }
 
 .main-wrapper-v {
-    max-height: 1600px; 
+   
     overflow-y: scroll;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
@@ -12,7 +14,6 @@
 }
 
 .main-wrapper-h {
-    max-height: 850px; 
     overflow-y: scroll;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
