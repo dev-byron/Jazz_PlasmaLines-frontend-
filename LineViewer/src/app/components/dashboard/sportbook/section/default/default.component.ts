@@ -6,6 +6,9 @@ import { ViewConfig } from '../../../../../models/view-config.model';
 import { TimeZones } from '../../../../../data/time-zones'
 import { CustomDateFormatter } from '../../../../../utils/custom-date-formatter'
 import { ImageService } from '../../../../../services/utils/image.service';
+import { Total } from '../../../../../models/total.model';
+import { LineTypeEnum } from '../../../../../models/lineType.enum';
+import { CustomOddFormatter } from '../../../../../utils/odds-formatter';
 
 @Component({
   selector: 'ngx-line-default',
@@ -40,35 +43,23 @@ export class DefaultComponent implements OnInit {
     }
   }
 
-  
   getSpread (participant: Participant) {
-    if (participant.line.spread && participant.line.spreadOdds) {
-      return  this.format(participant.line.spread) + this.format(participant.line.spreadOdds);
-    }
-    return '-';
+    return CustomOddFormatter.format(participant.line.spread, participant.line.spreadOdds, this.viewConfig.lineType);
   }
 
-  private format(spread) {
-    const spreatInt = parseInt(spread);
-     if (spreatInt > 0) {
-      spread = '+' + spread;
-     }
-     return spread;
-  }
-
-
-  getTotal(total) {
-    if (total.value) {
-      return this.format(total.value) +''+  this.format(total.overOdds);
-    }
-   return '-';
+  getTotal(total: Total) {
+    return CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType);
   }
 
   getMline(participant: Participant) {
-    if (participant.line.moneyLine) {
-      return this.format(participant.line.moneyLine); 
-    }
-    return '-';
+    return CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType);
   }
+
+  getArrow(i) { 
+    const route = '/assets/arrows/'
+    return  route + (i == 0 ? 'up.png' : 'down.png');
+  }
+
+
   
 }

@@ -3,11 +3,7 @@
     margin: 0;
 }
 
-.table {
-    color: #164b89;
-}
-
-.table-title {
+    .table-title {
     height: 25px;
 }
 
@@ -39,7 +35,6 @@
 }
 
 td {
-    color: white;
     padding: 3px 3px;
     font-size: 16px;
 }
@@ -56,12 +51,16 @@ td {
     width: 11%;
 }
 
+.col-th-1 {
+    width: 8%;
+}
+
 .col-th-1 > span {
     margin-left: 10px;
 }
 
 .col-th-2 {
-    width: 20%;
+    width: 22%;
 }
 
 .col-th-3 {

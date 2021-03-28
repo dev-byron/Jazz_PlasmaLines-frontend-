@@ -1,23 +1,23 @@
+
 .main-container {
     height: 100vh;
-    background-color: #2b3035 ;
     padding: auto;
 }
 
+.dark {
+    background-color: #2b3035 !important;
+}
+
+.light {
+    background-color: rgba(255, 255, 255, 0.05);
+ }
+
+
 .main-wrapper-v {
-   
-    overflow-y: scroll;
-    overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
     position: relative;
 }
 
 .main-wrapper-h {
-    overflow-y: scroll;
-    overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
     position: relative;
 }
 

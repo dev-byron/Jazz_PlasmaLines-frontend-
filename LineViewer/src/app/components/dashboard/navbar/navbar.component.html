@@ -1,6 +1,7 @@
-<nav class="navbar ">
+<nav class="navbar" [ngClass]="{'background-dark': viewTheme == 'd', 'background-light': viewTheme == 'l' }">
     <div class="standart-logo">
-        <img src="/assets/logo/jazzgs-display-white.png" class="img-responsive">
-        <a class="exit-btn" (click)="exit()"><i class="fa fa-sign-out-alt"></i></a>
+        <img *ngIf="viewTheme == 'd'" src="/assets/logo/jazzgs-display-white.png" class="img-responsive">
+        <img *ngIf="viewTheme == 'l'" src="/assets/logo/jazzgs-display-dark.png" class="img-responsive">
+        <a [ngClass]="{'dark': viewTheme == 'd', 'light': viewTheme == 'l' }" class="exit-btn" (click)="exit()"><i class="fa fa-sign-out-alt"></i></a>
     </div>
 </nav>

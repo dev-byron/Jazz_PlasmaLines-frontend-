@@ -13,6 +13,7 @@ import { ViewTypeEnum } from '../../../models/viewType.enum';
 import { LineTypeEnum } from '../../../models/lineType.enum';
 import { interval } from 'rxjs';
 import { Game } from '../../../models/game.model';
+import { Advertising } from '../../../models/advertising.model';
 
 @Component({
   selector: 'ngx-sportbook',
@@ -31,11 +32,13 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   plasmaLineConfig: PlasmaLineConfig;
   viewConfig: ViewConfig = {
     viewType: ViewTypeEnum.Horizontal,
-    lineType: LineTypeEnum.Decimal
+    lineType: LineTypeEnum.Decimal,
+    theme: 'd'
   } as ViewConfig;
 
   viewTypeEnum = ViewTypeEnum;
-  advertisingImages: string[];
+  advertisingImages: Advertising[];
+  advertisingEvery: number;
   rooms: Room[];
   sportbookSections: SportbookSection[];
   loadingData: boolean;
@@ -112,13 +115,78 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           paginationNumber = 0;
           jumpToNewSection = true;
         }
-
       };
     });
+    
 
     setTimeout(() => {
       this.closeLoadingModal();
     }, this.plasmaLineConfig.screenTime * 1000);
+  }
+
+
+  checkSectionOnDisplayTest() {
+    let gamesToDisplay = 8;
+    let paginationNumber = 0;
+    let jumpToNewSection = true;
+    let allGames: Game[] = [];
+    let diplayingGames: Game[] = [];
+    let sectionIndex = 0;
+
+    interval(this.plasmaLineConfig.screenTime * 1000).subscribe(() => {
+      if (this.plasmaLineConfig && this.sportbookSections && this.sportbookSections.length > 0) {
+        if (jumpToNewSection) {
+          this.sectionOnDisplay = { ...this.sportbookSections[sectionIndex] };
+          this.sectionOnDisplay.schedules = this.sectionOnDisplay.schedules.filter(x => x.games.length > 0);
+          jumpToNewSection = false;
+          allGames = this.sectionOnDisplay.schedules.map(x => x.games)
+            .reduce(function (pre, cur) {
+              return pre.concat(cur);
+            })
+            .map((e) => e);
+            sectionIndex = sectionIndex < this.sportbookSections.length - 1 ? sectionIndex + 1 : 0;
+        }
+
+        const paginationIndex: number = ((paginationNumber) * gamesToDisplay);
+        diplayingGames = allGames.slice(paginationIndex, (paginationIndex + gamesToDisplay));
+
+        const schedules = [...this.sectionOnDisplay.schedules];
+        this.schedulesOnDisplay = schedules.map(function(schedule, index) {
+          let scheduleCopy = {...schedule};
+          scheduleCopy.games = schedule.games.filter(x => diplayingGames.find(y => y.id == x.id));
+          return scheduleCopy.games.length > 0 ? scheduleCopy : null;    
+        }).filter(x => x != null);
+
+
+        if ((paginationIndex + gamesToDisplay) <= allGames.length) {
+          paginationNumber++;
+        }
+        else {
+          paginationNumber = 0;
+          jumpToNewSection = true;
+        }
+      };
+    });
+    
+
+    setTimeout(() => {
+      this.closeLoadingModal();
+    }, this.plasmaLineConfig.screenTime * 1000);
+  }
+
+  getScheduleType(section: Schedule) {
+    if (section.title.toLowerCase().includes("futures") || section.title.toLowerCase().includes("odds to win")) {
+      return 1;
+    }
+    else if (section.title.toLowerCase().includes("team totals")) {
+      return 2;
+    }
+    else if(section.sport.toLowerCase().includes("soc")) {
+      return 3;
+    }
+    else {
+      return 4;
+    }
   }
 
   stopScroll($event) {
@@ -140,10 +208,10 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
       this.configurationService.getByCode(this.code).subscribe(plasmaLineConfig => {
         if (plasmaLineConfig) {
           this.plasmaLineConfig = plasmaLineConfig;
+          this.configureView(this.plasmaLineConfig);
+          this.getAdvertisingImages(this.plasmaLineConfig);
           this.checkSectionOnDisplay();
           this.configureSocketRooms(this.plasmaLineConfig);
-          this.configureView(this.plasmaLineConfig);
-          // this.getAdvertisingImages(this.plasmaLineConfig);
         }
       });
 
@@ -157,13 +225,8 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getAdvertisingImages(plasmaLineConfig: PlasmaLineConfig) {
     this.advertisingImages = [];
-    if (plasmaLineConfig && plasmaLineConfig.sections) {
-      plasmaLineConfig.sections.forEach(section => {
-        if (section.advertisingUrl) {
-          this.advertisingImages.push(section.advertisingUrl)
-        }
-      });
-    }
+    this.advertisingImages = plasmaLineConfig.advertisings;
+    this.advertisingEvery = plasmaLineConfig.advertisingLapseTime;
   }
 
   private configureSocketRooms(plasmaLineConfig: PlasmaLineConfig) {
@@ -174,14 +237,6 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
         this.socketService.setupSocketRooms(this.rooms);
       }
     }
-  }
-
-  private configureView(plasmaLineConfig: PlasmaLineConfig) {
-    this.viewConfig = {
-      viewType: (plasmaLineConfig.viewType == 'v' ? ViewTypeEnum.Vertical : ViewTypeEnum.Horizontal),
-      lineType: (plasmaLineConfig.lineType == 'a' ? LineTypeEnum.American : LineTypeEnum.Decimal),
-      timeZoneId: plasmaLineConfig.time
-    } as ViewConfig;
   }
 
   private filterSportbookSections(allSchedules: Schedule[], subscribedSections: PlasmaSection[]) {
@@ -212,7 +267,6 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       });
     }
-
   }
 
 
@@ -244,5 +298,21 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
       this.modalReference.close();
     }
   }
+
+  private configureView(plasmaLineConfig: PlasmaLineConfig) {
+    this.viewConfig = {
+      viewType: (plasmaLineConfig.viewType == 'v' ? ViewTypeEnum.Vertical : ViewTypeEnum.Horizontal),
+      lineType: (plasmaLineConfig.lineType == 'a' ? LineTypeEnum.American : LineTypeEnum.Decimal),
+      theme: plasmaLineConfig.viewTheme,
+      timeZoneId: plasmaLineConfig.time
+    } as ViewConfig;
+
+    if (plasmaLineConfig.viewTheme == 'd') {
+      document.body.style.background = '#191919';
+    } else {
+      document.body.style.background = '#D8D9DD';
+    }
+  }
+
 
 }

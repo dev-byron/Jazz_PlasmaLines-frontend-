@@ -7,6 +7,7 @@ import { Total } from '../../../../../models/total.model';
 import { ViewConfig } from '../../../../../models/view-config.model';
 import { ImageService } from '../../../../../services/utils/image.service';
 import { CustomDateFormatter } from '../../../../../utils/custom-date-formatter';
+import { CustomOddFormatter } from '../../../../../utils/odds-formatter';
 
 
 @Component({
@@ -40,40 +41,26 @@ export class DrawParticipantComponent implements OnInit {
       return CustomDateFormatter.formatTime(game.time, this.hourToadd);
      }
   }
-  
 
   getSpread (participant: Participant) {
-    if (participant.line.spread && participant.line.spreadOdds) {
-      return this.format(participant.line.spread) + this.format(participant.line.spreadOdds);
-    }
-    return '-';
+    return CustomOddFormatter.format(participant.line.spread, participant.line.spreadOdds, this.viewConfig.lineType);
   }
 
   getMline(participant: Participant) {
-    if (participant.line.moneyLine) {
-      return this.format(participant.line.moneyLine); 
-    }
-    return '-';
+    return CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType);
   }
 
   getGoals(total: Total, index: number) {
     if (index == 0) {
-      return this.format(total.value) + this.format(total.overOdds);
+      CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType);
+      //return this.format(total.value) + this.format(total.overOdds);
     } else if (index == 1) {
-      return this.format(total.value) + this.format(total.underOdds);
+      CustomOddFormatter.format(total.value, total.underOdds, this.viewConfig.lineType);
+      //return this.format(total.value) + this.format(total.underOdds);
     }
     else {
       return '-';
     }
   }
-
-  private format(spread) {
-    const spreatInt = parseInt(spread);
-     if (spreatInt > 0) {
-      spread = '+' + spread;
-     }
-     return spread;
-  }
-
 
 }

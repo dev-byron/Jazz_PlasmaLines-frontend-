@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { throttleTime } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-navbar',
@@ -7,6 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+
+  @Input()
+  viewTheme: string;
+
 
   constructor(private router: Router) { }
 

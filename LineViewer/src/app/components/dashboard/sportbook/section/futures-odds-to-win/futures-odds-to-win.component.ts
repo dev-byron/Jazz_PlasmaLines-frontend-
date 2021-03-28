@@ -2,6 +2,7 @@ import { Component,  Input,  OnInit } from '@angular/core';
 import { Schedule } from '../../../../../models/schedule.model';
 import { Participant } from '../../../../../models/participant.model';
 import { ViewConfig } from '../../../../../models/view-config.model';
+import { CustomOddFormatter } from '../../../../../utils/odds-formatter';
 
 @Component({
   selector: 'ngx-futures-odds-to-win',
@@ -28,10 +29,7 @@ export class FutureOddsToWinComponent implements OnInit {
   }
 
   getOdds(participant: Participant) {
-    if (participant.line.moneyLine) {
-      return '+' + participant.line.moneyLine; 
-    }
-    return '-';
+    return  CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType);
   }
 
 }

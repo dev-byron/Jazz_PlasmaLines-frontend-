@@ -1,5 +1,6 @@
-import { AfterViewInit, OnDestroy, EventEmitter, Input, Output, Component, OnInit } from "@angular/core";
-import { interval, timer } from 'rxjs';
+import { AfterViewInit, OnDestroy, EventEmitter, Input, Output, Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { interval } from 'rxjs';
+import { Advertising } from "../../../../models/advertising.model";
 
 @Component({
   selector: 'ngx-advertising',
@@ -7,45 +8,61 @@ import { interval, timer } from 'rxjs';
   styleUrls: ['./advertising.component.scss']
 })
 export class AdvertisingComponent implements OnDestroy, AfterViewInit {
-  
+
   @Input()
-  advertisingImages: string[];
+  advertisingImages: Advertising[];
   @Input()
-  everySeconds: number;
+  advertisingEvery: number;
   @Input()
-  staySeconds: number;
-  
+  direction: string;
+
   @Output()
   notify: EventEmitter<boolean> = new EventEmitter<boolean>();
-  
+
+  @ViewChild('advertisingContainer') advertisingContainer: ElementRef;
+
   current: string;
   display: boolean;
+  staySeconds: number;
+  top: string;
+  topNumber: number;
 
-  constructor() {}
+  interval: any;
+
+  constructor()  {
+    this.display = true;
+  }
 
   ngAfterViewInit() {
-    if (this.advertisingImages && this.advertisingImages.length > 0) {
-      let index = 0;
-      let seconds = 0;
-      interval(this.everySeconds + seconds).subscribe(() => {
-        this.current = this.advertisingImages[index];
-        index++;
-        if (index >= this.advertisingImages.length) {
-          index = 0;
-        }
+    let currentIndex = 0;
+    var refreshTime = 1000 / 30;
+    setInterval(() => {
         this.display = true;
-        setTimeout(() => {
-          this.notify.emit(true);
-          this.display = false;
-          seconds = this.staySeconds;
-        }, this.staySeconds);
-        this.notify.emit(true);
-      })
-    }
+        this.current = this.advertisingImages[currentIndex].imageUrl;
+        
+        if (this.advertisingContainer) {
+          this.advertisingContainer.nativeElement.setAttribute('style', 'top: ' + window.innerHeight + 'px');
+          this.interval = setInterval(() => {
+            this.topNumber = this.advertisingContainer.nativeElement.offsetTop - 5;
+            this.top = this.topNumber + 'px;';
+            this.advertisingContainer.nativeElement.setAttribute('style', 'top: ' + this.top);
+            if (this.advertisingContainer.nativeElement.offsetTop + 100 + this.advertisingContainer.nativeElement.offsetHeight < 0) {
+              this.advertisingContainer.nativeElement.setAttribute('style', 'top: ' + window.outerHeight + 'px');
+              this.display = false;
+              clearInterval(this.interval);
+            }
+          }, refreshTime);
+      }
+      currentIndex = (currentIndex < (this.advertisingImages.length - 1)) ? currentIndex + 1 : 0;
+    }, (this.advertisingEvery * 1000));
   }
- 
+
+
   ngOnDestroy(): void {
-   
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+
   }
-  
+
 }

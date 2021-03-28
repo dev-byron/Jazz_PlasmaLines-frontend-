@@ -17,10 +17,26 @@
 }
 
 .exit-btn {
-    color: #fff !important;
     cursor: pointer;
     display: inline-block;
     float: right;
     font-size: 15px;
     margin-top: 10px;
+}
+
+
+.dark {
+    color: #EDF1F7 !important;
+}
+
+.light {
+    color: #191919 !important;
+}
+
+.background-dark {
+    background-color: #191919 !important;
+}
+
+.background-light {
+    background-color: #fff !important;
 }
