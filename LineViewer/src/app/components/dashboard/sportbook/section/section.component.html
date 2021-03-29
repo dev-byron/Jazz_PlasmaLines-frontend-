@@ -2,14 +2,19 @@
     <div class="img-section">
         <img  src="{{imageUrl}}" class="card-img-top">
     </div>
-    <div class="card-body no-padding">
-        <div *ngFor="let schedule of schedulesOnDisplay" >
-            <div [ngSwitch]="getScheduleType(schedule)">
-                <ngx-futures-odds-to-win *ngSwitchCase="1"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-futures-odds-to-win> 
-                <ngx-team-totals *ngSwitchCase="2"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-team-totals>
-                <ngx-draw-participant *ngSwitchCase="3"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-draw-participant>
-                <ngx-line-default *ngSwitchCase="4" [schedule]="schedule" [viewConfig]="viewConfig"></ngx-line-default>
+    <div class="card-body no-padding" >
+        <div  *ngIf="!displayNoSectionError">
+            <div *ngFor="let schedule of schedulesOnDisplay" >
+                <div [ngSwitch]="getScheduleType(schedule)">
+                    <ngx-futures-odds-to-win *ngSwitchCase="1"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-futures-odds-to-win> 
+                    <ngx-team-totals *ngSwitchCase="2"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-team-totals>
+                    <ngx-draw-participant *ngSwitchCase="3"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-draw-participant>
+                    <ngx-line-default *ngSwitchCase="4" [schedule]="schedule" [viewConfig]="viewConfig"></ngx-line-default>
+                </div>
             </div>
+        </div>
+        <div *ngIf="displayNoSectionError">
+            <ngx-no-data [viewConfig]="viewConfig"></ngx-no-data>
         </div>
     </div>
 </div>

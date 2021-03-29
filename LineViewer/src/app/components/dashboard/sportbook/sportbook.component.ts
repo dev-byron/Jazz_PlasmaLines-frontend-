@@ -35,7 +35,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     lineType: LineTypeEnum.Decimal,
     theme: 'd'
   } as ViewConfig;
-
+  displayNoSectionError: boolean;
   viewTypeEnum = ViewTypeEnum;
   advertisingImages: Advertising[];
   advertisingEvery: number;
@@ -67,39 +67,76 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.openLoadingModal();
-    this.setSubscribers();
+    this.initLinesConfiguration();
   }
 
   ngOnDestroy(): void {
     this.unsubscribeRooms();
   }
 
-  checkSectionOnDisplay() {
-    let gamesToDisplay = 8;
-    let paginationNumber = 0;
+  checkSectionToDisplay() {
     let jumpToNewSection = true;
     let allGames: Game[] = [];
     let diplayingGames: Game[] = [];
     let sectionIndex = 0;
-
+    let lastGameIndex = 0; 
     interval(this.plasmaLineConfig.screenTime * 1000).subscribe(() => {
+      const containerHeight = window.innerHeight - 230;
+      let availableSpace = containerHeight;
       if (this.plasmaLineConfig && this.sportbookSections && this.sportbookSections.length > 0) {
         if (jumpToNewSection) {
           this.sectionOnDisplay = { ...this.sportbookSections[sectionIndex] };
           this.sectionOnDisplay.schedules = this.sectionOnDisplay.schedules.filter(x => x.games.length > 0);
-          jumpToNewSection = false;
-          allGames = this.sectionOnDisplay.schedules.map(x => x.games)
+          if (this.sectionOnDisplay.schedules && this.sectionOnDisplay.schedules.length > 0) {
+            allGames = this.sectionOnDisplay.schedules.map(x => x.games)
             .reduce(function (pre, cur) {
               return pre.concat(cur);
             })
             .map((e) => e);
-
             sectionIndex = sectionIndex < this.sportbookSections.length - 1 ? sectionIndex + 1 : 0;
+            lastGameIndex = 0;
+            lastGameId = allGames[0].id;
+            jumpToNewSection = false;
+           }
         }
+        var breakLoop = false;
+        var gamesToDisplay = 0;
+        var scheduleId = 0;
+        var counter = lastGameIndex;
+        do {
+          var game = allGames[counter];
+          if (game) {
+            var lastGameId = game.id;
+            var schedule = this.sectionOnDisplay.schedules.find(x => x.games.find(y => y.id == lastGameId));
+            if (schedule) {
+              if ((scheduleId !== schedule.id))  {
+                scheduleId = schedule.id;
+                availableSpace = availableSpace - 50;
+              }
+            }
+          }
+          else {
+            breakLoop = true;
+          }
+          
+          if (availableSpace < 0) {
+            breakLoop = true;
+          } 
 
-        const paginationIndex: number = ((paginationNumber) * gamesToDisplay);
-        diplayingGames = allGames.slice(paginationIndex, (paginationIndex + gamesToDisplay));
-
+          if (!breakLoop) {
+            availableSpace = availableSpace - (allGames[counter].participants.length * 25);
+            if (availableSpace > 0) {
+              gamesToDisplay++;
+              counter++;
+            } else {
+                breakLoop = true;
+            }
+          }
+        } while (!breakLoop);
+        
+        diplayingGames = allGames.slice(lastGameIndex, (lastGameIndex + gamesToDisplay));
+        lastGameIndex = (lastGameIndex + gamesToDisplay);
+        
         const schedules = [...this.sectionOnDisplay.schedules];
         this.schedulesOnDisplay = schedules.map(function(schedule, index) {
           let scheduleCopy = {...schedule};
@@ -107,86 +144,12 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           return scheduleCopy.games.length > 0 ? scheduleCopy : null;    
         }).filter(x => x != null);
 
-
-        if ((paginationIndex + gamesToDisplay) <= allGames.length) {
-          paginationNumber++;
-        }
-        else {
-          paginationNumber = 0;
+        if (lastGameIndex + 1 >= allGames.length) {
           jumpToNewSection = true;
         }
       };
-    });
-    
-
-    setTimeout(() => {
       this.closeLoadingModal();
-    }, this.plasmaLineConfig.screenTime * 1000);
-  }
-
-
-  checkSectionOnDisplayTest() {
-    let gamesToDisplay = 8;
-    let paginationNumber = 0;
-    let jumpToNewSection = true;
-    let allGames: Game[] = [];
-    let diplayingGames: Game[] = [];
-    let sectionIndex = 0;
-
-    interval(this.plasmaLineConfig.screenTime * 1000).subscribe(() => {
-      if (this.plasmaLineConfig && this.sportbookSections && this.sportbookSections.length > 0) {
-        if (jumpToNewSection) {
-          this.sectionOnDisplay = { ...this.sportbookSections[sectionIndex] };
-          this.sectionOnDisplay.schedules = this.sectionOnDisplay.schedules.filter(x => x.games.length > 0);
-          jumpToNewSection = false;
-          allGames = this.sectionOnDisplay.schedules.map(x => x.games)
-            .reduce(function (pre, cur) {
-              return pre.concat(cur);
-            })
-            .map((e) => e);
-            sectionIndex = sectionIndex < this.sportbookSections.length - 1 ? sectionIndex + 1 : 0;
-        }
-
-        const paginationIndex: number = ((paginationNumber) * gamesToDisplay);
-        diplayingGames = allGames.slice(paginationIndex, (paginationIndex + gamesToDisplay));
-
-        const schedules = [...this.sectionOnDisplay.schedules];
-        this.schedulesOnDisplay = schedules.map(function(schedule, index) {
-          let scheduleCopy = {...schedule};
-          scheduleCopy.games = schedule.games.filter(x => diplayingGames.find(y => y.id == x.id));
-          return scheduleCopy.games.length > 0 ? scheduleCopy : null;    
-        }).filter(x => x != null);
-
-
-        if ((paginationIndex + gamesToDisplay) <= allGames.length) {
-          paginationNumber++;
-        }
-        else {
-          paginationNumber = 0;
-          jumpToNewSection = true;
-        }
-      };
     });
-    
-
-    setTimeout(() => {
-      this.closeLoadingModal();
-    }, this.plasmaLineConfig.screenTime * 1000);
-  }
-
-  getScheduleType(section: Schedule) {
-    if (section.title.toLowerCase().includes("futures") || section.title.toLowerCase().includes("odds to win")) {
-      return 1;
-    }
-    else if (section.title.toLowerCase().includes("team totals")) {
-      return 2;
-    }
-    else if(section.sport.toLowerCase().includes("soc")) {
-      return 3;
-    }
-    else {
-      return 4;
-    }
   }
 
   stopScroll($event) {
@@ -203,23 +166,39 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private setSubscribers() {
+  private initLinesConfiguration() {
     if (this.code) {
       this.configurationService.getByCode(this.code).subscribe(plasmaLineConfig => {
         if (plasmaLineConfig) {
           this.plasmaLineConfig = plasmaLineConfig;
+          this.configurationService.getInitialSchedules(this.code).subscribe(() => {});
           this.configureView(this.plasmaLineConfig);
           this.getAdvertisingImages(this.plasmaLineConfig);
-          this.checkSectionOnDisplay();
-          this.configureSocketRooms(this.plasmaLineConfig);
+          this.setSubscribers(this.plasmaLineConfig);
         }
       });
 
       this.eventAggregator.featuredSchedules.subscribe(featuredSchedule => {
-        if (featuredSchedule != null && this.plasmaLineConfig) {
-          this.filterSportbookSections(featuredSchedule.schedules, this.plasmaLineConfig.sections);
+        if (featuredSchedule != null  && this.plasmaLineConfig) {
+          this.filterSportbookSections(featuredSchedule.schedules, this.plasmaLineConfig.sections, this.plasmaLineConfig.showOnlyNextEvents);
+          this.checkSectionToDisplay();
+          this.validateIfSections(featuredSchedule.schedules)
         }
       });
+    }
+  }
+
+  private validateIfSections(schedules) {
+    if (schedules && schedules.length > 0) {
+      this.displayNoSectionError = false;
+    } else {
+      this.displayNoSectionError = true;
+    }
+  }
+
+  private setSubscribers(plasmaLineConfig: PlasmaLineConfig) {
+    if (plasmaLineConfig) {
+      this.configureSocketRooms(this.plasmaLineConfig);
     }
   }
 
@@ -239,8 +218,8 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private filterSportbookSections(allSchedules: Schedule[], subscribedSections: PlasmaSection[]) {
-    if (allSchedules && subscribedSections) {
+  private filterSportbookSections(allSchedules: Schedule[], subscribedSections: PlasmaSection[], showOnlyNextEvents: boolean) {
+    if (subscribedSections) {
       subscribedSections.forEach(subscribedSection => {
         subscribedSection.events.forEach(subscribedEvent => {
           const section = {
@@ -249,20 +228,26 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
             bannerUrl: subscribedSection.bannerUrl,
             schedules: []
           } as SportbookSection;
-          subscribedEvent.titles.forEach(subscribedTitle => {
-            var schedules = allSchedules.find(x => x.sport == section.sport && x.division == section.division && x.title == subscribedTitle);
-            if (schedules) {
-              section.schedules.push(schedules);
+
+          if (allSchedules) {
+            if (showOnlyNextEvents) {
+              section.schedules = section.schedules.concat(allSchedules);
+            } else {
+              subscribedEvent.titles.forEach(subscribedTitle => {
+                var schedules = allSchedules.find(x => x.sport == section.sport && x.division == section.division && x.title == subscribedTitle);
+                if (schedules) {
+                  section.schedules.push(schedules);
+                }
+              });
             }
-          });
+          }
+
           if (!this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division)) {
             this.sportbookSections.push(section);
           }
           else {
             const sportbookSection = this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division);
-            if (sportbookSection.schedules.length == 0) {
               sportbookSection.schedules = section.schedules;
-            }
           }
         });
       });
@@ -316,3 +301,54 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 }
+
+
+  // checkSectionOnDisplay() {
+  //   let gamesToDisplay = 8;
+  //   let paginationNumber = 0;
+  //   let jumpToNewSection = true;
+  //   let allGames: Game[] = [];
+  //   let diplayingGames: Game[] = [];
+  //   let sectionIndex = 0;
+
+  //   interval(this.plasmaLineConfig.screenTime * 1000).subscribe(() => {
+  //     if (this.plasmaLineConfig && this.sportbookSections && this.sportbookSections.length > 0) {
+  //       if (jumpToNewSection) {
+  //         this.sectionOnDisplay = { ...this.sportbookSections[sectionIndex] };
+  //         this.sectionOnDisplay.schedules = this.sectionOnDisplay.schedules.filter(x => x.games.length > 0);
+  //         jumpToNewSection = false;
+  //         allGames = this.sectionOnDisplay.schedules.map(x => x.games)
+  //           .reduce(function (pre, cur) {
+  //             return pre.concat(cur);
+  //           })
+  //           .map((e) => e);
+
+  //           sectionIndex = sectionIndex < this.sportbookSections.length - 1 ? sectionIndex + 1 : 0;
+  //       }
+
+  //       const paginationIndex: number = ((paginationNumber) * gamesToDisplay);
+  //       diplayingGames = allGames.slice(paginationIndex, (paginationIndex + gamesToDisplay));
+
+  //       const schedules = [...this.sectionOnDisplay.schedules];
+  //       this.schedulesOnDisplay = schedules.map(function(schedule, index) {
+  //         let scheduleCopy = {...schedule};
+  //         scheduleCopy.games = schedule.games.filter(x => diplayingGames.find(y => y.id == x.id));
+  //         return scheduleCopy.games.length > 0 ? scheduleCopy : null;    
+  //       }).filter(x => x != null);
+
+
+  //       if ((paginationIndex + gamesToDisplay) <= allGames.length) {
+  //         paginationNumber++;
+  //       }
+  //       else {
+  //         paginationNumber = 0;
+  //         jumpToNewSection = true;
+  //       }
+  //     };
+  //   });
+    
+
+  //   setTimeout(() => {
+  //     this.closeLoadingModal();
+  //   }, this.plasmaLineConfig.screenTime * 1000);
+  // }

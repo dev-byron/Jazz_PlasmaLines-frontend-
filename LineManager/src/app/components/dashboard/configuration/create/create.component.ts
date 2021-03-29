@@ -76,9 +76,9 @@ export class CreateComponent implements OnInit {
              private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.selectedViewType = 'v';
-    this.selectedLineType = 'd';
-    this.selectedViewTheme = 'l';
+    this.selectedViewType = 'h';
+    this.selectedLineType = 'a';
+    this.selectedViewTheme = 'd';
     this.timeZoneId = 5;
     this.selectedSections = [];
     this.advertisings = [];

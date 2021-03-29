@@ -1,0 +1,98 @@
+
+.no-margin {
+    margin: 0;
+}
+
+
+.table-title {
+    height: 25px;
+}
+
+.table-subtitle {
+    height: 25px;
+}
+
+.table-title > th{
+    background-color: #164b89;
+    color: white;
+    padding: 1px 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    border: 0;
+}
+
+.no-data {
+    text-align: center;
+}
+
+.table-subtitle > th {
+    color: white;
+    font-size: 14px;
+    margin: 0;
+    border: 0;
+    padding: 3px 0px;
+    background-color: #2b3035 ;
+}
+
+.tr-v {
+    height: 50px;
+}
+
+td {
+    padding: 3px 3px;
+    font-size: 16px;
+}
+
+.game-time {
+    vertical-align: middle;
+}
+
+.game-time > span {
+    margin-left: 10px;
+}
+
+.col-th-1 {
+    width: 8%;
+}
+
+.col-th-1 > span {
+    margin-left: 10px;
+}
+
+.col-th-2 {
+    width: 22%;
+}
+
+.col-th-3 {
+    width: 13%;
+    text-align: center;
+}
+
+.game-icon {
+    width: 25px;
+    height: 25px;
+    margin-left: 25px;
+}
+
+.arrow-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.rotation-number {
+    font-weight: 700;
+    margin-right: 8px;
+}
+
+.line-details {
+    text-align: center;
+}
+
+.time-td {
+    padding: 3px 12px !important;
+    font-size: 19px;
+    font-weight: 700;
+    border: none;
+}

@@ -19,6 +19,8 @@ export class SectionComponent implements OnInit {
   @Input()
   viewConfig: ViewConfig;
 
+  @Input()
+  displayNoSectionError: boolean;
 
   ngOnInit(): void {
   }

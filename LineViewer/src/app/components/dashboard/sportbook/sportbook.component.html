@@ -1,12 +1,13 @@
 
 <ngx-navbar [viewTheme]="viewConfig.theme"></ngx-navbar>
 
-<div [ngClass]="{'container-fluid main-wrapper-v': viewConfig.viewType === viewTypeEnum.Vertical, 'container main-wrapper-h': viewConfig.viewType === viewTypeEnum.Horizontal }">
+<div class="main-wrapper">
   <div class="main-container" [ngClass]="{'dark': viewConfig.theme == 'd', 'light': viewConfig.theme == 'l' }">
     <div class="p-0">
       <div class="main-wrapper" >
         <div class="main-wrapper-section" *ngIf="sectionOnDisplay">
           <ngx-section [schedulesOnDisplay]="schedulesOnDisplay" 
+            [displayNoSectionError]="displayNoSectionError"
             [viewConfig]="viewConfig" [imageUrl]="sectionOnDisplay.bannerUrl">
           </ngx-section>
         </div>
@@ -18,8 +19,6 @@
     [advertisingEvery]="advertisingEvery" [direction]='h' (notify)="stopScroll($event)">
   </ngx-advertising>
 
-
-  <ngx-footer ></ngx-footer>
 
 <ng-template #content let-modal>
   <div class="modal-header">

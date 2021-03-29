@@ -33,10 +33,11 @@ export class SocketService {
   private onListen() {
     try {
       this.socket.on('onListen', (data: string) => {
-        if (data) {
+        if (data && data.length > 0) {
            const featuredSchedules = {
             schedules: JSON.parse(data)
            } as FeaturedSchedules; 
+           this.eventAggregator.featuredSchedules.next(null);
            this.eventAggregator.featuredSchedules.next(featuredSchedules);
         }
       });
