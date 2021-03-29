@@ -30,8 +30,7 @@
               <td>{{getTimeZone(config.time)}}</td>
               <td>{{getLineType(config.lineType)}}</td>
               <td>{{getViewType(config.viewType)}}</td>
-              <td></td>
-              <!-- <td>{{config.createdBy}}</td> -->
+              <td>{{config.createdBy}}</td>
               <td>{{config.createdDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
               <td>
                 <button type="button" class="btn btn-success btn-table" (click)="edit(config.code)"><i class="fas fa-edit"></i></button>

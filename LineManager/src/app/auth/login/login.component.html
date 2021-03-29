@@ -2,7 +2,7 @@
     <img src="/assets/logo/jazzgs-display-dark.png" class="img-responsive">
 </div>
 
-<h2 id="title" class="title">LOGIN</h2>
+<h2 id="title" class="title">Inicio de sesión</h2>
 <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
     <p class="alert-title"><b>Oh snap!</b></p>
     <ul class="alert-message-list">
@@ -36,16 +36,16 @@
             [attr.aria-invalid]="email.invalid && email.touched ? true : null">
         <ng-container *ngIf="email.invalid && email.touched">
             <p class="caption status-danger" *ngIf="email.errors?.required">
-                Email is required!
+                El email es requerido!
             </p>
             <p class="caption status-danger" *ngIf="email.errors?.pattern">
-                Email should be the real one!
+                El email debe ser real
             </p>
         </ng-container>
     </div>
 
     <div class="form-control-group">
-        <label class="label" for="input-password">Password:</label>
+        <label class="label" for="input-password">Contraseña:</label>
         <input nbInput fullWidth [(ngModel)]="user.password" #password="ngModel" name="password" type="password"
             id="input-password" placeholder="Password"
             [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : 'basic'"
@@ -55,19 +55,19 @@
             [attr.aria-invalid]="password.invalid && password.touched ? true : null">
         <ng-container *ngIf="password.invalid && password.touched ">
             <p class="caption status-danger" *ngIf="password.errors?.required">
-                Password is required!
+                La contraseña es requerida
             </p>
             <p class="caption status-danger" *ngIf="(password.errors?.minlength || password.errors?.maxlength)">
-                Password should contains
-                from {{ getConfigValue('forms.validation.password.minLength') }}
-                to {{ getConfigValue('forms.validation.password.maxLength') }}
-                characters
+                La contraseña debe contener
+                desde {{ getConfigValue('forms.validation.password.minLength') }}
+                hasta {{ getConfigValue('forms.validation.password.maxLength') }}
+                caracteres
             </p>
         </ng-container>
     </div>
 
     <button nbButton fullWidth (click)="login()" class="btn-login" status="success" [disabled]="submitted || !form.valid"
         [class.btn-pulse]="submitted">
-        Sign In
+        Iniciar
     </button>
 </form>

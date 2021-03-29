@@ -1,6 +1,6 @@
 <form (ngSubmit)="submit()" #form="ngForm" aria-labelledby="title">
     <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-6">
             <nb-card accent="info">
                 <nb-card-header>
                     Nuevo Usuario
@@ -50,7 +50,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-6">
             <button class="float-right btn-success mr-3" nbButton (click)="submit()" [disabled]="!form.valid || isSubmitting"
                 status="success">Guardar
                 <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i></button>

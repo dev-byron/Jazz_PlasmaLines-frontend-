@@ -267,8 +267,6 @@ export class CreateComponent implements OnInit {
     if (showOnlyNextEvents)  {
       this.selectedSections = this.nextEventsSection;
     }
-    console.log(this.modelIsValid);
-   
     var model = {};
     if (this.modelIsValid) {
       model = {

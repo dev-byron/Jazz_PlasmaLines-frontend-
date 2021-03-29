@@ -20,13 +20,11 @@ export class UserCreateComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute) { }
   ngOnInit(): void {
-
   }
 
   submit() {
    this.emailTaken = false;
    this.isSubmitting = true;
-   this.roleModel = 'client';
    this.service.getByEmail(this.emailModel).subscribe(res => {
     if (res) {
       this.emailTaken = true;

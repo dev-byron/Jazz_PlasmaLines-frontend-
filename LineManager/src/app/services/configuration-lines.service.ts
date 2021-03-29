@@ -4,16 +4,17 @@ import { Observable } from 'rxjs';
 import { ConfigurationLine } from '../models/configuration-line.model';
 import { Sport } from '../models/sport.model';
 import { AppConfig } from '../app.config';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable()
 export class ConfigurationLinesService {
 
   protected apiServer = AppConfig.settings.serverUrl + '/api/';
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
 
   getAll(): Observable<ConfigurationLine[]> {
-    return this.http.get<ConfigurationLine[]>(this.apiServer +'configuration/', { responseType: 'json' });
+    return this.http.get<ConfigurationLine[]>(this.apiServer +'configuration/user/' + this.tokenStorage.getUserId(), { responseType: 'json' });
   }
 
   getByCode(configurationCode: string):  Observable<ConfigurationLine> {

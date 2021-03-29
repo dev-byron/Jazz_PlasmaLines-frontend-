@@ -6,6 +6,7 @@ import { NotFoundComponent } from './miscellaneous/not-found/not-found.component
 import { UsersComponent } from './user/users.component';
 import { CreateComponent } from './dashboard/configuration/create/create.component';
 import { UserCreateComponent } from './user/user-create/user-create.component';
+import { AuthGuard } from './utils/auth.guard';
 
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
+        canActivate: [AuthGuard],
         children: [
           {
             path: '',

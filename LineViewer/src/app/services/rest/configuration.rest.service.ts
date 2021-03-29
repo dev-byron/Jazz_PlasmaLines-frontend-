@@ -2,8 +2,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../app.config';
-import { FeaturedSchedules } from '../../models/featured-schedules.model';
 import { PlasmaLineConfig } from '../../models/plasma-line.model';
+import { Schedule } from '../../models/schedule.model';
 
 @Injectable()
 export class ConfigurationRestService {
@@ -20,8 +20,8 @@ export class ConfigurationRestService {
     return this.httpClient.get<boolean>(`${this.apiServer}${code}/isvalid`, { observe: 'response' });
   }
 
-  getSchedulesByConfigurationCode(code: string): Observable<HttpResponse<FeaturedSchedules>> { 
-    return this.httpClient.get<FeaturedSchedules>(`${this.apiServer}${code}/schedules`, { observe: 'response' });
+  getSchedulesByConfigurationCode(code: string): Observable<HttpResponse<Schedule[]>> { 
+    return this.httpClient.get<Schedule[]>(`${this.apiServer}${code}/schedules`, { observe: 'response' });
   }
 
 }

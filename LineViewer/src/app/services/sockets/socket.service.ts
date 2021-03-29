@@ -37,7 +37,6 @@ export class SocketService {
            const featuredSchedules = {
             schedules: JSON.parse(data)
            } as FeaturedSchedules; 
-           this.eventAggregator.featuredSchedules.next(null);
            this.eventAggregator.featuredSchedules.next(featuredSchedules);
         }
       });

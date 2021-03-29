@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FeaturedSchedules } from '../../models/featured-schedules.model';
 import { PlasmaLineConfig } from '../../models/plasma-line.model';
+import { Schedule } from '../../models/schedule.model';
 import { ConfigurationRestService } from '../rest/configuration.rest.service';
 import { EventAggregator } from '../utils/event-aggregator';
 
@@ -26,8 +27,11 @@ export class ConfigurationService {
 
   getInitialSchedules(code: string): Observable<void>{ 
     return this.plasmaLineConfigurationRestService.getSchedulesByConfigurationCode(code).pipe(
-        map((data: HttpResponse<FeaturedSchedules>) => {
-           this.eventAggregator.featuredSchedules.next(data.body);
+        map((data: HttpResponse<Schedule[]>) => {
+          const featuredSchedules = {
+            schedules: data.body
+           } as FeaturedSchedules; 
+           this.eventAggregator.featuredSchedules.next(featuredSchedules);
         }),
         catchError((error: HttpErrorResponse) => {
             return throwError(error);

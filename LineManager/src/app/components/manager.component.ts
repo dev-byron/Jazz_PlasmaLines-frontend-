@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TokenStorageService } from '../services/token-storage.service';
 
 import { MENU_ITEMS } from './pages-menu';
 
@@ -13,6 +14,11 @@ import { MENU_ITEMS } from './pages-menu';
   `,
 })
 export class ManagerComponent {
-
-  menu = MENU_ITEMS;
+  menu = [];
+  constructor(private tokenStorage: TokenStorageService) {
+    this.menu = MENU_ITEMS;
+    // users
+    this.menu[1].hidden = !this.tokenStorage.isAdmin();
+  }
+  
 }

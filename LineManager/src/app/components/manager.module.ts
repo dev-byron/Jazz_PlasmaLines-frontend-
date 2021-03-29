@@ -8,6 +8,7 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { UserModule } from './user/user.module';
 import { ImageManageModalComponent } from './utils/modals/image-manager/image-manager-modal.component';
 import { DeleteConfirmationModalComponent } from './utils/modals/delete-confirmation/delete-confirmation-modal.component';
+import { AuthGuard } from './utils/auth.guard';
 
 @NgModule({
   imports: [
@@ -27,6 +28,9 @@ import { DeleteConfirmationModalComponent } from './utils/modals/delete-confirma
     ImageManageModalComponent,
     DeleteConfirmationModalComponent
   ],
+  providers: [
+    AuthGuard
+  ]
 })
 export class ManagerModule {
 }

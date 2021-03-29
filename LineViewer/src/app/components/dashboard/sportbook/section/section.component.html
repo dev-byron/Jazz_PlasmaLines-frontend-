@@ -3,7 +3,7 @@
         <img  src="{{imageUrl}}" class="card-img-top">
     </div>
     <div class="card-body no-padding" >
-        <div  *ngIf="!displayNoSectionError">
+        <div>
             <div *ngFor="let schedule of schedulesOnDisplay" >
                 <div [ngSwitch]="getScheduleType(schedule)">
                     <ngx-futures-odds-to-win *ngSwitchCase="1"  [schedule]="schedule" [viewConfig]="viewConfig"></ngx-futures-odds-to-win> 

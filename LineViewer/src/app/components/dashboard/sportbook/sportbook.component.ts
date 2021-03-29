@@ -35,7 +35,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     lineType: LineTypeEnum.Decimal,
     theme: 'd'
   } as ViewConfig;
-  displayNoSectionError: boolean;
+
   viewTypeEnum = ViewTypeEnum;
   advertisingImages: Advertising[];
   advertisingEvery: number;
@@ -45,6 +45,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
   deletedFirst = false;
   counter = 0;
   timeZoneId: number;
+  displayNoSectionError: boolean;
 
   sectionOnDisplay: SportbookSection = null;
   scheduleOnDisplay: Schedule = null;
@@ -58,8 +59,6 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    // console.log(window.innerHeight);
-    // console.log(window.innerHeight - 130);
     this.loadingData = true;
     this.sportbookSections = [];
     this.stopAutoScroll = false;
@@ -74,14 +73,15 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unsubscribeRooms();
   }
 
-  checkSectionToDisplay() {
+  setupdateSectionInterval() {
     let jumpToNewSection = true;
     let allGames: Game[] = [];
     let diplayingGames: Game[] = [];
     let sectionIndex = 0;
     let lastGameIndex = 0; 
+    
     interval(this.plasmaLineConfig.screenTime * 1000).subscribe(() => {
-      const containerHeight = window.innerHeight - 230;
+      const containerHeight = window.innerHeight - 220;
       let availableSpace = containerHeight;
       if (this.plasmaLineConfig && this.sportbookSections && this.sportbookSections.length > 0) {
         if (jumpToNewSection) {
@@ -97,7 +97,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
             lastGameIndex = 0;
             lastGameId = allGames[0].id;
             jumpToNewSection = false;
-           }
+            }
         }
         var breakLoop = false;
         var gamesToDisplay = 0;
@@ -122,7 +122,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           if (availableSpace < 0) {
             breakLoop = true;
           } 
-
+  
           if (!breakLoop) {
             availableSpace = availableSpace - (allGames[counter].participants.length * 25);
             if (availableSpace > 0) {
@@ -143,12 +143,13 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           scheduleCopy.games = schedule.games.filter(x => diplayingGames.find(y => y.id == x.id));
           return scheduleCopy.games.length > 0 ? scheduleCopy : null;    
         }).filter(x => x != null);
-
+  
         if (lastGameIndex + 1 >= allGames.length) {
           jumpToNewSection = true;
         }
+  
+        this.closeLoadingModal();
       };
-      this.closeLoadingModal();
     });
   }
 
@@ -175,24 +176,15 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           this.configureView(this.plasmaLineConfig);
           this.getAdvertisingImages(this.plasmaLineConfig);
           this.setSubscribers(this.plasmaLineConfig);
+          this.setupdateSectionInterval();
         }
       });
-
       this.eventAggregator.featuredSchedules.subscribe(featuredSchedule => {
-        if (featuredSchedule != null  && this.plasmaLineConfig) {
+        if (featuredSchedule && this.plasmaLineConfig) {
+          console.log(featuredSchedule.schedules)
           this.filterSportbookSections(featuredSchedule.schedules, this.plasmaLineConfig.sections, this.plasmaLineConfig.showOnlyNextEvents);
-          this.checkSectionToDisplay();
-          this.validateIfSections(featuredSchedule.schedules)
         }
       });
-    }
-  }
-
-  private validateIfSections(schedules) {
-    if (schedules && schedules.length > 0) {
-      this.displayNoSectionError = false;
-    } else {
-      this.displayNoSectionError = true;
     }
   }
 
@@ -228,12 +220,13 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
             bannerUrl: subscribedSection.bannerUrl,
             schedules: []
           } as SportbookSection;
-
+       
           if (allSchedules) {
             if (showOnlyNextEvents) {
               section.schedules = section.schedules.concat(allSchedules);
             } else {
               subscribedEvent.titles.forEach(subscribedTitle => {
+             
                 var schedules = allSchedules.find(x => x.sport == section.sport && x.division == section.division && x.title == subscribedTitle);
                 if (schedules) {
                   section.schedules.push(schedules);
@@ -241,14 +234,21 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
               });
             }
           }
+          if (showOnlyNextEvents && section.schedules.length == 0) {
+            this.displayNoSectionError = true;
+          } else {
+            this.displayNoSectionError = false;
+          }
 
-          if (!this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division)) {
-            this.sportbookSections.push(section);
-          }
-          else {
-            const sportbookSection = this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division);
-              sportbookSection.schedules = section.schedules;
-          }
+          if (section.schedules.length > 0 || showOnlyNextEvents) {
+            if (!this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division)) {
+              this.sportbookSections.push(section);
+            }
+            else {
+              const sportbookSection = this.sportbookSections.find(x => x.sport == section.sport && x.division == section.division);
+                sportbookSection.schedules = section.schedules;
+            }
+          } 
         });
       });
     }
@@ -298,7 +298,6 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
       document.body.style.background = '#D8D9DD';
     }
   }
-
 
 }
 
