@@ -3,19 +3,19 @@
     margin: 0;
 }
 
-    .table-title {
-    height: 25px;
+.table-title {
+    height: 35px;
 }
 
 .table-subtitle {
-    height: 25px;
+    height: 35px;
 }
 
 .table-title > th{
     background-color: #164b89;
     color: white;
     padding: 1px 8px;
-    font-size: 14px;
+    font-size: 22px;
     font-weight: 500;
     margin: 0;
     border: 0;
@@ -23,7 +23,7 @@
 
 .table-subtitle > th {
     color: white;
-    font-size: 14px;
+    font-size: 22px;
     margin: 0;
     border: 0;
     padding: 3px 0px;
@@ -31,12 +31,13 @@
 }
 
 .tr-v {
-    height: 50px;
+    height: 70px;
 }
 
 td {
-    padding: 3px 3px;
-    font-size: 16px;
+    padding: 2px 2px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .game-time {
@@ -48,10 +49,6 @@ td {
 }
 
 .col-th-1 {
-    width: 11%;
-}
-
-.col-th-1 {
     width: 8%;
 }
 
@@ -60,13 +57,14 @@ td {
 }
 
 .col-th-2 {
-    width: 22%;
+    width: 35%;
 }
 
 .col-th-3 {
-    width: 13%;
+    width: 10%;
     text-align: center;
 }
+
 
 .game-icon {
     width: 25px;

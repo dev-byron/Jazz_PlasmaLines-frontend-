@@ -81,7 +81,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     let lastGameIndex = 0; 
     
     interval(this.plasmaLineConfig.screenTime * 1000).subscribe(() => {
-      const containerHeight = window.innerHeight - 220;
+      const containerHeight = window.innerHeight - 170;
       let availableSpace = containerHeight;
       if (this.plasmaLineConfig && this.sportbookSections && this.sportbookSections.length > 0) {
         if (jumpToNewSection) {
@@ -111,7 +111,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
             if (schedule) {
               if ((scheduleId !== schedule.id))  {
                 scheduleId = schedule.id;
-                availableSpace = availableSpace - 50;
+                availableSpace = availableSpace - 80;
               }
             }
           }
@@ -124,7 +124,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           } 
   
           if (!breakLoop) {
-            availableSpace = availableSpace - (allGames[counter].participants.length * 25);
+            availableSpace = availableSpace - (allGames[counter].participants.length * 35.1);
             if (availableSpace > 0) {
               gamesToDisplay++;
               counter++;
@@ -181,7 +181,6 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       this.eventAggregator.featuredSchedules.subscribe(featuredSchedule => {
         if (featuredSchedule && this.plasmaLineConfig) {
-          console.log(featuredSchedule.schedules)
           this.filterSportbookSections(featuredSchedule.schedules, this.plasmaLineConfig.sections, this.plasmaLineConfig.showOnlyNextEvents);
         }
       });

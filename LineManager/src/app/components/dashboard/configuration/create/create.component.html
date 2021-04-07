@@ -18,7 +18,7 @@
                                 <label class="label">Nombre:</label>
                                 <input type="text" maxlength="50" nbInput formControlName="name"
                                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"
-                                    fullWidth status="basic" placeholder="Football">
+                                    fullWidth status="basic" placeholder="Crear Nombre">
                             </div>
                         </div>
                     </div>
@@ -165,7 +165,8 @@
                                         <label class="label">Actualizar pantalla de lineas cada:</label>
                                         <nb-select fullWidth placeholder="Seleccione cada cuanto desea actualizar la pantalla"  formControlName="updateScreenTime">
                                             <nb-option *ngFor="let config of updateScreenConfig" [value]="config.time">
-                                                {{config.text}}</nb-option>
+                                                {{config.text}}
+                                            </nb-option>
                                         </nb-select>
                                     </div>
                                 </div>
@@ -198,7 +199,7 @@
                                                     </div>
                                                 </td>
                                                 <td *ngIf="!hasBanner(section)">
-                                                    Seccion sin imagen de encabezado
+                                                    Seccion sin imagen de encabezado (1920x150)
                                                 </td>
                                                 <td>
                                                     <button type="button" (click)="manageBanner(section)" class="btn btn-info">
@@ -221,7 +222,7 @@
                                                     </div>
                                                 </td>
                                                 <td *ngIf="!hasBanner(section)">
-                                                    Seccion sin imagen de encabezado
+                                                    Seccion sin imagen de encabezado (1920x150)
                                                 </td>
                                                 <td>
                                                     <button type="button" (click)="manageBanner(section)" class="btn btn-info">
@@ -294,7 +295,7 @@
                                                 </tr>
                                                 <tr *ngIf="advertisings.length == 0">
                                                     <td colspan="2"> 
-                                                        Sin imagenes de publicidad
+                                                        Sin imagenes de publicidad (800x600)
                                                     </td>
                                                 </tr>
                                             </tbody>

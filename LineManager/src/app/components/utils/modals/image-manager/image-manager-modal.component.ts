@@ -32,10 +32,10 @@ export class ImageManageModalComponent implements OnInit {
       }
     } else {
       this.isAdvertising = true;
-      this.resolutionMessage = '1920x300'
+      this.resolutionMessage = '800x600'
       this.folderName = 'advertising';
       if (this.imageUrl == '') {
-        this.imageUrl = "https://via.placeholder.com/1920x400";
+        this.imageUrl = "https://via.placeholder.com/800x600";
       }
     }
   }
