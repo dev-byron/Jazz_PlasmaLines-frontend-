@@ -7,15 +7,39 @@
 }
 
 .img-section {
-    display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     height: 150px;
+    position: relative;
+    display: inline-block;
 }
 
 .img-section img {
     flex-shrink: 0;
     min-width: 100%;
-    min-height: 100%
+    min-height: 100%;
+    position: relative;
+    display: inline-block;
 }
+
+.overlay {
+    position: absolute;
+    z-index: 5;
+    padding: 5px 11px;
+    border-radius: 5px;
+    right: 7px;
+    top: 7px;
+    opacity: 0.5;
+    background-color: white;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .overlay:hover {
+      opacity: 1;
+  }
+
+
+  .btn-exit {
+    cursor: pointer;
+  }

@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Game } from '../../../../models/game.model';
 import { Schedule } from '../../../../models/schedule.model';
 import { ViewConfig } from '../../../../models/view-config.model';
@@ -22,9 +23,16 @@ export class SectionComponent implements OnInit {
   @Input()
   displayNoSectionError: boolean;
 
+  constructor(private router: Router) {}
+
   ngOnInit(): void {
+    console.log(this.schedulesOnDisplay);
   }
 
+  exit() {
+    this.router.navigateByUrl('/verifier');
+  }
+  
   getScheduleType(section: Schedule) {
     if (section.title.toLowerCase().includes("futures") || section.title.toLowerCase().includes("odds to win")) {
       return 1;

@@ -124,7 +124,7 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
           } 
   
           if (!breakLoop) {
-            availableSpace = availableSpace - (allGames[counter].participants.length * 35.1);
+            availableSpace = availableSpace - (allGames[counter].participants.length * 40);
             if (availableSpace > 0) {
               gamesToDisplay++;
               counter++;
@@ -253,7 +253,6 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
   private getRoomsFromLineConfig(plasmaLineConfig: PlasmaLineConfig) {
     const newRooms: Room[] = [];
     if (plasmaLineConfig && plasmaLineConfig.sections) {
@@ -297,56 +296,4 @@ export class SportBookComponent implements OnInit, AfterViewInit, OnDestroy {
       document.body.style.background = '#D8D9DD';
     }
   }
-
 }
-
-
-  // checkSectionOnDisplay() {
-  //   let gamesToDisplay = 8;
-  //   let paginationNumber = 0;
-  //   let jumpToNewSection = true;
-  //   let allGames: Game[] = [];
-  //   let diplayingGames: Game[] = [];
-  //   let sectionIndex = 0;
-
-  //   interval(this.plasmaLineConfig.screenTime * 1000).subscribe(() => {
-  //     if (this.plasmaLineConfig && this.sportbookSections && this.sportbookSections.length > 0) {
-  //       if (jumpToNewSection) {
-  //         this.sectionOnDisplay = { ...this.sportbookSections[sectionIndex] };
-  //         this.sectionOnDisplay.schedules = this.sectionOnDisplay.schedules.filter(x => x.games.length > 0);
-  //         jumpToNewSection = false;
-  //         allGames = this.sectionOnDisplay.schedules.map(x => x.games)
-  //           .reduce(function (pre, cur) {
-  //             return pre.concat(cur);
-  //           })
-  //           .map((e) => e);
-
-  //           sectionIndex = sectionIndex < this.sportbookSections.length - 1 ? sectionIndex + 1 : 0;
-  //       }
-
-  //       const paginationIndex: number = ((paginationNumber) * gamesToDisplay);
-  //       diplayingGames = allGames.slice(paginationIndex, (paginationIndex + gamesToDisplay));
-
-  //       const schedules = [...this.sectionOnDisplay.schedules];
-  //       this.schedulesOnDisplay = schedules.map(function(schedule, index) {
-  //         let scheduleCopy = {...schedule};
-  //         scheduleCopy.games = schedule.games.filter(x => diplayingGames.find(y => y.id == x.id));
-  //         return scheduleCopy.games.length > 0 ? scheduleCopy : null;    
-  //       }).filter(x => x != null);
-
-
-  //       if ((paginationIndex + gamesToDisplay) <= allGames.length) {
-  //         paginationNumber++;
-  //       }
-  //       else {
-  //         paginationNumber = 0;
-  //         jumpToNewSection = true;
-  //       }
-  //     };
-  //   });
-    
-
-  //   setTimeout(() => {
-  //     this.closeLoadingModal();
-  //   }, this.plasmaLineConfig.screenTime * 1000);
-  // }

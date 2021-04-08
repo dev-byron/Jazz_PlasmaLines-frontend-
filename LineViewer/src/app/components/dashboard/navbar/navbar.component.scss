@@ -1,3 +1,10 @@
+.navbar {
+    background-color: #164b89;
+    color: white;
+    padding: 2px 5px;
+    height: 25px;
+}
+
 .standart-logo {
     width: 100%;
     display: block;
@@ -5,38 +12,12 @@
     position: relative;
 }
 
-.standart-logo > img {
-    width: 120px;
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.img-responsive {
-    margin-top: 5px;
-}
 
 .exit-btn {
     cursor: pointer;
     display: inline-block;
     float: right;
     font-size: 15px;
+    font-weight: bold;
     margin-top: 10px;
-}
-
-
-.dark {
-    color: #EDF1F7 !important;
-}
-
-.light {
-    color: #191919 !important;
-}
-
-.background-dark {
-    background-color: #191919 !important;
-}
-
-.background-light {
-    background-color: #fff !important;
 }
