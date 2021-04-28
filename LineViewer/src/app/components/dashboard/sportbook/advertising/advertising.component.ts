@@ -26,22 +26,22 @@ export class AdvertisingComponent implements OnDestroy, AfterViewInit {
   staySeconds: number;
   top: string;
   topNumber: number;
-
   interval: any;
 
-  constructor()  {
-    this.display = true;
-  }
+  constructor()  {}
 
   ngAfterViewInit() {
     let currentIndex = 0;
-    var refreshTime = 1000 / 30;
+    var fps = 33;
     setInterval(() => {
+    this.topNumber = 0;
+      if (!this.display) {
         this.display = true;
         this.current = this.advertisingImages[currentIndex].imageUrl;
         
         if (this.advertisingContainer) {
           this.advertisingContainer.nativeElement.setAttribute('style', 'top: ' + window.innerHeight + 'px');
+          
           this.interval = setInterval(() => {
             this.topNumber = this.advertisingContainer.nativeElement.offsetTop - 5;
             this.top = this.topNumber + 'px;';
@@ -51,9 +51,10 @@ export class AdvertisingComponent implements OnDestroy, AfterViewInit {
               this.display = false;
               clearInterval(this.interval);
             }
-          }, refreshTime);
+          }, fps);
       }
       currentIndex = (currentIndex < (this.advertisingImages.length - 1)) ? currentIndex + 1 : 0;
+      }
     }, (this.advertisingEvery * 1000));
   }
 
@@ -64,5 +65,4 @@ export class AdvertisingComponent implements OnDestroy, AfterViewInit {
     }
 
   }
-
 }

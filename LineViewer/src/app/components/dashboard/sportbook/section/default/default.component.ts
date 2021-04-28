@@ -44,15 +44,15 @@ export class DefaultComponent implements OnInit {
   }
 
   getSpread (participant: Participant) {
-    return CustomOddFormatter.format(participant.line.spread, participant.line.spreadOdds, this.viewConfig.lineType);
+    return CustomOddFormatter.formatHandicap(participant.line.spread, participant.line.spreadOdds, this.viewConfig.lineType, true);
   }
 
   getTotal(total: Total) {
-    return CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType);
+    return CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType, false);
   }
 
   getMline(participant: Participant) {
-    return CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType);
+    return CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType, true);
   }
 
   getArrow(i) { 

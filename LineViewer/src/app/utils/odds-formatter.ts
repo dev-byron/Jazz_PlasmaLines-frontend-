@@ -1,12 +1,15 @@
 import { LineTypeEnum } from "../models/lineType.enum";
 
 export class CustomOddFormatter {
-    static format(value: string, odd: string, format: LineTypeEnum) {
+
+    static formatHandicap(value: string, odd: string, format: LineTypeEnum, addSign: boolean) {
         if (format == LineTypeEnum.American) {
-            if (value && odd) {
-                return this.formatValue(value) + ' ' + this.formatValue(odd);
+            if(parseInt(value) == 0) {
+                return 'PK' + this.formatValue(odd, true);
+            } else if (value && odd) {
+                return this.formatValue(value, addSign) + '' + this.formatValue(odd, true);
             } else if (value) {
-                return this.formatValue(value);
+                return this.formatValue(value, addSign);
             }
             return '-';
         } else {
@@ -19,9 +22,27 @@ export class CustomOddFormatter {
         }
     }
 
-   private  static formatValue(spread) {
+    static format(value: string, odd: string, format: LineTypeEnum, addSign: boolean) {
+        if (format == LineTypeEnum.American) {
+            if (value && odd) {
+                return this.formatValue(value, addSign) + '' + this.formatValue(odd, true);
+            } else if (value) {
+                return this.formatValue(value, addSign);
+            }
+            return '-';
+        } else {
+            if (odd) {
+                return this.formatOdd(odd);
+            } else if (value) {
+                return this.formatOdd(value);
+            }
+            return '-';
+        }
+    }
+
+   private  static formatValue(spread, addSign: boolean) {
         const spreatInt = parseInt(spread);
-        if (spreatInt > 0) {
+        if (spreatInt > 0 && addSign) {
             spread = '+' + spread;
         }
         return spread;

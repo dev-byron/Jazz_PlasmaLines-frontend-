@@ -6,8 +6,8 @@
     <tr class="table-subtitle">
       <th scope="col" class="col-th-1"><span>HORA</span></th>
       <th scope="col" class="col-th-2"><span>EQUIPO</span></th>
-      <th scope="col" class="col-th-3"><span>SPREAD</span></th>
-      <th scope="col" class="col-th-3"><span>TOTAL</span></th>
+      <th scope="col" class="col-th-3"><span>HANDICAP</span></th>
+      <th scope="col" class="col-th-3"><span class="padding-left-total">TOTAL</span></th>
       <th scope="col" class="col-th-3"><span>MLINE</span></th>
     </tr>
   </thead>
@@ -32,7 +32,7 @@
       </td>
       <td class="line-details">
         <div *ngFor="let participant of game.participants; let i = index" [attr.data-index]="i">
-          <img class="arrow-icon" src="{{ getArrow(i) }}">
+          <img class="arrow-icon" src="{{ getArrow(i) }}" *ngIf="game.total.value">
           <span>  {{ getTotal(game.total) }} </span>
         </div>
       </td>

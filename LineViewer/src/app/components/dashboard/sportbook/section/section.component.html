@@ -1,8 +1,13 @@
 <div class="card">
     <div class="img-section">
-        <a class="btn-exit" (click)="exit()">
-            <div class="overlay">
+        <a class="btn-action" (click)="exit()">
+            <div class="exit">
                 <i class="fa fa-sign-out-alt"></i>
+            </div>
+        </a>
+         <a class="btn-action" (click)="switchFullScreen()">
+            <div class="full-screen">
+                <i class="fas fa-expand"></i>
             </div>
         </a>
         <img  src="{{imageUrl}}" class="card-img-top">

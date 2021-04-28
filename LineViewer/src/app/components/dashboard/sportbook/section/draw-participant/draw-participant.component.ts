@@ -43,20 +43,18 @@ export class DrawParticipantComponent implements OnInit {
   }
 
   getSpread (participant: Participant) {
-    return CustomOddFormatter.format(participant.line.spread, participant.line.spreadOdds, this.viewConfig.lineType);
+    return CustomOddFormatter.formatHandicap(participant.line.spread, participant.line.spreadOdds, this.viewConfig.lineType, true);
   }
 
   getMline(participant: Participant) {
-    return CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType);
+    return CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType, true);
   }
 
   getGoals(total: Total, index: number) {
     if (index == 0) {
-      CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType);
-      //return this.format(total.value) + this.format(total.overOdds);
+      CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType, false);
     } else if (index == 1) {
-      CustomOddFormatter.format(total.value, total.underOdds, this.viewConfig.lineType);
-      //return this.format(total.value) + this.format(total.underOdds);
+      CustomOddFormatter.format(total.value, total.underOdds, this.viewConfig.lineType, false);
     }
     else {
       return '-';

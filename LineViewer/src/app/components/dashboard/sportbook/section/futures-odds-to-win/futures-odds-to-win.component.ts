@@ -29,7 +29,7 @@ export class FutureOddsToWinComponent implements OnInit {
   }
 
   getOdds(participant: Participant) {
-    return  CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType);
+    return  CustomOddFormatter.format(participant.line.moneyLine, null, this.viewConfig.lineType, true);
   }
 
 }
