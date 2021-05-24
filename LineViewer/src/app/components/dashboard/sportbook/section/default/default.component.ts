@@ -47,8 +47,12 @@ export class DefaultComponent implements OnInit {
     return CustomOddFormatter.formatHandicap(participant.line.spread, participant.line.spreadOdds, this.viewConfig.lineType, true);
   }
 
-  getTotal(total: Total) {
-    return CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType, false);
+  getTotal(index, total: Total) {
+    if (index == 0) {
+      return CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType, false);
+    } else {
+      return CustomOddFormatter.format(total.value, total.underOdds, this.viewConfig.lineType, false);
+    }
   }
 
   getMline(participant: Participant) {

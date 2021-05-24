@@ -33,7 +33,7 @@
       <td class="line-details">
         <div *ngFor="let participant of game.participants; let i = index" [attr.data-index]="i">
           <img class="arrow-icon" src="{{ getArrow(i) }}" *ngIf="game.total.value">
-          <span>  {{ getTotal(game.total) }} </span>
+          <span>  {{ getTotal(i, game.total) }} </span>
         </div>
       </td>
       <td class="line-details">
