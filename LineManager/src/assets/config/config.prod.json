@@ -1,4 +1,10 @@
 {
     "env": "prod",
-    "serverUrl": "http://localhost:3000"
+    "serverUrl": "/server",
+    "s3": {
+        "accessKeyId": "AKIA6GCUWKERZUBP4JRF",
+        "secretAccessKey": "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",
+        "region": "us-east-1",
+        "bucket": "crc-display-01"
+    }
 }
