@@ -1,5 +1,5 @@
 {
-    "env": "dev",
+    "env": "prod",
     "serverUrl": "/server",
     "socketUrl": "/server",
     "imagesServerUrl": "https://jazz-lines.s3.amazonaws.com"
