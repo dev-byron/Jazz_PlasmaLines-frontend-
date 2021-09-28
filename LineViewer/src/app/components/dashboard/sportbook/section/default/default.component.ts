@@ -63,7 +63,5 @@ export class DefaultComponent implements OnInit {
     const route = '/assets/arrows/'
     return  route + (i == 0 ? 'up.png' : 'down.png');
   }
-
-
   
 }

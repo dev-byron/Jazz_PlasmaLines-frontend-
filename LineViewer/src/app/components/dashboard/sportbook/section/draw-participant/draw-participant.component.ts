@@ -52,9 +52,9 @@ export class DrawParticipantComponent implements OnInit {
 
   getGoals(total: Total, index: number) {
     if (index == 0) {
-      CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType, false);
+      return CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType, false);
     } else if (index == 1) {
-      CustomOddFormatter.format(total.value, total.underOdds, this.viewConfig.lineType, false);
+      return CustomOddFormatter.format(total.value, total.underOdds, this.viewConfig.lineType, false);
     }
     else {
       return '-';

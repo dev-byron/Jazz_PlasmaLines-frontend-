@@ -13,10 +13,10 @@ export class CustomOddFormatter {
             }
             return '-';
         } else {
-            if (odd) {
-                return this.formatOdd(odd);
+            if (value && odd) {
+                return this.formatValue(value, addSign) + ' ' + this.formatOdd(odd);;
             } else if (value) {
-                return this.formatOdd(value);
+                return this.formatOdd(odd);
             }
             return '-';
         }
@@ -45,7 +45,7 @@ export class CustomOddFormatter {
         if (spreatInt > 0 && addSign) {
             spread = '+' + spread;
         }
-        return spread;
+        return  '' +  spread;
     }
 
     private static formatOdd(spread) {

@@ -42,11 +42,11 @@ export class TeamTotalsComponent implements OnInit {
 
   getGoals(total: Total, index: number) {
     if (index == 0) {
-      return  CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType, false);
-      // return this.format(total.value) + this.format(total.overOdds);
+      //return  CustomOddFormatter.format(total.value, total.overOdds, this.viewConfig.lineType, false);
+       return this.format(total.value) + this.format(total.overOdds);
     } else if (index == 1) {
-      return  CustomOddFormatter.format(total.value, total.underOdds, this.viewConfig.lineType, false);
-      // return this.format(total.value) + this.format(total.underOdds);
+      //return  CustomOddFormatter.format(total.value, total.underOdds, this.viewConfig.lineType, false);
+      return this.format(total.value) + this.format(total.underOdds);
     }
     else {
       return '-';
