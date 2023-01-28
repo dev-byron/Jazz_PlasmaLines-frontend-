@@ -6,6 +6,7 @@ export interface ConfigurationLine {
     name: string;
     viewType: string;
     lineType: string;
+    useAlternativeCodes: boolean;
     viewTheme: string;
     screenTime: number;
     advertisingLapseTime: number;

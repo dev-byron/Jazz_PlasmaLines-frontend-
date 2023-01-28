@@ -11,32 +11,33 @@
                         <h6>1. Configuración:</h6>
                     </div>
                 </div>
-                <form [formGroup]="firstForm"  class="step-container">
+                <form [formGroup]="firstForm" class="step-container">
                     <div class="row mt-3">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="label">Nombre:</label>
                                 <input type="text" maxlength="50" nbInput formControlName="name"
                                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"
-                                    fullWidth status="basic" placeholder="Crear Nombre">
+                                    fullWidth status="basic" placeholder="Crear nombre">
                             </div>
                         </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-sm-2">
                             <div class="form-group">
-                                <label class="label">Tipo de Línea:</label>
+                                <label class="label">Tipo de línea:</label>
                                 <nb-radio-group formControlName="lineType" status="primary">
                                     <nb-radio formControlName="lineType" value="a" ngDefaultControl>Americana</nb-radio>
-                                    <nb-radio formControlName="lineType" value="d" ngDefaultControl >Decimal </nb-radio>
+                                    <nb-radio formControlName="lineType" value="d" ngDefaultControl>Decimal </nb-radio>
                                 </nb-radio-group>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-group">
-                                <label class="label">Tipo de Vista:</label>
+                                <label class="label">Tipo de vista:</label>
                                 <nb-radio-group formControlName="viewType" status="success" name="viewType">
-                                    <nb-radio formControlName="viewType" value="h" ngDefaultControl >Horizontal </nb-radio>
+                                    <nb-radio formControlName="viewType" value="h" ngDefaultControl>Horizontal
+                                    </nb-radio>
                                     <nb-radio formControlName="viewType" value="v" ngDefaultControl>Vertical</nb-radio>
                                 </nb-radio-group>
                             </div>
@@ -46,7 +47,16 @@
                                 <label class="label">Tema:</label>
                                 <nb-radio-group formControlName="viewTheme" status="warning" name="viewTheme">
                                     <nb-radio formControlName="viewTheme" value="d" ngDefaultControl>Oscuro</nb-radio>
-                                    <nb-radio formControlName="viewTheme" value="l" ngDefaultControl >Claro</nb-radio>
+                                    <nb-radio formControlName="viewTheme" value="l" ngDefaultControl>Claro</nb-radio>
+                                </nb-radio-group>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="label">Utilizar códigos alternos de equipos:</label>
+                                <nb-radio-group formControlName="useAlternativeCodes" status="danger" name="useAlternativeCodes">
+                                    <nb-radio formControlName="useAlternativeCodes" value="false" ngDefaultControl>No</nb-radio>
+                                    <nb-radio formControlName="useAlternativeCodes" value="true" ngDefaultControl>Si</nb-radio>
                                 </nb-radio-group>
                             </div>
                         </div>
@@ -55,10 +65,10 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label class="label">Zona horario a elegir: </label>
-                                <nb-select fullWidth placeholder="Selecciona una zona horaria" formControlName="timeZone" 
-                                    [(selected)]="timeZoneId">
-                                    <nb-option *ngFor="let zone of timeZones.getTimeZoneList()"
-                                    [value]="zone.id"> {{zone.text}}</nb-option>
+                                <nb-select fullWidth placeholder="Selecciona una zona horaria"
+                                    formControlName="timeZone" [(selected)]="timeZoneId">
+                                    <nb-option *ngFor="let zone of timeZones.getTimeZoneList()" [value]="zone.id">
+                                        {{zone.text}}</nb-option>
                                 </nb-select>
                             </div>
                         </div>
@@ -71,7 +81,8 @@
                     <hr>
                     <div class="row ">
                         <div class="col-sm-12">
-                            <button nbButton class="float-right mr-2" status="primary" [disabled]="firstForm.invalid" nbStepperNext>Siguiente</button>
+                            <button nbButton class="float-right mr-2" status="primary" [disabled]="firstForm.invalid"
+                                nbStepperNext>Siguiente</button>
                         </div>
                     </div>
                 </form>
@@ -81,7 +92,7 @@
                 <ng-template #labelTwo>Ligas</ng-template>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h6>2. Selección de Ligas:</h6>
+                        <h6>2. Selección de ligas:</h6>
                     </div>
                 </div>
 
@@ -92,14 +103,16 @@
                                 <div class="col-sm-12">
                                     <label class="label">Seleccione el tipo de ligas que desea mostrar:</label>
                                     <div class="info-type col-sm-8">
-                                        <span><i class="fas fa-info-circle"></i> 
-                                            "Selección de Próximos Eventos" no permite incluir ligas y  
-                                             crea una configuración mostrando todos los eventos 30 minutos a futuro
+                                        <span><i class="fas fa-info-circle"></i>
+                                            "Selección de próximos eventos" no permite incluir ligas y
+                                            crea una configuración mostrando todos los eventos 30 minutos a futuro
                                         </span>
                                     </div>
                                     <nb-radio-group status="primary" formControlName="category">
-                                        <nb-radio formControlName="category" value="1" ngDefaultControl>Selección por Ligas </nb-radio>
-                                        <nb-radio formControlName="category" value="2" ngDefaultControl>Selección de Próximos Eventos</nb-radio>
+                                        <nb-radio formControlName="category" value="1" ngDefaultControl>Selección por
+                                            ligas </nb-radio>
+                                        <nb-radio formControlName="category" value="2" ngDefaultControl>Selección de
+                                            próximos eventos</nb-radio>
                                     </nb-radio-group>
                                 </div>
                             </div>
@@ -107,27 +120,30 @@
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <label class="label">Seleccióne las ligas que desea incluir: </label>
-                                        <ngx-treeview [config]="config" [items]="items" (selectedChange)="onSelectedChange($event)">
+                                        <ngx-treeview [config]="config" [items]="items"
+                                            (selectedChange)="onSelectedChange($event)">
                                         </ngx-treeview>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="label">Ligas Seleccionadas:</label>
+                                    <label class="label">Ligas seleccionadas:</label>
                                     <div class="accordion-selected" *ngIf="config.hasFilter">
                                         <nb-accordion>
                                             <nb-accordion-item *ngFor="let selectedSport of getSelectedItems()">
-                                              <nb-accordion-item-header>
-                                                Sección: {{selectedSport.value}}
-                                              </nb-accordion-item-header>
-                                              <nb-accordion-item-body>
-                                                <nb-list>
-                                                    <div class="divison-selected" *ngFor="let selectedDivision of getSelectedChild(selectedSport)">
-                                                        <nb-list-item class="title-selected"*ngFor="let title of getSelectedChild(selectedDivision)">
-                                                            {{title.value}}
-                                                        </nb-list-item>
-                                                    </div>
-                                                  </nb-list>
-                                              </nb-accordion-item-body>
+                                                <nb-accordion-item-header>
+                                                    Sección: {{selectedSport.value}}
+                                                </nb-accordion-item-header>
+                                                <nb-accordion-item-body>
+                                                    <nb-list>
+                                                        <div class="divison-selected"
+                                                            *ngFor="let selectedDivision of getSelectedChild(selectedSport)">
+                                                            <nb-list-item class="title-selected"
+                                                                *ngFor="let title of getSelectedChild(selectedDivision)">
+                                                                {{title.value}}
+                                                            </nb-list-item>
+                                                        </div>
+                                                    </nb-list>
+                                                </nb-accordion-item-body>
                                             </nb-accordion-item>
                                         </nb-accordion>
                                     </div>
@@ -140,7 +156,9 @@
                             <div class="row ">
                                 <div class="col-sm-12">
                                     <button nbButton nbStepperPrevious>Anterior</button>
-                                    <button nbButton class="float-right mr-2" status="primary" [disabled]="secondForm.invalid || !isFormTwoValid"  nbStepperNext>Siguiente</button>
+                                    <button nbButton class="float-right mr-2" status="primary"
+                                        [disabled]="secondForm.invalid || !isFormTwoValid"
+                                        nbStepperNext>Siguiente</button>
                                 </div>
                             </div>
                         </form>
@@ -149,21 +167,23 @@
             </nb-step>
 
             <nb-step [label]="labelThree">
-                <ng-template #labelThree>Encabezados y publicidad</ng-template>
+                <ng-template #labelThree>Encabezados y <br> publicidad</ng-template>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h6>3.1 Imagenes de Encabezado</h6>
+                        <h6>3.1 Imagenes de encabezado</h6>
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-sm-12">
-                        <form [formGroup]="thirdForm"  class="step-container">
+                        <form [formGroup]="thirdForm" class="step-container">
                             <div class="row">
                                 <div class="col-sm-5">
                                     <div class="form-group">
                                         <label class="label">Actualizar pantalla de lineas cada:</label>
-                                        <nb-select fullWidth placeholder="Seleccione cada cuanto desea actualizar la pantalla"  formControlName="updateScreenTime">
+                                        <nb-select fullWidth
+                                            placeholder="Seleccione cada cuanto desea actualizar la pantalla"
+                                            formControlName="updateScreenTime">
                                             <nb-option *ngFor="let config of updateScreenConfig" [value]="config.time">
                                                 {{config.text}}
                                             </nb-option>
@@ -173,8 +193,8 @@
                                 <div class="col-sm-3" *ngIf="showCustomUpdateScreenTime">
                                     <div class="form-group">
                                         <label class="label">Otro: (segundos)</label>
-                                        <input type="number" nbInput formControlName="customUpdateScreenTime"
-                                        fullWidth status="basic" min="1" placeholder="0">
+                                        <input type="number" nbInput formControlName="customUpdateScreenTime" fullWidth
+                                            status="basic" min="1" placeholder="0">
                                     </div>
                                 </div>
                             </div>
@@ -186,14 +206,14 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="col-name col-th-1">Sección</th>
-                                                <th scope="col" class="col-btn col-th-2">Vista Previa</th>
-                                                <th scope="col"  colspan="2" class="col-btn col-th-3"></th>
+                                                <th scope="col" class="col-btn col-th-2">Vista previa</th>
+                                                <th scope="col" colspan="2" class="col-btn col-th-3"></th>
                                             </tr>
                                         </thead>
                                         <tbody *ngIf="config.hasFilter">
-                                            <tr *ngFor="let section of selectedSections" >
+                                            <tr *ngFor="let section of selectedSections">
                                                 <td>{{section.name}}</td>
-                                                <td *ngIf="hasBanner(section)"> 
+                                                <td *ngIf="hasBanner(section)">
                                                     <div class="table-img">
                                                         <img class="img-responsive" src="{{section.bannerUrl}}">
                                                     </div>
@@ -202,21 +222,23 @@
                                                     Seccion sin imagen de encabezado (1920x150)
                                                 </td>
                                                 <td>
-                                                    <button type="button" (click)="manageBanner(section)" class="btn btn-info">
+                                                    <button type="button" (click)="manageBanner(section)"
+                                                        class="btn btn-info">
                                                         <i class="fas fa-upload"></i>
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" (click)="deleteBanner(section)" class="btn btn-danger btn-table">
+                                                    <button type="button" (click)="deleteBanner(section)"
+                                                        class="btn btn-danger btn-table">
                                                         <i class="far fa-trash-alt"></i>
                                                     </button>
                                                 </td>
                                             </tr>
                                         </tbody>
                                         <tbody *ngIf="!config.hasFilter">
-                                            <tr *ngFor="let section of nextEventsSection" >
+                                            <tr *ngFor="let section of nextEventsSection">
                                                 <td>{{section.name}}</td>
-                                                <td *ngIf="hasBanner(section)"> 
+                                                <td *ngIf="hasBanner(section)">
                                                     <div class="table-img">
                                                         <img class="img-responsive" src="{{section.bannerUrl}}">
                                                     </div>
@@ -225,12 +247,14 @@
                                                     Seccion sin imagen de encabezado (1920x150)
                                                 </td>
                                                 <td>
-                                                    <button type="button" (click)="manageBanner(section)" class="btn btn-info">
+                                                    <button type="button" (click)="manageBanner(section)"
+                                                        class="btn btn-info">
                                                         <i class="fas fa-upload"></i>
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" (click)="deleteBanner(section)" class="btn btn-danger btn-table">
+                                                    <button type="button" (click)="deleteBanner(section)"
+                                                        class="btn btn-danger btn-table">
                                                         <i class="far fa-trash-alt"></i>
                                                     </button>
                                                 </td>
@@ -250,9 +274,11 @@
                                 <div class="col-sm-5">
                                     <div class="form-group">
                                         <label class="label">Mostrar publicidad cada:</label>
-                                        <nb-select fullWidth placeholder="Seleccione cada cuanto desea ver la publicidad"  
-                                        formControlName="showAdvertisingTime">
-                                            <nb-option *ngFor="let config of updateAdvertisingConfig" [value]="config.time">
+                                        <nb-select fullWidth
+                                            placeholder="Seleccione cada cuanto desea ver la publicidad"
+                                            formControlName="showAdvertisingTime">
+                                            <nb-option *ngFor="let config of updateAdvertisingConfig"
+                                                [value]="config.time">
                                                 {{config.text}}</nb-option>
                                         </nb-select>
                                     </div>
@@ -261,7 +287,7 @@
                                     <div class="form-group">
                                         <label class="label">Otro: (segundos)</label>
                                         <input type="number" nbInput formControlName="customShowAdvertisingTime"
-                                        fullWidth status="basic" min="1" placeholder="0">
+                                            fullWidth status="basic" min="1" placeholder="0">
                                     </div>
                                 </div>
                             </div>
@@ -270,31 +296,34 @@
                                 <div class="col-sm-7">
                                     <div class="form-group">
                                         <label class="label">Administrar imagenes de publicidad:</label>
-                                        <button type="button" (click)="manageAdvertising()" class="btn btn-info btn-add-advert float-sm-right">
+                                        <button type="button" (click)="manageAdvertising()"
+                                            class="btn btn-info btn-add-advert float-sm-right">
                                             <i class="fas fa-upload"></i> Agregar
                                         </button>
                                         <table class="table table-striped table-bordered table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col" class="col-btn col-th-4">Vista Previa</th>
+                                                    <th scope="col" class="col-btn col-th-4">Vista previa</th>
                                                     <th scope="col" class="col-btn col-th-3"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let advertising of advertisings">
-                                                    <td> 
+                                                    <td>
                                                         <div class="table-img">
-                                                            <img class="img-responsive-adv" src="{{advertising.imageUrl}}">
+                                                            <img class="img-responsive-adv"
+                                                                src="{{advertising.imageUrl}}">
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <button type="button" (click)="deleteAdvertising(advertising)" class="btn btn-danger btn-table">
+                                                        <button type="button" (click)="deleteAdvertising(advertising)"
+                                                            class="btn btn-danger btn-table">
                                                             <i class="far fa-trash-alt"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
                                                 <tr *ngIf="advertisings.length == 0">
-                                                    <td colspan="2"> 
+                                                    <td colspan="2">
                                                         Sin imagenes de publicidad (800x600)
                                                     </td>
                                                 </tr>
@@ -307,33 +336,17 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <button nbButton nbStepperPrevious>Anterior</button>
-                                    <button nbButton class="float-right mr-2" (click)="submit()" 
-                                        [disabled]="firstForm.invalid || secondForm.invalid || !isFormTwoValid || thirdForm.invalid" 
-                                    status="success">Guardar</button>
-                                    <button nbButton class="float-right mr-2" (click)="cancel()" status="danger">Cancelar</button>
+                                    <button nbButton class="float-right mr-2" (click)="submit()"
+                                        [disabled]="firstForm.invalid || secondForm.invalid || !isFormTwoValid || thirdForm.invalid"
+                                        status="success">Guardar</button>
+                                    <button nbButton class="float-right mr-2" (click)="cancel()"
+                                        status="danger">Cancelar</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </nb-step>
-            <!-- <nb-step [label]="labelFour">
-                <ng-template #labelFour>Resumen</ng-template>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h6>4. Resumen:</h6>
-                    </div>
-                </div>
-                <hr>
-                <div class="row ">
-                    <div class="col-sm-12">
-                        <button nbButton nbStepperPrevious>Anterior</button>
-                        <button nbButton class="float-right mr-2" (click)="submit()" [disabled]="!modelIsValid"
-                            status="success">Guardar</button>
-                        <button nbButton class="float-right mr-2" (click)="cancel()" status="danger">Cancelar</button>
-                    </div>
-                </div>
-            </nb-step> -->
         </nb-stepper>
     </nb-card-body>
 </nb-card>
