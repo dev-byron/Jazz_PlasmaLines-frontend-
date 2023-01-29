@@ -2,5 +2,5 @@
     "env": "dev",
     "serverUrl": "http://localhost:3000",
     "socketUrl": "http://localhost:3000",
-    "imagesServerUrl": "https://jazz-lines.s3.amazonaws.com"
+    "imagesServerUrl": "https://crc-display-01.s3.amazonaws.com"
 }

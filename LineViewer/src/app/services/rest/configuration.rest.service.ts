@@ -10,7 +10,7 @@ import { Schedule } from '../../models/schedule.model';
 export class ConfigurationRestService {
  
   protected apiServer = AppConfig.settings.serverUrl + "/api/configuration/";
-  protected configFileServer = "https://crc-display-01.s3.amazonaws.com";
+  protected configFileServer = AppConfig.settings.imagesServerUrl;
 
   constructor(private httpClient: HttpClient) { }
 
