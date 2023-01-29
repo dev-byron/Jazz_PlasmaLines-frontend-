@@ -15,7 +15,7 @@
                     <div class="row mt-3">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="label">Nombre:</label>
+                                <label class="label">Nombre: <label class="required">*</label></label>
                                 <input type="text" maxlength="50" nbInput formControlName="name"
                                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}"
                                     fullWidth status="basic" placeholder="Crear nombre">
@@ -54,9 +54,12 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="label">Utilizar códigos alternos de equipos:</label>
-                                <nb-radio-group formControlName="useAlternativeCodes" status="danger" name="useAlternativeCodes">
-                                    <nb-radio formControlName="useAlternativeCodes" value="false" ngDefaultControl>No</nb-radio>
-                                    <nb-radio formControlName="useAlternativeCodes" value="true" ngDefaultControl>Si</nb-radio>
+                                <nb-radio-group formControlName="useAlternativeCodes" status="danger"
+                                    name="useAlternativeCodes">
+                                    <nb-radio formControlName="useAlternativeCodes" value="false"
+                                        ngDefaultControl>No</nb-radio>
+                                    <nb-radio formControlName="useAlternativeCodes" value="true"
+                                        ngDefaultControl>Si</nb-radio>
                                 </nb-radio-group>
                             </div>
                         </div>
@@ -74,9 +77,16 @@
                         </div>
                         <div class="col-sm-4">
                             <label fullWidth class="label mr-3">Zona horario original: </label>
-                            <label fullWidth status="info">
+                            <br>
+                            <label fullWidth status="info" class="original-time-label">
                                 <i class="fas fa-clock"></i> (GMT-08:00) Pacific Time (US & Canada)</label>
                         </div>
+                    </div>
+                    <div class="info-type">
+                        <span><i class="fas fa-info-circle"></i>
+                            Los códigos alternos de los equipos se cargan por medio de un archivo almacenado en la nube
+                            (s3)
+                        </span>
                     </div>
                     <hr>
                     <div class="row ">
@@ -101,7 +111,7 @@
                         <form [formGroup]="secondForm" class="step-container">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <label class="label">Seleccione el tipo de ligas que desea mostrar:</label>
+                                    <label class="label">Seleccione el tipo de ligas que desea mostrar: </label>
                                     <div class="info-type col-sm-8">
                                         <span><i class="fas fa-info-circle"></i>
                                             "Selección de próximos eventos" no permite incluir ligas y
@@ -119,7 +129,7 @@
                             <div class="row mt-4">
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                        <label class="label">Seleccióne las ligas que desea incluir: </label>
+                                        <label class="label">Seleccióne las ligas que desea incluir: <label class="required">*</label></label>
                                         <ngx-treeview [config]="config" [items]="items"
                                             (selectedChange)="onSelectedChange($event)">
                                         </ngx-treeview>
@@ -180,7 +190,7 @@
                             <div class="row">
                                 <div class="col-sm-5">
                                     <div class="form-group">
-                                        <label class="label">Actualizar pantalla de lineas cada:</label>
+                                        <label class="label">Actualizar pantalla de lineas cada: <label class="required">*</label></label>
                                         <nb-select fullWidth
                                             placeholder="Seleccione cada cuanto desea actualizar la pantalla"
                                             formControlName="updateScreenTime">
@@ -273,7 +283,7 @@
                             <div class="row mt-2">
                                 <div class="col-sm-5">
                                     <div class="form-group">
-                                        <label class="label">Mostrar publicidad cada:</label>
+                                        <label class="label">Mostrar publicidad cada: <label class="required">*</label></label>
                                         <nb-select fullWidth
                                             placeholder="Seleccione cada cuanto desea ver la publicidad"
                                             formControlName="showAdvertisingTime">
@@ -291,7 +301,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row mt-2">
                                 <div class="col-sm-7">
                                     <div class="form-group">
