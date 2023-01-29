@@ -2,6 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../app.config';
+import { AlternativeCodes } from '../../models/alternative-codes.model';
 import { PlasmaLineConfig } from '../../models/plasma-line.model';
 import { Schedule } from '../../models/schedule.model';
 
@@ -9,11 +10,16 @@ import { Schedule } from '../../models/schedule.model';
 export class ConfigurationRestService {
  
   protected apiServer = AppConfig.settings.serverUrl + "/api/configuration/";
+  protected configFileServer = "https://crc-display-01.s3.amazonaws.com";
 
   constructor(private httpClient: HttpClient) { }
 
   getByCode(code: string): Observable<HttpResponse<PlasmaLineConfig>> { 
     return this.httpClient.get<PlasmaLineConfig>(`${this.apiServer}${code}`, { observe: 'response' });
+  }
+
+  getAlternativeCodes(): Observable<HttpResponse<AlternativeCodes[]>> { 
+    return this.httpClient.get<AlternativeCodes[]>(`${this.configFileServer}/configurations/alternate_codes.json`, { observe: 'response' });
   }
 
   validConfigurationCode(code: string): Observable<HttpResponse<boolean>> { 
