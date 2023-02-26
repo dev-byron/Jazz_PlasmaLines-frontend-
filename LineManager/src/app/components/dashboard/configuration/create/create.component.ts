@@ -125,12 +125,14 @@ export class CreateComponent implements OnInit {
       lineType:  ['1', Validators.required],
       viewType:  ['', Validators.required],
       viewTheme: ['', Validators.required],
-      timeZone: ['', Validators.required]
+      timeZone: ['', Validators.required],
+      useAlternativeCodes: ['', Validators.required],
     });
     this.firstForm.controls['lineType'].setValue(this.selectedLineType, {onlySelf: true});
     this.firstForm.controls['viewType'].setValue(this.selectedViewType, {onlySelf: true});
     this.firstForm.controls['viewTheme'].setValue(this.selectedViewTheme, {onlySelf: true});
     this.firstForm.controls['timeZone'].setValue(this.timeZoneId, {onlySelf: true});
+    this.firstForm.controls['useAlternativeCodes'].setValue('false', {onlySelf: true});
 
 
     this.secondForm = this.fb.group({
@@ -154,6 +156,7 @@ export class CreateComponent implements OnInit {
     this.firstForm.controls['viewType'].setValue(configuration.viewType, {onlySelf: false});
     this.firstForm.controls['viewTheme'].setValue(configuration.viewTheme, {onlySelf: false});
     this.firstForm.controls['timeZone'].setValue(parseInt(configuration.time), {onlySelf: false});
+    this.firstForm.controls['useAlternativeCodes'].setValue(configuration.useAlternativeCodes.toString(), {onlySelf: true});
 
     if (configuration.showOnlyNextEvents) {
       this.secondForm.controls['category'].setValue('2', {onlySelf: false});
@@ -267,7 +270,7 @@ export class CreateComponent implements OnInit {
     if (showOnlyNextEvents)  {
       this.selectedSections = this.nextEventsSection;
     }
-    var model = {};
+    var model: ConfigurationLine;
     if (this.modelIsValid) {
       model = {
         code: this.editCode ? this.editCode : "",
@@ -276,6 +279,7 @@ export class CreateComponent implements OnInit {
         lineType: this.firstForm.controls['lineType'].value,
         viewTheme: this.firstForm.controls['viewTheme'].value,
         time:  this.firstForm.controls['timeZone'].value,
+        useAlternativeCodes: this.strToBool(this.firstForm.controls['useAlternativeCodes'].value),
         createdDate: new Date().toDateString(),
         createdBy: this.getUserId(),
         showOnlyNextEvents: showOnlyNextEvents,
@@ -283,13 +287,12 @@ export class CreateComponent implements OnInit {
         advertisingLapseTime: this.getAdvertisingLapseTime(),
         advertisings: this.advertisings,
         sections: this.selectedSections
-      }
+      } as ConfigurationLine;
 
       this.configService.save(model).subscribe(res => {
         this.isSubmitting = false;
         this.redirectoToDashboard();
       });
-
     }
   }
 
@@ -508,6 +511,9 @@ export class CreateComponent implements OnInit {
     return section.bannerUrl !== '';
   }
 
+  private strToBool(str: string) {
+    return /true/.test(str);
+  }
 
 
 }

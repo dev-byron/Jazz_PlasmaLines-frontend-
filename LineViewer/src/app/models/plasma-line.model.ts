@@ -7,6 +7,7 @@ export interface PlasmaLineConfig {
     viewType: string;
     lineType: string;
     viewTheme: string;
+    useAlternativeCodes: boolean;
     time: number;
     screenTime: number;
     advertisingLapseTime: number;

@@ -1,3 +1,3 @@
-<div class="advertising-container" #advertisingContainer [hidden]="!display">
-    <img class="advertising-container-img"  [src]="current">
+<div class="ad-container" #advertisingContainer>
+    <img [src]="current" *ngIf="current"/>
 </div>

@@ -25,7 +25,7 @@ export class ConfigurationLinesService {
     return this.http.get<Sport[]>(this.apiServer + 'sports/tree', { responseType: 'json' });
   }
 
-  save(configuration: any):  Observable<ConfigurationLine> {
+  save(configuration: ConfigurationLine):  Observable<ConfigurationLine> {
     return this.http.post<ConfigurationLine>(this.apiServer + 'configuration/', configuration, { responseType: 'json' });
   }
 

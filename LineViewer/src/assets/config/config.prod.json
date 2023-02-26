@@ -2,5 +2,5 @@
     "env": "prod",
     "serverUrl": "/server",
     "socketUrl": "/server",
-    "imagesServerUrl": "https://jazz-lines.s3.amazonaws.com"
+    "imagesServerUrl": "https://crc-display-01.s3.amazonaws.com"
 }
